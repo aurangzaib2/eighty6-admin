@@ -1,0 +1,66 @@
+#page-container {
+  min-height: 74vh;
+}
+
+ngb-accordion::ng-deep .card-header {
+  padding: 0.6em;
+  background-color: var(--grey-300);
+  color: var(--grey-100) !important;
+}
+
+.input-group-custom {
+  .form-control {
+    border: none !important;
+    border-radius: 0px;
+    border-bottom: 1px var(--grey-200) solid !important;
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
+  :focus {
+    box-shadow: none;
+    border-color: none;
+  }
+
+  .btn-custom {
+    border: none !important;
+    border-bottom: 1px var(--grey-200) solid !important;
+  }
+
+  .btn-custom:focus {
+    box-shadow: none;
+    border-color: none;
+  }
+}
+
+.directions-ltl {
+  direction: ltr !important;
+  text-align: left !important;
+  .text-left{
+    text-align: left !important;
+  }
+
+  quill-editor {
+    .ql-formats {
+      display: flex;
+    }
+
+    .ql-editor {
+      text-align: left;
+    }
+
+    .ql-toolbar.ql-snow {
+      float: right;
+      display: flex;
+    }
+  }
+}
+
+
+.directions-rtl {
+  direction: rtl !important;
+  text-align: right !important;
+  .ql-toolbar.ql-snow{
+    float: left !important;
+  }
+}

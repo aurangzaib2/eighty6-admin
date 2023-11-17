@@ -1,0 +1,47 @@
+<div class="card top-cards">
+	<div class="card-header border-0 bg-transparent d-flex">
+		<span> {{'dashboard.topCategories' | translate}}</span>
+	</div>
+	<div class="card-body pt-0">
+		<div class="table-responsive fixed-height">
+			<table class="table">
+				<thead>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of dataList" (click)="navigateToProduct(item)">
+						<td>
+							<div class="d-flex image-and-text align-items-center">
+								<img [src]="item?.image || 'assets/images/placeholder_product.svg'">
+								<div class="text-div dir-ltr">
+									<!-- <h4 class="text-black-100  text-capitalize">{{item?.name}}</h4> -->
+									<span *ngIf="selectedLang == 'en'">
+										<h4 *ngIf="item?.name">{{item?.name | truncate:16| capitalize}}</h4>
+										<h4 *ngIf="!item?.name">{{item?.nameTranslations?.ar}}</h4>
+									  </span>
+									  <span *ngIf="selectedLang == 'ar'">
+										<h4 *ngIf="item?.nameTranslations?.ar">{{item?.nameTranslations?.ar}}</h4>
+										<h4 *ngIf="!item?.nameTranslations?.ar">
+														{{item?.name | truncate:16| capitalize}}
+										</h4>
+									  </span>
+									<!-- <p class="text-gray-100">{{currency}} {{item?.totalAmount.toFixed(2)}}</p> -->
+									<p class="text-gray-100 price font-roboto">{{currency}}</p>
+                                    <p class="text-gray-100 price">{{item?.totalAmount.toFixed(2)}}</p>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="text-div">
+								<img src="assets/icons/right-arrow.svg">
+							</div>
+						</td>
+					</tr>
+					<tr *ngIf="dataList.length === 0">
+						<td>{{'noData' | translate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

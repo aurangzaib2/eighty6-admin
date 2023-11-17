@@ -1,0 +1,21 @@
+<div class="alert-content" *ngIf="message?.text" [ngClass]="message.cssClass">
+    <!-- <h5 class="alert-title"></h5>
+    <p class="alert-description">
+        was able to customize this ngx-toastr with overriding this CSS.
+    </p> -->
+    <div class="media">
+        <div class="media-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <label class="mt-0 alert-title">{{message.text}}</label>
+                </div>
+                <div (click)="remove()">
+                    <img src="assets/icons/black-cross.svg" class="img-fluid closs-arrow">
+                </div>
+            </div>
+            <p class="alert-description mb-0">
+                {{message.description}}
+            </p>
+        </div>
+    </div>
+</div>

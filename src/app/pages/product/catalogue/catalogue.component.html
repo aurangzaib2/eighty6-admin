@@ -1,0 +1,27 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize">{{'products.products' | translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li class="breadcrumb-item" aria-current="page">{{'products.products' | translate}}</li>
+        </ol>
+    </div>
+    <div class="clearfix">
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="open()">
+            <img src="assets/icons/plus-white.svg"> {{'products.createCategory' | translate}}
+        </button>
+    </div>
+</div>
+
+<div class="container-fluid" id="page-container">
+    <ul ngbNav [(activeId)]="activeTab" class="nav nav-tabs w-100 flex-nowrap ov-scroll">
+        <li class="nav-link text-nowrap" [ngbNavItem]="link.fragment" *ngFor="let link of links">
+            <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="router-link-active" class="text-capitalize">
+                <img [src]="link.image" class="mr-2">
+                {{ link.title }}
+            </a>
+        </li>
+    </ul>
+    <div class="mt-3">
+        <router-outlet></router-outlet>
+    </div>
+</div>

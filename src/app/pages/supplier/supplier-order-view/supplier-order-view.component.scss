@@ -1,0 +1,37 @@
+#page-container {
+  min-height: 74vh;
+  overflow-y: scroll;
+  max-height: 74vh;
+}
+.profile {
+  place-items: center;
+  .user-profile {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+  }
+}
+.form-group > label {
+  position: relative;
+  left: 0px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black-100);
+  padding: 0 5px;
+}
+
+.btn-dropdown {
+  text-align: left;
+  padding-top: 12px;
+}
+.dropdown-toggle::after {
+  display: inline-block;
+  float: right;
+  padding-top: 12px;
+  position: absolute;
+  right: 12px;
+  top: 22px;
+}
+.dropdown-menu.show {
+  width: 100%;
+}

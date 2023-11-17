@@ -1,0 +1,76 @@
+<div class="card profile-card border-0">
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-center">
+			<div>
+				<span class="section-head">{{'suppliers.uploadFile' | translate}}</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-5" *ngIf="fileUploaded">
+				<div>
+					<div class="image-box rounded border text-center position-relative">
+						<img src="assets/images/placeholder_product.svg">
+						<button (click)="clearImage()" data-testid="clearImage"
+							class="btn btn-grey btn-circular btn-photo-close btn-sm btn-sm-close">
+							<i class="fa fa-times fa-lg"></i>
+						</button>
+					</div>
+				</div>
+				<h4 class="text-black-100 font-13 mt-2">{{fileInfo?.name}}</h4>
+				<span class="text-black-100 font-12">
+					Size: {{fileInfo?.originalSize }} kb
+				</span>
+
+				<div class="d-flex align-items-center">
+					<button class="btn btn-green-badge btn-circular btn-sm btn-sm-check" data-testid="check-btn">
+						<i class="fa fa-check"></i>
+					</button>
+					<span class="text-gray-400 pl-2 font-12">Excel uploaded</span>
+				</div>
+			</div>
+			<div class="col-12" *ngIf="!fileUploaded">
+				<div (fileDropped)="onFileDropped($event)">
+					<div class="upload-box mt-2">
+						<input #fileDropRef autocomplete="on" type="file" name="file"
+							(change)="fileBrowseHandler($event.target.files)" required
+							accept="image/png, image/jpeg,image/jpg" data-testid="browseFile">
+						<img src="assets/icons/download.svg" class="img-fluid download-img">
+						<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+							translate}}</label>
+						<p class="dragDropText text-gray-100">{{'shared.excelFileAllowed' | translate}}</p>
+					</div>
+				</div>
+				<!-- <div class="upload-box mt-2" (click)="fileInput1.click()" appDragDrop
+					(fileDropped)="onFileDropped($event)">
+					<input hidden autocapitalize="on" #fileInput1 autocomplete="on"
+						accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+						(change)="upload($event.target.files)" type="file" name="file" required>
+					<img src="assets/icons/download.svg" class="img-fluid download-img">
+					<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+						translate}}</label>
+					<p class="dragDropText text-gray-100">{{'shared.excelFileAllowed' | translate}}</p>
+				</div> -->
+			</div>
+		</div>
+		<div class="mt-1">
+			<span class="text-black-100 font-14">
+				<a class="btn-link" role="button" data-testid="downloadTemplate" (click)="downloadTemplate()">{{'suppliers.downloadExcelFile' |
+					translate}}</a>
+			</span>
+		</div>
+		<div class="mt-1 text-capitalize">
+			<ng-container *ngIf="displayMessage!=null">
+				<span class="error-message font-14">{{displayMessage}}</span>
+			</ng-container>
+		</div>
+		<div class="d-flex justify-content-between mt-3">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()" data-testid="close-modal">
+				{{'suppliers.cancel' | translate}}
+			</button>
+			<button type="submit" (click)="submit()" class="btn btn-theme btn-blue text-capitalize" data-testid="bulk-upload">
+				<span *ngIf="!loading">{{'suppliers.upload' | translate}}</span>
+				<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+</div>

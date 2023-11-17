@@ -1,0 +1,350 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">#{{orderId}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li [routerLink]="['/supplier']" aria-current="page" class="breadcrumb-item">{{'suppliers.suppliersList' |
+				translate}}</li>
+			<li (click)="goBack()" class=" breadcrumb-item" data-testid="back-btn">{{supplierData?.name}}</li>
+			<li aria-current="page" class="breadcrumb-item">#{{orderId}}</li>
+		</ol>
+	</div>
+</div>
+<div *ngIf="order" class="container-fluid" id="page-container">
+	<div class="row justify-content-between h-100 align-items-center">
+		<div class="col-lg-6 col-md-8 col-sm-12">
+			<div class="d-flex align-items-center profile mt-2">
+				<div class="clearfix">
+					<img [src]="order?.restaurant?.logo || 'assets/images/placeholder_logo.png'"
+						class="img-fluid user-profile">
+				</div>
+				<div class="clearfix pl-2">
+					<h5 class="mb-0 text-bold text-capitalize">{{order?.restaurant?.name}}
+						<small class="text-gray-100">{{'suppliers.companyName' | translate}} :
+							{{order?.restaurant?.company?.name}}</small>
+					</h5>
+					<p class="text-black-200 text-capitalize">
+						{{'suppliers.orderID' | translate}} <span class="text-gray-100 font-roboto"> {{order?.uniqueId}}</span>
+						<span class="pl-2">
+							{{'suppliers.orderStatus' | translate}}
+							<span *ngIf="order?.deliveryStatus ==='rejected'" class="red-badge">
+								{{'suppliers.rejected' | translate}}
+							</span>
+							<span *ngIf="order?.deliveryStatus ==='pending'" class="orange-badge">
+								{{'suppliers.pending' | translate}}
+							</span>
+							<span *ngIf="order?.deliveryStatus ==='confirmed'" class="green-badge">
+								{{'suppliers.confirmed' | translate}}
+							</span>
+							<span *ngIf="order?.deliveryStatus ==='delivered'" class="green-badge">
+								{{'suppliers.delivered' | translate}}
+							</span>
+							<span *ngIf="order?.deliveryStatus ==='completed'" class="green-badge">
+								{{'suppliers.completed' | translate}}
+							</span>
+							<span *ngIf="order?.deliveryStatus ==='dispatched'" class="blue-badge">
+								{{'suppliers.dispatched' | translate}}
+							</span>
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-12 col-sm-12">
+			<div class="row justify-content-end">
+				<div class="col-lg-4 col-md-5 col-sm-12">
+					<div class="d-flex align-items-center">
+						<div class="clearfix">
+							<img alt="phone" class="mr-2" src="assets/icons/phone.svg">
+						</div>
+						<div class="clearfix">
+							<label class="mb-0 pb-0"> {{'suppliers.phone' | translate}}</label>
+							<p>{{order?.restaurant?.mobileNumber}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-7 col-sm-12">
+					<div class="d-flex align-items-center">
+						<div class="clearfix">
+							<img alt="message" class="mr-2" src="assets/icons/address.svg">
+						</div>
+						<div class="clearfix">
+							<label class="mb-0 pb-0">{{'suppliers.address' | translate}}</label>
+							<p>{{order?.restaurant?.location || '-'}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex text-capitalize h-100 align-items-center my-2">
+		<div class="d-flex align-items-center">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/account-blue.svg">
+			</div>
+			<div class="clearfix">
+				<p class="text-black-100 mb-0 pb-0">{{'suppliers.supplier' | translate}}
+					<span class="text-gray-100">{{supplierData?.name}}</span>
+				</p>
+			</div>
+		</div>
+		<div class="d-flex align-items-center pl-1">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/calender.svg">
+			</div>
+			<div class="clearfix">
+				<p class="text-black-100 mb-0 pb-0">{{'suppliers.date' | translate}} <span
+						class="text-gray-100 font-roboto">{{order?.createdAt |date:'mediumDate'}}</span></p>
+			</div>
+		</div>
+		<div class="d-flex align-items-center pl-1">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/time.svg">
+			</div>
+			<div class="clearfix">
+				<p class="text-black-100 mb-0 pb-0">
+					{{'suppliers.time' | translate}}
+					<span class="text-gray-100 font-roboto dir">{{order?.createdAt |date:'hh:mm a'}}
+					</span>
+				</p>
+			</div>
+		</div>
+		<div class="d-flex align-items-center pl-1">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/payment.svg">
+			</div>
+			<div class="clearfix">
+				<p class="text-black-100 mb-0 pb-0">{{'suppliers.paymentMethod' | translate}} <span
+						class="text-gray-100">{{order?.paymentMethod}}</span>
+				</p>
+			</div>
+		</div>
+		<div class="d-flex align-items-center pl-1">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/sort-blue.svg">
+			</div>
+			<div class="clearfix">
+				<div class="d-flex align-items-center text-black-100">
+					<p class="text-black-100 mb-0 pb-0">{{'orders.paymentStatus' | translate}}
+						<img *ngIf="order?.status === 'paid'" class="img-fluid status-circle"
+							src="assets/icons/status-paid.svg">
+						<img *ngIf="order?.status === 'pending_payment'" class="img-fluid status-circle"
+							src="assets/icons/status-pending.svg">
+						<span class="px-1  text-gray-100" *ngIf="order?.status === orderStatus.PENDING_PAYMENT">
+							{{ 'pending'|translate}}
+						</span>
+						<span class="px-1  text-gray-100" *ngIf="order?.status != orderStatus.PENDING_PAYMENT">
+							{{ 'paid'|translate}}
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex text-capitalize h-100 align-items-center" *ngIf="order?.isAmended">
+		<div class="d-flex align-items-center pl-1">
+			<div class="clearfix">
+				<img alt="phone" class="mr-1 pb-1" src="assets/icons/payment.svg">
+			</div>
+			<div class="clearfix">
+				<p class="text-black-100 mb-0 pb-0">{{'orders.amendStatus' | translate}}
+					<img *ngIf="order?.amendOrderStatus === 'confirmed'" class="img-fluid status-circle"
+						src="assets/icons/status-paid.svg">
+					<img *ngIf="order?.amendOrderStatus === 'pending'" class="img-fluid status-circle"
+						src="assets/icons/status-pending.svg"><span
+						class="text-gray-100">{{order?.amendOrderStatus}}</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex justify-content-end">
+		<button (click)="downloadInvoice()" class="btn btn-theme blue-time text-capitalize vertical-middle ml-3" data-testid="downloadInvoice">
+			<img class="img-fluid pr-1" style="height: 1.2em;" src="assets/icons/download-blue.png">
+			{{'orders.invoiceDownload'| translate}}
+		</button>
+	</div>
+	<div class="d-flex my-3">
+		<div class="card grey-200-bg w-100 rounded">
+			<div class="card-body">
+				<label>{{'orders.deliveryInstructions'| translate}}</label>
+				<p *ngIf="order?.deliveryInstruction">{{order?.deliveryInstruction}}</p>
+				<p *ngIf="!order?.deliveryInstruction">-</p>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix my-4">
+		<div class="table-responsive page-table text-nowrap">
+			<ngx-datatable #orderItemTable class="material expandable" [columnMode]="'force'" [headerHeight]="50"
+				rowHeight="auto" [scrollbarH]="true" [rows]="orderItems" emptyMessage="{{ 'noData' | translate}}"
+				[rowClass]="checkIsAmended">
+				<ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+					[canAutoResize]="false">
+					<ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+						<a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
+							[class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+							(click)="toggleExpandRow(row)" *ngIf="row?.orderAmendItems.length >0" data-testid="toggleExpandRow">
+						</a>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-row-detail rowHeight="auto" #orderAmendItem>
+					<ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+						<div style="padding-left:35px;">
+							<label>{{'orders.receivedOrderDetails' | translate}}</label>
+						</div>
+						<div class="table-responsive page-table">
+							<table class="table table-borderless" style="width:100%">
+								<thead class="table-header no-border">
+									<tr>
+										<th scope="col">{{'orders.productName' | translate}}</th>
+										<th scope="col">{{'orders.unit' | translate}}</th>
+										<th scope="col">{{'orders.quantity' | translate}}</th>
+										<th scope="col">{{'orders.unitPrice' | translate}}</th>
+										<th scope="col">{{'orders.totalAmount' | translate}}</th>
+										<th scope="col" width="260px">{{'restaurants.message' | translate}}</th>
+										<th scope="col">{{'onBoarding.status' | translate}}</th>
+									</tr>
+								</thead>
+								<tbody *ngIf="row.orderAmendItems && row.orderAmendItems.length" class="table-body">
+									<tr *ngFor="let item of row.orderAmendItems;let j=index">
+										<td class="text-wrap">{{row?.name |capitalize}}</td>
+										<td>
+											{{item?.unitType}} <span class="text-lowercase">{{item?.units}}</span>
+										</td>
+										<td>{{item?.quantity}}</td>
+										<td>{{item?.discountedPrice || item?.price}}</td>
+										<td>{{item?.total | number : '1.2-2'}}
+											<span class="blue-badge" *ngIf="item.isFOC">
+												FOC
+											</span>
+										</td>
+										<td class="text-wrap pr-4">
+											<p class="px-2">{{item?.restaurantMessage}}</p>
+											<p class="yellow-200-bg px-2">{{item?.supplierMessage}}</p>
+										</td>
+										<td>
+											<span class="text-capitalize">{{item?.status}}</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</ng-template>
+				</ngx-datatable-row-detail>
+
+				<ngx-datatable-column name="{{'orders.productCode' | translate}}" [flexGrow]="1" [minWidth]="120"
+					[width]="150" [sortable]="false" prop="sku">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						{{ row.sku }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="{{'orders.productName' | translate}}" [flexGrow]="1" [width]="200"
+					[sortable]="false" prop="name">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						<span class="text-capitalize">{{ row.name }}</span>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="{{'orders.unit' | translate}}" [flexGrow]="1" [sortable]="false"
+					prop="unitType">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						{{row?.unitType}} <span class="text-lowercase">{{row?.units}}</span>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="{{'orders.quantity' | translate}}" [flexGrow]="1" [sortable]="false"
+					prop="quantity">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						{{ row.quantity }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="{{'orders.unitPrice' | translate}}" [flexGrow]="1" [sortable]="false">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						{{ row?.discountedPrice || row?.price }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="{{'orders.totalAmount' | translate}}" [flexGrow]="1" [sortable]="false"
+					prop="total">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						{{ row.total | number : '1.2-2' }}
+						<span class="blue-badge" *ngIf="row.isFOC">
+							FOC
+						</span>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-end my-2">
+		<div class="card grey-200-bg card-order border-0">
+			<div class="card-body">
+				<label class="text-capitalize">{{'orders.orderDetails' | translate}}</label>
+				<div class="d-flex justify-content-between list-items" *ngIf="order?.discountedPromoPrice > 0">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">{{'orders.orderAmount' | translate}}</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">{{currency}} {{order?.subTotal | number : '1.2-2'}} </span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between list-items" *ngIf="order?.discountedPromoPrice > 0">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">{{'orders.promoCode' | translate}}
+							({{order?.voucher}})
+						</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">- {{currency}} {{order?.discountedPromoPrice}} </span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between list-items" *ngIf="order?.discountInPercentage > 0">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">{{'orders.discount' | translate}}</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize"> {{order?.discountInPercentage}} %</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between list-items">
+					<div class="clearfix">
+						<span class="text-label">{{'orders.subtotal' | translate}}</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">
+							{{currency}}
+						</span>
+						<span class="text-value text-capitalize font-geflow">
+							{{order?.totalPrice | number : '1.2-2'}}
+						</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between list-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">{{'orders.vat' | translate}} ({{TAX}} %)</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">
+							{{currency}}
+						</span>
+						<span class="text-value text-capitalize font-geflow">{{order?.tax | number : '1.2-2'}}</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between list-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">{{'orders.total' | translate}} </span>
+					</div>
+					<div class="clearfix">
+						<span class="text-final-value text-capitalize">
+							{{currency}}
+						</span>
+						<span class="text-final-value text-capitalize font-geflow">
+							{{order?.totalPrice + order?.tax | number : '1.2-2'}}
+						</span>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <button class="btn btnprimary" (click)="createPdf()">
+    Pdf
+</button> -->

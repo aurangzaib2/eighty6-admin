@@ -1,0 +1,118 @@
+<div class="inner-header d-flex justify-content-between">
+  <div class="clearfix">
+    <h2 class="text-capitalize">{{categoryData?.subCategoryName}}</h2>
+    <ol class="breadcrumb inner-header-breadrumb">
+      <li class="breadcrumb-item" [routerLink]="['/product']" routerLinkActive="router-link-active">
+        {{'products.products' | translate}}</li>
+      <li class="breadcrumb-item" aria-current="page" (click)="goBack()">{{categoryData?.name}}</li>
+      <li class="breadcrumb-item" aria-current="page">{{categoryData?.subCategoryName}}</li>
+    </ol>
+  </div>
+  <div class="clearfix">
+    <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="open()">
+      <img src="assets/icons/plus-white.svg">{{'products.addProduct' | translate}}
+    </button>
+  </div>
+</div>
+<div class="container-fluid" id="page-container">
+  <div class="form-group max-300">
+    <div class="input-group mb-0 search-box">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <img src="assets/icons/search.svg">
+        </span>
+      </div>
+      <input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+        aria-describedby="basic-addon1" [(ngModel)]="search" (keyup)="searchData()">
+    </div>
+  </div>
+  <div class="tab-inner-div mt-3" (scroll)="onScroll($event)">
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-2" *ngFor="let item of dataList">
+        <div class="discount-box mb-5">
+          <div class="discount-click" (click)="navigateToProductView(item)"></div>
+          <!-- <div class="image-box rounded border mb-3 position-relative">
+            <div class="d-flex flex-column justify-content-start organic" *ngFor="let p of item?.productType">
+              <img [src]="p.image" *ngIf="p.image">
+            </div>
+            <div class="text-div discount-promo-badge" *ngIf="item?.discountedPrice > 0">
+              <div class="promo blue-bg ml-auto m-2">
+                {{(((item?.price - item?.discountedPrice) / item?.price) *
+                100).toFixed(0)}} % OFF</div>
+            </div>
+            <img src="assets/images/placeholder_product.svg" *ngIf="item.image === null">
+            <img [src]="item?.image" *ngIf="item.image != null">
+          </div> -->
+          <div class="d-flex flex-row rounded border mb-3 position-relative">
+            <div class="clearfix justify-content-between product-type">
+              <div class="d-flex flex-column justify-content-start organic pt-2 px-2"
+                *ngFor="let p of item?.productType">
+                <img [src]="p.image" *ngIf="p.image" class="img-fluid">
+              </div>
+            </div>
+            <div class="d-flex flex-column w-100">
+              <div class="d-flex justify-content-center p-3">
+                <img [src]="item?.image || 'assets/images/placeholder_product.svg'" style="width: 100px;height: 100px;">
+              </div>
+            </div>
+          </div>
+          <div class="text-div d-flex">
+            <div>
+              <label class="text-black-100 font-17 mb-0 font-weight-bold" *ngIf="selectedLang == 'en'">
+                <span *ngIf="item?.displayName"> {{item?.displayName | capitalize
+                  |truncate:18}}</span>
+                <span *ngIf="!item?.displayName"> {{item?.nameTranslation?.ar | capitalize
+                |truncate:18}}</span></label>
+                <label class="text-black-100 font-17 mb-0 font-weight-bold" *ngIf="selectedLang == 'ar'">
+                  <span *ngIf="!item?.nameTranslation?.ar"> {{item?.displayName | capitalize
+                    |truncate:18}}</span>
+                  <span *ngIf="item?.nameTranslation?.ar">{{item?.nameTranslation?.ar | capitalize
+                  |truncate:18}}</span></label>
+              <p class="text-gray-100 py-1 text-capitalize">{{item?.subCategory?.name | capitalize| truncate:18}}</p>
+              <p class="text-blue-100 py-1 text-capitalize" *ngIf="item?.origin">{{item?.origin | capitalize}}</p>
+              <p class="text-black-200 py-1 text-capitalize" *ngIf="item?.brandName">{{item?.brandName |
+                capitalize|truncate:20}}
+              </p>
+              <p class="text-gray-100 py-1 text-capitalize" *ngIf="item?.name">{{item?.name | capitalize |truncate:20}}
+              </p>
+              <p class="text-black-200 py-1 text-capitalize" *ngIf="item?.productType.length > 0">
+                <span class="text-capitalize" *ngFor="let p of item.productType;let i =index">{{p.name}}<span
+                    *ngIf="item?.productType.length-1 > i">, </span>
+                </span>
+              </p>
+              <p class="text-gray-100 py-1">{{item?.quantity}} {{item?.unit?.name}}</p>
+              <p class="text-black-200 py-1 text-capitalize" *ngIf="item?.packaging?.name">{{item?.packaging?.name |
+                capitalize}}</p>
+            </div>
+            <div class="ml-auto z-index-fix">
+              <div ngbDropdown class="drop-small">
+                <button class="btn p-0" id="dropdownConfig" ngbDropdownToggle>
+                  <img src="assets/icons/action-dot.svg" class="rotate90">
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                  <button ngbDropdownItem (click)="edit(item)">
+                    <label><img src="assets/icons/edit-gray.svg" class="mx-2">{{'products.edit' | translate}}</label>
+                  </button>
+                  <!-- <button ngbDropdownItem (click)="openConfirmHide(item)">
+                    <label>
+                      <img src="assets/icons/block-gray.svg" class="mx-2">
+                      <span *ngIf="item?.status === 'active'">Hide</span>
+                      <span *ngIf="item?.status === 'inactive'">Un-hide</span>
+                    </label>
+                  </button> -->
+                  <button ngbDropdownItem (click)='openConfirmDelete(item)'>
+                    <label><img src="assets/icons/delete-gray.svg" class="mx-2">{{'products.delete' |
+                      translate}}</label>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-self-center h-100" *ngIf="dataList && dataList.length === 0">
+    <p>{{ 'noData' | translate}}</p>
+  </div>
+</div>

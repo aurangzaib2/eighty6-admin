@@ -1,0 +1,212 @@
+/* filter button */
+// drop down meanu
+.btn:focus {
+  box-shadow: none !important;
+}
+.dropdown-menu {
+  border: none;
+  background: var(--white);
+  box-shadow: 1px 1px 18px var(--grey-400);
+}
+.dropdown-toggle::after {
+  display: none;
+}
+/* btn-menu .. */
+.btn-menu {
+  padding: 0 4px;
+  color: var(--grey-400);
+}
+/* btn link */
+.btn-link {
+  font-family: var(--font-roboto);
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: 0.4px;
+  color: var(--blue-100);
+  cursor: pointer;
+}
+.btn-link:hover {
+  text-decoration: none;
+}
+
+/* theme btn */
+.btn-theme {
+  height: 42px;
+  color: var(--white);
+  border-radius: 4px;
+  outline: none !important;
+}
+
+.btn-blue {
+  background: var(--blue-100);
+}
+.btn-blue:hover {
+  color: var(--white);
+}
+.btn-grey {
+  color: var(--black-300) !important;
+  background: var(--grey-400) !important;
+}
+.btn-grey:hover {
+  opacity: 0.8;
+  color: var(--grey-300);
+}
+.btn-theme:hover {
+  opacity: 0.8;
+}
+.btn-red {
+  color: var(--white);
+  background: var(--red-100);
+}
+.btn-red:hover {
+  opacity: 0.8;
+  color: var(--white);
+}
+.btn-green {
+  color: var(--white);
+  background: var(--green-100);
+}
+.btn-green:hover {
+  opacity: 0.8;
+  color: var(--white);
+}
+.red-time {
+  color: var(--red-100);
+  background: var(--red-200);
+}
+.green-time {
+  color: var(--green-100);
+  background: var(--green-200);
+  border-radius: 4px;
+}
+.blue-time {
+  color: var(--blue-100);
+  background: var(--blue-300);
+  border-radius: 4px;
+}
+.red-time:hover {
+  opacity: 0.8;
+  color: var(--red-100);
+}
+.blue-time:hover {
+  opacity: 0.8;
+  color: var(--blue-100);
+}
+.btn-sm-close {
+  font-size: 0.6em;
+}
+.btn-sm-check {
+  font-size: 0.48em;
+  padding: 0.18rem 0.2rem;
+}
+.btn-photo-close {
+  position: absolute;
+  top: 20px;
+  right: 2px;
+}
+.btn-circular {
+  border-radius: 50%;
+}
+.btn-remove-red {
+  color: var(--red-100);
+}
+.btn-remove-red:hover {
+  color: var(--red-100);
+}
+.btn-add-black:hover {
+  color: var(--black-100);
+  cursor: pointer;
+}
+.trans-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  border-radius: 0;
+  padding: 0;
+  button {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 40px;
+    }
+    &::after {
+      width: 14px;
+      background-image: url(../assets/images/arrow-down.png);
+      border: none;
+      height: 12px;
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      vertical-align: inherit;
+      display: inline-block;
+    }
+  }
+}
+.btn-blue-badge,
+.btn-blue-badge:hover {
+  color: var(--blue-100);
+  background: var(--blue-300);
+}
+.btn-green-badge,
+.btn-green-badge:hover {
+  color: var(--green-100);
+  background: var(--green-200);
+}
+.btn-red-badge,
+.btn-red-badge:hover {
+  color: var(--red-100);
+  background: var(--red-200);
+}
+.btn-blue-badge,
+.btn-green-badge,
+.btn-red-badge:hover {
+  opacity: 0.8;
+}
+button {
+  label {
+    font-size: 14px;
+    color: var(--black-300);
+  }
+}
+.card {
+  .product-box {
+    .dropdown-menu {
+      min-width: 7rem;
+    }
+  }
+}
+// label and checkbox inside dropdown
+.dropdown-menu {
+  h6 {
+    font-size: 14px;
+    line-height: 1.57;
+    font-weight: 500;
+    margin: 4px 0;
+    color: var(--black-500);
+  }
+  .dropdown-item {
+    cursor: pointer;
+  }
+  .custom-checkbox .custom-control-label::before {
+    border: var(--black-300) solid 1px;
+  }
+}
+.drop-small {
+  .dropdown-menu {
+    width: max-content !important;
+    min-width: max-content;
+
+    .dropdown-item {
+      padding: 0 15px 0 0 !important;
+      cursor: pointer;
+    }
+  }
+}

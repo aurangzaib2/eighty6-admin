@@ -1,0 +1,60 @@
+<div class="form-group max-300">
+    <div class="input-group mb-0 search-box">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">
+                <img src="assets/icons/search.svg">
+            </span>
+        </div>
+        <input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+            aria-describedby="basic-addon1" (keyup)="setFilter('search', $event.currentTarget.value)">
+    </div>
+</div>
+<div class="tab-inner-div">
+    <div class="table-responsive page-table text-nowrap">
+        <table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+            <thead class="table-header no-border">
+                <tr>
+                    <th class="pl-2" scope="col" style="width:35%">{{'products.productName' | translate}}</th>
+                    <th scope="col">{{'products.supplier' | translate}}</th>
+                    <th scope="col">{{'products.origin' | translate}}</th>
+                    <th scope="col">{{'products.action' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody class="table-body" *ngIf="dataList || dataList.length">
+                <tr *ngFor="let item of dataList;let i=index">
+                    <td class="pl-2" (click)="openEdit(item,false)">
+                        {{item?.displayName}}
+                    </td>
+                    <td (click)="openEdit(item,false)">
+                        <div>
+                            <!-- <img [src]="item?.logo || 'assets/images/placeholder_logo.png'"
+                                class="img-fluid image-profile"> -->
+                            <span class="px-2">{{item?.supplierName}}</span>
+                        </div>
+                    </td>
+                    <td (click)="openEdit(item,false)">
+                        {{item?.origin}}
+                    </td>
+                    <td>
+                        <div class="d-flex action-btns">
+                            <button class="btn btn-red-badge mr-2" (click)="openEdit(item,false)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button class="btn btn-green-badge mr-2" (click)="openEdit(item,false)">
+                                <i class="fa fa-check"></i>
+                            </button>
+                            <button class="btn btn-blue-badge" (click)="openEdit(item,true)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+                <tr>
+                    <td class="text-center" colspan="3">{{ 'noData' | translate}}</td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+</div>

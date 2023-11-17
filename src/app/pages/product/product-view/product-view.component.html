@@ -1,0 +1,285 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+      <span  *ngIf="selectedLang == 'en'">  
+        <h2 class="text-capitalize" *ngIf="productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.en}}</h2>
+        <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.ar}}</h2>
+        <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.en && !productData?.product?.nameTranslation?.ar">{{productData?.product?.displayNameTranslation?.en}}</h2>
+     </span>
+      <span  *ngIf="selectedLang == 'ar'">  
+        <h2 class="text-capitalize" *ngIf="productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.ar}}</h2>
+        <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.en}}</h2>
+        <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.ar && !productData?.product?.nameTranslation?.en">{{productData?.product?.displayNameTranslation?.en}}</h2>
+     </span>
+
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li class="breadcrumb-item" (click)="goBackFourth()">{{'products.products' | translate}}</li>
+            <li class="breadcrumb-item" (click)="goBackThrice()">{{productData?.category?.name}}</li>
+            <li class="breadcrumb-item" (click)="goBackTwice()">{{productData?.subCategory?.name}}</li>
+            <li class="breadcrumb-item" (click)="goBack()">{{subHeaderData?.supplierName}}</li>
+
+          <span *ngIf="selectedLang == 'en'" class="breadcrumb-item">
+              <li  aria-current="page" *ngIf="productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.en}}</li>
+              <li  aria-current="page" *ngIf="!productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.ar}}</li>
+              <li  aria-current="page" *ngIf="!productData?.product?.nameTranslation?.en && !productData?.product?.nameTranslation?.ar">{{productData?.product?.displayNameTranslation?.en}}</li>
+           </span>
+          <span *ngIf="selectedLang == 'ar'" class="breadcrumb-item">
+              <li  aria-current="page" *ngIf="productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.ar}}</li>
+              <li  aria-current="page" *ngIf="!productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.en}}</li>
+              <li  aria-current="page" *ngIf="!productData?.product?.nameTranslation?.en && !productData?.product?.nameTranslation?.ar">{{productData?.product?.displayNameTranslation?.en}}</li>
+           </span>
+        </ol>
+    </div>
+    <div class="clearfix">
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="open()">
+            <img src="assets/icons/plus-white.svg">{{'products.createNew' | translate}}
+        </button>
+    </div>
+</div>
+<div class="container-fluid" id="page-container">
+    <div class="card-body px-0">
+        <div class="row">
+            <div class="col-sm-5">
+                <!-- <div class="product-img d-flex flex-row image-box text-center">
+                    <div class="d-flex justify-content-between">
+                        <div class="text-div discount-promo-badge" *ngIf="productData?.discountedPrice > 0">
+                            <div class="promo blue-bg m-2">
+                                {{(((productData?.price - productData?.discountedPrice) / productData?.price) *
+                                100).toFixed(0)}} % OFF
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex w-80">
+                        <img src="assets/images/placeholder_product.svg" class="img-fluid"
+                            *ngIf="productData?.image === null">
+                        <img [src]="productData?.image" class="img-fluid" *ngIf="productData?.image != null">
+                    </div>
+                    <div class="d-flex flex-column float-right">
+                        <div *ngFor="let p of productData?.product?.productType">
+                            <img [src]="p.image" *ngIf="p.image" class="my-1" style="width:30px;height: 30px;">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row image-box product-img">
+                    <div class="col-2">
+                        <div class="text-div discount-promo-badge" *ngIf="productData?.discountedPrice > 0">
+                            <div class="promo blue-bg m-2">
+                                {{(((productData?.price - productData?.discountedPrice) / productData?.price) *
+                                100).toFixed(0)}} % {{'products.off' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 text-center">
+                        <img src="assets/images/placeholder_product.svg" class="img-fluid"
+                            *ngIf="productData?.product?.image === null">
+                        <img [src]="productData?.product?.image" class="img-fluid"
+                            *ngIf="productData?.product?.image != null">
+                    </div>
+                    <div class="col-2">
+                        <div *ngFor="let p of productData?.product?.productType">
+                            <img [src]="p.image" *ngIf="p.image" class="my-1" style="width:30px;height: 30px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <p class="font-normal text-gray-100 mb-0">{{productData?.sku}}</p>
+                <span  *ngIf="selectedLang == 'en'">
+                    <h2 class="text-capitalize" *ngIf="productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.en}}</h2>
+                    <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.en">{{productData?.product?.nameTranslation?.ar}}</h2>
+                    <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.en && !productData?.product?.nameTranslation?.ar">{{productData?.product?.displayNameTranslation?.en}}</h2>
+            </span>
+            <span  *ngIf="selectedLang == 'ar'">  
+                <h2 class="text-capitalize" *ngIf="productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.ar}}</h2>
+                <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.ar">{{productData?.product?.nameTranslation?.en}}</h2>
+                <h2 class="text-capitalize" *ngIf="!productData?.product?.nameTranslation?.ar && !productData?.product?.nameTranslation?.en">{{productData?.product?.displayNameTranslation?.en}}</h2>
+             </span>
+                <div *ngIf="productData?.discountedPrice <= 0">
+                    <h4 class="font-normal text-blue-100">
+                        {{currency}} {{productData?.price}}
+                    </h4>
+                </div>
+                <div *ngIf="productData?.discountedPrice > 0">
+                    <h4 class="text-blue-100 mb-1">{{currency}} {{productData?.discountedPrice}}
+                    </h4>
+                    <h6 class="text-gray-600 font-normal text-decoration-line-through">
+                        {{currency}} {{productData?.price}}
+                    </h6>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-5">
+                        <!-- <div class="product-view-text d-flex">
+                            <label class="font-weight-bold">Category</label>
+                            <span class="text-gray-100">{{productData?.category?.name}}</span>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.category' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.category?.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.subCategory' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.subCategory?.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.subProduct' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.product?.name || '-' | capitalize}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.brand' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.product?.brandName || '-' |
+                                    capitalize}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'products.origin' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.product?.origin || '-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'products.type' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100"
+                                    *ngFor="let p of productData?.product?.productType;let i =index">
+                                    {{p.name}}<span *ngIf="productData?.product?.productType.length-1 > i">,</span>
+                                </span>
+                                <span class="text-gray-100" *ngIf="productData?.product?.productType.length ===0">
+                                    -
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.packaging' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.product?.packaging?.name || '-' |
+                                    capitalize}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.quantitySize' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{productData?.product?.quantity}}
+                                    {{productData?.product?.unit.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'products.unitPrice' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100">{{currency}} {{productData?.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'products.discount' | translate}}%:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100"
+                                    *ngIf="productData?.discountedPrice > 0">{{(((productData?.price -
+                                    productData?.discountedPrice) /
+                                    productData?.price) *
+                                    100).toFixed(0)}} % {{'products.off' | translate}}</span>
+                                <span class="text-gray-100" *ngIf="productData?.discountedPrice == 0">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">{{'suppliers.discountPrice' | translate}}:</label>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-gray-100" *ngIf="productData?.discountedPrice > 0">AED
+                                    {{productData?.discountedPrice}}</span>
+                                <span class="text-gray-100" *ngIf="productData?.discountedPrice == 0">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex mt-2">
+                    <button class="btn blue-time medium" (click)="edit()">
+                        <i class="fa fa-pencil"></i> {{'products.edit' | translate}}
+                    </button>
+                    <button class="btn btn-grey medium ml-2" *ngIf="!productData?.inStock" (click)="openConfirmStock()">
+                        <i class="fa fa-ban"></i>{{'products.outOfStock' | translate}}
+                    </button>
+                    <button class="btn btn-grey medium ml-2" *ngIf="productData?.inStock" (click)="openConfirmStock()">
+                        {{'suppliers.inStock' | translate}}
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="col-sm-1 text-right">
+                <button class="btn p-0">
+                    <img src="assets/icons/action-dot.svg" class="rotate90">
+                </button>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="font-17 text-black-200">{{'products.description' | translate}}</h5>
+                <hr>
+                <p class="font-normal text-black-100 op-7">{{productData?.description || '-'}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner [fullScreen]="false" type="timer" size="default" bdColor="rgba(255,255,255,0)" color="var(--blue-100)">
+</ngx-spinner>

@@ -1,0 +1,41 @@
+h6 a {
+  border-bottom: 2px solid #51a79c;
+  padding-bottom: 4px;
+}
+
+.card {
+  flex-direction: row-reverse;
+}
+
+.profile-section-divider{
+  display: block;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .card-img-overlay {
+    position: relative;
+    left: 0;
+    max-width: 100%;
+    height: max-content;
+  }
+
+  img.card-img-top {
+    max-width: 317px;
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .invite span.theme-color.ml-2.mr-2 {
+    margin: 0 0 10px !important;
+    display: block;
+  }
+}

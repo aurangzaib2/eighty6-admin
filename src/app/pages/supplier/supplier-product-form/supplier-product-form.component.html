@@ -1,0 +1,631 @@
+<div class="card profile-card border-0">
+	<div class="close-icon" (click)="closeModal()" data-testid="close-btn">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div>
+		<div class="d-flex justify-content-center my-4" *ngIf="form.id.value === null">
+			<h5 class="text-black-100 mb-0">{{'suppliers.createNew' | translate}}</h5>
+		</div>
+		<div class="d-flex justify-content-center my-4" *ngIf="form.id.value != null">
+			<h5 class="text-black-100 mb-0">{{'suppliers.editProductInventory' | translate}}</h5>
+		</div>
+		<div class="clearfix mx-4" *ngIf="form.id.value === null">
+			<ul ngbNav #nav="ngbNav" [(activeId)]="activeTab"
+				class="nav nav-tabs w-100 flex-nowrap justify-content-center text-center">
+				<li [ngbNavItem]="1" class="nav-links text-nowrap text-capitalize w-50">
+					<a ngbNavLink class="w-100">
+						<img src="assets/icons/plus.svg" class="mr-2">
+						{{'suppliers.addNewProduct' | translate}}
+					</a>
+					<ng-template ngbNavContent>
+						<div class="mx-4 mb-4">
+							<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+								<div class="row mt-3">
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="categoryId" data-testid="selectCategory"
+												(change)="getSubCategory()">
+												<ng-option *ngFor="let item of categoryList" [value]="item.id">
+													<span  [attr.data-testid]="item.name">{{item.name}}</span>
+												</ng-option>
+												
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.category' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.categoryId">
+												<ng-container
+													*ngIf="form.categoryId.hasError(error.type) && (form.categoryId.dirty || form.categoryId.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="subCategoryId" data-testid="selectSubCat"
+												(change)="getSubProduct()">
+												<ng-option *ngFor="let item of subCategoryList"
+													[value]="item.subCategory?.id">
+													<span  [attr.data-testid]="item.subCategory.name">{{item?.subCategory?.name}}</span>
+												</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.subCategory' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.subCategoryId">
+												<ng-container
+													*ngIf="form.subCategoryId.hasError(error.type) && (form.subCategoryId.dirty || form.subCategoryId.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="subProduct" data-testid="selectSubProduct"
+												(change)="getBrands()">
+												<ng-option *ngFor="let item of subProduct" [value]="item.name">
+													<span *ngIf="selectedLang == 'en'" >
+														<span  [attr.data-testid]="item.name" *ngIf="item?.name">{{item?.name}}</span>
+														<span  [attr.data-testid]="item.name" *ngIf="!item?.name">{{item?.nameTranslation?.en}}</span>
+														<span  [attr.data-testid]="item.name" *ngIf="!item?.nameTranslation?.en && !item?.name">{{item?.nameTranslation?.ar}}</span>
+													</span>
+													<span *ngIf="selectedLang == 'ar'" >
+														<span  [attr.data-testid]="item.name" *ngIf="item?.nameTranslation?.ar">{{item?.nameTranslation?.ar}}</span>
+														<span  [attr.data-testid]="item.name" *ngIf="!item?.nameTranslation?.ar">{{item?.nameTranslation?.en}}</span>
+														<span  [attr.data-testid]="item.name" *ngIf="!item?.nameTranslation?.ar && !item?.nameTranslation?.en">{{item?.name}}</span>
+													</span>
+										
+												</ng-option>
+												<ng-option value="Any">Any</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.subProduct' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.subProduct">
+												<ng-container
+													*ngIf="form.subProduct.hasError(error.type) && (form.subProduct.dirty || form.subProduct.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="brandName" data-testid="selectBrand"
+												(change)="getOrigins()">
+												<ng-option *ngFor="let item of brandList" [value]="item.brandName">
+													<span  [attr.data-testid]="item.brandName">{{item.brandName}}</span>
+											
+												</ng-option>
+												<ng-option value="Any">Any</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.brand' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.brandName">
+												<ng-container
+													*ngIf="form.brandName.hasError(error.type) && (form.brandName.dirty || form.brandName.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="origin" data-testid="selectOrigin"
+												(change)="getTypes()">
+												<ng-option *ngFor="let item of originList" [value]="item.origin">
+												
+													<span  [attr.data-testid]="item.origin">{{item?.origin}}</span>
+												</ng-option>
+												<ng-option value="Any">Any</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.origin' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.origin">
+												<ng-container
+													*ngIf="form.origin.hasError(error.type) && (form.origin.dirty || form.origin.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select [multiple]="false" class="form-control" data-testid="selectType"
+												formControlName="productType" (change)="getPackages()" bindLabel="name">
+												<ng-option *ngFor="let item of typeList" [value]="item">
+													<span  [attr.data-testid]="item.name">{{item?.name}}</span>
+													<span *ngIf="typeList?.length-1 > i">,</span>
+												</ng-option>
+												<ng-option value="Any">Any</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.type' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.productTypeId">
+												<ng-container
+													*ngIf="form.productTypeId.hasError(error.type) && (form.productTypeId.dirty || form.productTypeId.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="packagingId" data-testid="selectPackage"
+												(change)="getQuantitySize()">
+												<ng-option *ngFor="let item of packagingList" [value]="item.id">
+													<span  [attr.data-testid]="item.name">{{item?.name}}</span>
+												</ng-option>
+												<ng-option value="Any">Any</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.packaging' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.packagingId">
+												<ng-container
+													*ngIf="form.packagingId.hasError(error.type) && (form.packagingId.dirty || form.packagingId.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<ng-select class="form-control" formControlName="productId" data-testid="selectPro"
+												(change)="selectProduct()">
+												<ng-option *ngFor="let item of productList" [value]="item.id">
+													<span  [attr.data-testid]="item.unitName">{{item?.quantity}} {{item?.unitName}}</span>
+													
+												</ng-option>
+											</ng-select>
+											<label for="exampleInput1">{{'suppliers.quantitySize' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.productId">
+												<ng-container
+													*ngIf="form.productId.hasError(error.type) && (form.productId.dirty || form.productId.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<input type="text" class="form-control" readonly autocomplete="off" data-testid="" data-testid="selectProductCode"
+												formControlName="productCode" id="productCode"
+												aria-describedby="product code" placeholder="">
+											<label for="exampleInput7">{{'suppliers.productCode' | translate}}</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<input onKeyPress="this.defaultValue = this.value" type="text" data-testid="selectUnitPrice"
+												class="form-control" autocomplete="off" id="unitPrice"
+												formControlName="price" aria-describedby="unitPrice"
+												placeholder="{{ 'enterHere' | translate}}"
+												(keyup)="calculateDiscountPrice()">
+											<label for="unitPrice">{{'suppliers.unitPrice' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.price">
+												<ng-container
+													*ngIf="form.price.hasError(error.type) && (form.price.dirty || form.price.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" data-testid="discount"
+												class="form-control" autocomplete="off" id="exampleInput4"
+												aria-describedby="discount" placeholder="0"
+												(keyup)="calculateDiscountPrice()" max="100"
+												formControlName="discountedPercentage">
+											<label for="exampleInput4">{{'suppliers.discount' | translate}} %</label>
+											<div class="text-left">
+												<span class="error-message font-13" *ngIf="checkDiscountedPercentage()">
+													Discount Percentage cannot be more then 100
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mt-2">
+											<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" data-testid="discountPercentage"
+												class="form-control" autocomplete="off" id="exampleInput5"
+												aria-describedby="discount price"
+												placeholder="{{ 'enterHere' | translate}}"
+												formControlName="discountedPrice"
+												(keyup)="calculateDiscountPercentage()">
+											<label for="exampleInput5">{{'suppliers.discountPrice' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.discountedPrice">
+												<ng-container
+													*ngIf="form.discountedPrice.hasError(error.type) && (form.discountedPrice.dirty || form.discountedPrice.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+											<div class="text-left">
+												<span class="error-message font-13" *ngIf="checkPrice()">
+													Discount price cannot be more then unit price
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12">
+										<div class="form-group mt-2">
+											<div class="form-group mt-2" *ngIf="selectedLang == 'ar'">
+												<span *ngIf="productForm.value.displayNameArabic">
+													<input type="text" readOnly class="form-control" autocomplete="off" id="displayName" data-testid="displayNameArabic"
+														formControlName="displayNameArabic" aria-describedby="displayName"
+														placeholder="Product Display Name">
+													</span>
+													<span *ngIf="!productForm.value.displayNameArabic">
+													<input type="text" readOnly class="form-control" autocomplete="off" id="displayName"
+														formControlName="displayName" aria-describedby="displayName"
+														placeholder="Product Display Name">
+													</span>
+													<label for="displayName">{{'suppliers.productDisplayName' | translate}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12">
+										<div class="form-group mt-2">
+											<textarea type="text" class="form-control" autocomplete="off" rows="2" data-testid="description"
+												formControlName="description" id="exampleInput8"
+												aria-describedby="description" placeholder="Description">
+                                                </textarea>
+											<label for="exampleInput8">{{'suppliers.description' | translate}}</label>
+											<div class="text-left" *ngFor="let error of errorMessages.description">
+												<ng-container
+													*ngIf="form.description.hasError(error.type) && (form.description.dirty || form.description.touched)">
+													<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" *ngIf="productSelected?.image">
+									<div class="col-4">
+										<span class="section-head">{{'suppliers.productImage' | translate}}</span>
+										<div class="image-box rounded border text-center mb-3 mt-2">
+											<img [src]="productSelected?.image" *ngIf="productSelected?.image != null" data-testid="proImage">
+										</div>
+										<h4 class=" text-gray-100 font-12">{{productSelected?.name}}</h4>
+									</div>
+								</div>
+								<div class="row" hidden>
+									<div class="col-12">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="customCheck2">
+											<label class="custom-control-label font-12 text-black-300"
+												for="customCheck2">Notify
+												customers on new
+												product</label>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="mt-1 text-capitalize">
+								<ng-container *ngIf="displayMessage!=null">
+									<span class="error-message font-14">{{displayMessage}}</span>
+								</ng-container>
+							</div>
+							<div class="d-flex justify-content-between mt-3">
+								<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()" data-testid="close">
+									{{'suppliers.cancel' | translate}}
+								</button>
+								<button type="submit" (click)="onSubmit()" data-testid="submit-btn"
+									class="btn btn-theme btn-blue text-capitalize">
+									<span *ngIf="!loading">{{'suppliers.saveUpdate' | translate}}</span>
+									<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status"
+										aria-hidden="true"></span>
+								</button>
+							</div>
+						</div>
+					</ng-template>
+				</li>
+				<li [ngbNavItem]="2" class="nav-links text-nowrap text-capitalize w-50">
+					<a ngbNavLink class="w-100"><img src="assets/icons/blue-menu-list.svg" class="mr-2">
+						{{'suppliers.bulkProducts' | translate}}
+					</a>
+					<ng-template ngbNavContent>
+						<app-supplier-product-bulk></app-supplier-product-bulk>
+					</ng-template>
+				</li>
+			</ul>
+			<div [ngbNavOutlet]="nav" class="mt-2"></div>
+		</div>
+		<div class="mx-4 mb-4" *ngIf="form.id.value != null">
+			<form [formGroup]="productForm">
+				<div class="row mt-3">
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="categoryId"
+								(change)="getSubCategory()" data-testid="changeCat">
+								<ng-option *ngFor="let item of categoryList" [value]="item.id">
+									{{item.name}}
+								</ng-option>
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.category' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.categoryId">
+								<ng-container
+									*ngIf="form.categoryId.hasError(error.type) && (form.categoryId.dirty || form.categoryId.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="subCategoryId" data-testid="subCategoryId"
+								(change)="getSubProduct()">
+								<ng-option *ngFor="let item of subCategoryList" [value]="item.subCategory?.id">
+									{{item?.subCategory?.name}}
+								</ng-option>
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.subCategory' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.subCategoryId">
+								<ng-container
+									*ngIf="form.subCategoryId.hasError(error.type) && (form.subCategoryId.dirty || form.subCategoryId.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="subProduct" data-testid="subPro"
+								(change)="getBrands()">
+								<ng-option *ngFor="let item of subProduct" [value]="item.name">
+									{{item.name || 'Any'}}
+								</ng-option>
+								<!-- <ng-option value="Any">Any</ng-option> -->
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.subProduct' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.subProduct">
+								<ng-container
+									*ngIf="form.subProduct.hasError(error.type) && (form.subProduct.dirty || form.subProduct.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="brandName" data-testid="brandName"
+								(change)="getOrigins()">
+								<ng-option *ngFor="let item of brandList" [value]="item.brandName">
+									{{item.brandName || 'Any'}}
+								</ng-option>
+								<!-- <ng-option value="Any">Any</ng-option> -->
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.brand' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.brandName">
+								<ng-container
+									*ngIf="form.brandName.hasError(error.type) && (form.brandName.dirty || form.brandName.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="origin" data-testid="origin"
+								(change)="getTypes()">
+								<ng-option *ngFor="let item of originList" [value]="item.origin">
+									{{item?.origin || 'Any'}}
+								</ng-option>
+								<!-- <ng-option value="Any">Any</ng-option> -->
+							</ng-select>
+							<label for="exampleInput1"> {{'suppliers.origin' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.origin">
+								<ng-container
+									*ngIf="form.origin.hasError(error.type) && (form.origin.dirty || form.origin.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" [multiple]="true" class="form-control" data-testid="productType"
+								formControlName="productType" (change)="getPackages()" bindLabel="name"
+								[closeOnSelect]="false" [searchable]="false">
+								<ng-option *ngFor="let item of typeList;let i =index" [value]="item">
+									{{item?.name || 'Any'}}
+									<span *ngIf="typeList?.length-1 > i">,</span>
+								</ng-option>
+								<!-- <ng-option value="Any">Any</ng-option> -->
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.type' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.productType">
+								<ng-container
+									*ngIf="form.productType.hasError(error.type) && (form.productType.dirty || form.productType.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="packagingId" data-testid="selectPackage"
+								(change)="getQuantitySize()">
+								<ng-option *ngFor="let item of packagingList" [value]="item.id">
+									{{item?.name || 'Any'}}
+								</ng-option>
+								<!-- <ng-option value="Any">Any</ng-option> -->
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.packaging' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.packagingId">
+								<ng-container
+									*ngIf="form.packagingId.hasError(error.type) && (form.packagingId.dirty || form.packagingId.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<ng-select [readonly]="true" class="form-control" formControlName="productId" data-testid="selectProduct"
+								(change)="selectProduct()">
+								<ng-option *ngFor="let item of productList" [value]="item.id">
+									{{item?.quantity}} {{item?.unitName}}
+								</ng-option>
+							</ng-select>
+							<label for="exampleInput1">{{'suppliers.quantitySize' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.productId">
+								<ng-container
+									*ngIf="form.productId.hasError(error.type) && (form.productId.dirty || form.productId.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<input type="text" class="form-control" readonly autocomplete="off" data-testid="productCode"
+								formControlName="productCode" id="productCode" aria-describedby="product code"
+								placeholder="Product Code">
+							<label for="exampleInput7">{{'suppliers.productCode' | translate}}</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<input onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+								autocomplete="off" id="unitPrice" formControlName="price" aria-describedby="unitPrice" data-testid="price"
+								placeholder="{{ 'enterHere' | translate}}" (keyup)="calculateDiscountPrice()">
+							<label for="unitPrice">{{'suppliers.unitPrice' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.price">
+								<ng-container
+									*ngIf="form.price.hasError(error.type) && (form.price.dirty || form.price.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" data-testid="discountedPercentage"
+								class="form-control" autocomplete="off" id="exampleInput4" aria-describedby="discount"
+								placeholder="0" (keyup)="calculateDiscountPrice()" max="100"
+								formControlName="discountedPercentage">
+							<label for="exampleInput4">{{'suppliers.discount' | translate}} %</label>
+							<div class="text-left">
+								<span class="error-message font-13" *ngIf="checkDiscountedPercentage()">
+									Discount Percentage cannot be more then 100
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group mt-2">
+							<input onKeyPress="this.defaultValue = this.value" type="text" class="form-control" data-testid="discountedPrice"
+								autocomplete="off" id="exampleInput5" aria-describedby="discount price"
+								placeholder="{{ 'enterHere' | translate}}" formControlName="discountedPrice"
+								(keyup)="calculateDiscountPercentage()">
+							<label for="exampleInput5">{{'suppliers.discountPrice' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.discountedPrice">
+								<ng-container
+									*ngIf="form.discountedPrice.hasError(error.type) && (form.discountedPrice.dirty || form.discountedPrice.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+							<div class="text-left">
+								<span class="error-message font-13" *ngIf="checkPrice()">
+									Discount price cannot be more then unit price
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group mt-2" *ngIf="selectedLang == 'en'">
+							<span *ngIf="productForm.value.displayName">
+							<input type="text" readOnly class="form-control" autocomplete="off" id="displayName"
+								formControlName="displayName" aria-describedby="displayName" data-testid="displayName"
+								placeholder="Product Display Name">
+							</span>
+							<span *ngIf="!productForm.value.displayName">
+							<input type="text" readOnly class="form-control" autocomplete="off" id="displayName"
+								formControlName="displayNameArabic" aria-describedby="displayName" data-testid="displayNameArabic"
+								placeholder="Product Display Name">
+							</span>
+							<label for="displayName">{{'suppliers.productDisplayName' | translate}}</label>
+						</div>
+						<div class="form-group mt-2" *ngIf="selectedLang == 'ar'">
+							<span *ngIf="productForm.value.displayNameArabic">
+								<input type="text" readOnly class="form-control" autocomplete="off" id="displayName" data-testid="displayNameArabic"
+									formControlName="displayNameArabic" aria-describedby="displayName"
+									placeholder="Product Display Name">
+								</span>
+								<span *ngIf="!productForm.value.displayNameArabic">
+								<input type="text" readOnly class="form-control" autocomplete="off" id="displayName" data-testid="displayName"
+									formControlName="displayName" aria-describedby="displayName"
+									placeholder="Product Display Name">
+								</span>
+								<label for="displayName">{{'suppliers.productDisplayName' | translate}}</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group mt-2">
+							<textarea type="text" class="form-control" autocomplete="off" rows="2"
+								formControlName="description" id="exampleInput8" aria-describedby="description" data-testid="description"
+								placeholder="Description">
+                                                                                </textarea>
+							<label for="exampleInput8">{{'suppliers.description' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.description">
+								<ng-container
+									*ngIf="form.description.hasError(error.type) && (form.description.dirty || form.description.touched)">
+									<span class="error-message font-13">{{'productFormErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="productSelected?.image != null">
+					<div class="col-4">
+						<span class="section-head">{{'suppliers.productImage' | translate}}</span>
+						<div class="image-box rounded border text-center mb-3 mt-2" data-testid="product-img">
+							<img [src]="productSelected?.image" *ngIf="productSelected?.image != null">
+						</div>
+						<h4 class=" text-gray-100 font-12">{{productSelected?.name}}</h4>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-12">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck2">
+							<label class="custom-control-label font-12 text-black-300" for="customCheck2">Notify
+								customers on new
+								product</label>
+						</div>
+					</div>
+				</div> -->
+			</form>
+			<div class="mt-1 text-capitalize">
+				<ng-container *ngIf="displayMessage!=null">
+					<span class="error-message font-14">{{displayMessage}}</span>
+				</ng-container>
+			</div>
+			<div class="d-flex justify-content-between mt-3">
+				<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()" data-testid="cancel-btn">
+					{{'suppliers.cancel' | translate}}
+				</button>
+				<button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize" data-testid="save-btn">
+					<span *ngIf="!loading"> {{'suppliers.saveUpdate' | translate}}</span>
+					<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status"
+						aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

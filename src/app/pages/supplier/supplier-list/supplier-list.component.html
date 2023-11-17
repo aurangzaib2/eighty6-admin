@@ -1,0 +1,124 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'sidebar.suppliers' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" aria-current="page">{{'sidebar.suppliers' | translate}}</li>
+		</ol>
+	</div>
+</div>
+
+<div class="container-fluid" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="form-group">
+			<div class="input-group mb-0 search-box">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">
+						<img src="assets/icons/search.svg">
+					</span>
+				</div>
+				<input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search" data-testid="search-supplier"
+					aria-describedby="basic-addon1" (keyup)="tableSetFilter('search', $event.currentTarget.value)">
+			</div>
+		</div>
+		<div>
+			<div ngbDropdown>
+				<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+					<img src="../../../../assets/icons/filter.svg">
+				</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+					<button class="text-capitalize" ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck1"
+								(change)="setFilter('all',$event.target.checked)"
+								[checked]="activeFilters.isOnBoarded === 'all'" data-testid="supplier-all-filter">
+							<label class="custom-control-label" for="customCheck1">
+								{{'registrations.all' |translate}}
+							</label>
+						</div>
+					</button>
+					<button class="text-capitalize" ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck2"
+								(change)="setFilter('true',$event.target.checked)"
+								[checked]="activeFilters.isOnBoarded === 'true'" data-testid="supplier-onboarded-filter">
+							<label class="custom-control-label" for="customCheck2">
+								{{'onBoarding.onboarded' |translate}}
+							</label>
+						</div>
+					</button>
+					<button class="text-capitalize" ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck3"
+								(change)="setFilter('false',$event.target.checked)"
+								[checked]="activeFilters.isOnBoarded === 'false'" data-testid="supplier-nonOnboarded-filter">
+							<label class="custom-control-label" for="customCheck3">
+								{{'onBoarding.nonOnboarded' |translate}}
+							</label>
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix">
+		<div class="table-responsive page-table text-nowrap">
+			<table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+				<thead class="table-header no-border">
+					<tr>
+						<th class="pl-2" scope="col">{{'suppliers.supplierName' | translate}}</th>
+						<th scope="col">{{'suppliers.contactPerson' | translate}}</th>
+						<th scope="col">{{'suppliers.location' | translate}}</th>
+						<th scope="col">{{'suppliers.email' | translate}}</th>
+						<th scope="col">{{'suppliers.phone' | translate}}</th>
+						<th scope="col">{{'suppliers.createdOn' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<ng-container *ngIf="dataList && dataList.length">
+						<tr *ngFor="let item of dataList;let i=index" (click)="navigateToSupplierView(item)" data-testid="supplier-detail"
+							[ngClass]="{'yellow-100-bg': item?.isOnBoarded === false}">
+							<td class="pl-2">
+								<div>
+									<!-- <img [src]="item?.logo || 'assets/images/placeholder_logo.png'"
+										class="img-fluid image-profile"> -->
+									<!-- <span class="px-2">{{item?.name | truncate:16| capitalize}}</span> -->
+									<div>
+									
+										<span *ngIf="selectedLang == 'en'">
+											<span *ngIf="item?.nameTranslation?.en">{{item?.nameTranslation?.en | truncate:16| capitalize}}</span>
+											<span *ngIf="!item?.nameTranslation?.en">{{item?.nameTranslation?.ar}}</span>
+										</span>
+										<span *ngIf="selectedLang == 'ar'">
+											<span *ngIf="item?.nameTranslation?.ar">{{item?.nameTranslation?.ar}}</span>
+											<span *ngIf="!item?.nameTranslation?.ar">
+																			{{item?.nameTranslation?.en | truncate:16| capitalize}}
+											</span>
+										</span>
+									
+									</div>
+								</div>
+							</td>
+							<td>
+								<span *ngIf="item?.contactPerson?.fullName">
+									{{item?.contactPerson?.fullName| truncate:14}}
+								</span>
+								<span *ngIf="item?.contactPerson?.name">
+									{{item?.contactPerson?.name| truncate:14}}
+								</span>
+							</td>
+							<td> {{item?.city |truncate:14}}</td>
+							<td class="text-lowercase font-roboto">{{item?.email | truncate:14}}</td>
+							<td>({{item?.mobileCode}})-{{item?.mobileNumber |truncate:14}}</td>
+							<td class="font-roboto">{{item?.createdAt |date:'mediumDate'}}</td>
+						</tr>
+					</ng-container>
+				</tbody>
+				<ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+					<tr>
+						<td class="text-center" colspan="6">{{ 'noData' | translate}}</td>
+					</tr>
+				</ng-container>
+			</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+tbody {
+    height: 42vh;
+    table-layout: fixed;
+    overflow: auto;
+    display: block;
+    width: 100%;
+}
+

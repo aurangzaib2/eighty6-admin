@@ -1,0 +1,105 @@
+<div class="card reataurant-card border-0">
+    <div class="close-icon" (click)="dismissModal()">
+        <img src="assets/icons/black-cross.svg" class="img-fluid">
+    </div>
+    <div class="card-body">
+        <!-- <div class="d-flex justify-content-center my-1">
+            <h4 class="section-head mb-0">{{'tickets.addTicket' | translate}}</h4>
+        </div> -->
+        <form [formGroup]="ticketForm">
+            <div class="row">
+                <div class="col-12 col-height">
+                    <div class="form-group mb-4 mt-4">
+                        <!-- <div ngbDropdown>
+                            <a class="btn btn-dropdown form-control" id="dropdownBasic1" #myDrop ngbDropdownToggle>
+                                Select option
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem>Payment Issue</button>
+                                <button ngbDropdownItem>Payment reset issue</button>
+                                <button ngbDropdownItem>Discount request isseue</button>
+                            </div>
+                        </div> -->
+                        <input type="text" class="form-control" autocomplete="off" id="exampleInput2"
+                            aria-describedby="subject" placeholder="{{ 'enterHere' | translate}}"
+                            formControlName="subject">
+                        <label for="exampleInput3">{{'tickets.ticketSubject' | translate}}</label>
+                        <div class="text-left" *ngFor="let error of errorMessages.subject">
+                            <ng-container
+                                *ngIf="form.subject.hasError(error.type) && (form.subject.dirty || form.subject.touched)">
+                                <span class="error-message font-13">{{'ticketFormErrors.'+error.message | translate}}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group mb-4 mt-4">
+                        <textarea type="text" class="form-control" formControlName="description" rows="4"
+                            autocomplete="off" id="exampleInput1" aria-describedby="emailHelp"
+                            placeholder="{{ 'enterHere' | translate}}"></textarea>
+                        <label for="exampleInput1">{{'tickets.description' | translate}}</label>
+                        <div class="text-left" *ngFor="let error of errorMessages.description">
+                            <ng-container
+                                *ngIf="form.description.hasError(error.type) && (form.description.dirty || form.description.touched)">
+                                <span class="error-message font-13">{{'ticketFormErrors.'+error.message | translate}}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-5 mb-4 mt-4" *ngIf="fileUploaded">
+                    <div>
+                        <div class="image-box rounded border text-center mt-2 position-relative">
+                            <img [src]="ticketAttachment?.image" *ngIf="ticketAttachment?.image != null">
+                            <button (click)="clearAttachment()" [hidden]="!ticketForm.enabled"
+                                class="btn btn-grey btn-circular btn-photo-close btn-sm btn-sm-close">
+                                <i class="fa fa-times fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="!fileUploaded">
+                    <div class="upload-box mt-2" (click)="fileInput1.click()" appDragDrop
+                        (fileDropped)="uploadAttachment($event)">
+                        <input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file"
+                            (change)="uploadAttachment($event.target.files[0])" required
+                            accept="image/png, image/jpeg, image/jpg, application/pdf">
+                        <img src="assets/icons/download.svg" class="img-fluid download-img">
+                        <label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+                            translate}}</label>
+                        <p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+                    </div>
+                    <!-- <div class="text-left" *ngFor="let error of errorMessages.image">
+                            <ng-container
+                                *ngIf="form.image.hasError(error.type) && (form.image.dirty || form.image.touched) && submitted">
+                                <span class="error-message font-13">{{error.message}}</span>
+                            </ng-container>
+                        </div> -->
+                </div>
+            </div>
+
+            <div class="mt-1 text-capitalize">
+                <ng-container *ngIf="displayMessage!=null">
+                    <span class="error-message font-14">{{displayMessage}}</span>
+                </ng-container>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-theme btn-grey text-capitalize" (click)="dismissModal()">
+                {{'tickets.cancel' | translate}}
+            </button>
+
+            <button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+                <span *ngIf="!loading">{{'tickets.addTicket' | translate}}</span>
+                <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>

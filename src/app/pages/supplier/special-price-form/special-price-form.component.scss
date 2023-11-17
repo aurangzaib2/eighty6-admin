@@ -1,0 +1,17 @@
+.btn-photo-close {
+  top: -10px;
+  right: -10px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+.image-box {
+  max-width: 133px;
+  position: relative;
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    padding: 10px;
+  }
+}

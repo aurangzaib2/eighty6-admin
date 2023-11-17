@@ -1,0 +1,198 @@
+<div class="container-fluid mt-5 border-1" id="page-container">
+	<form [formGroup]="profileForm">
+		<!-- general info -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'restaurants.generalInformation' | translate}}</span>
+		</div>
+		<div class="row my-3">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="firstName"
+						aria-describedby="firstName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="firstName">
+					<label for="firstName">{{'restaurants.fname' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="lastName" aria-describedby="lastName"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+					<label for="lastName">{{'restaurants.lname' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="name">
+					<label for="exampleInput1">{{'restaurants.restaurantName' | translate}} {{'products.english_text' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="Aname">
+					<label for="exampleInput1">{{'restaurants.restaurantName' | translate}} {{'products.arabic_text' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput2"
+						aria-describedby="email" placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+					<label for="exampleInput2">{{'restaurants.email' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" disabled>
+							<option aria-readonly="true" selected>{{form.mobileCode.value}}</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" inputNumber
+							onKeyPress="this.defaultValue = this.value" type="number" class="form-control"
+							id="exampleInput3" formControlName="mobileNumber">
+					</div>
+					<label for="exampleInput3">{{'restaurants.mobileNo' | translate}}#</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" disabled>
+							<option aria-readonly="true" selected>{{form.officePhoneCountryCode.value}}</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="number"
+							class="form-control" autocomplete="off" id="exampleInput4"
+							aria-describedby="office mobileNumber" placeholder="{{ 'enterHere' | translate}}"
+							formControlName="officePhoneNumber">
+					</div>
+					<label for="exampleInput5">{{'restaurants.officeNo' | translate}}#</label>
+				</div>
+			</div>
+
+			<!-- TRN Number -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="trnNumber" aria-describedby="trnNumber"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="trnNumber">
+					<label for="trnNumber">{{'restaurants.trnName' | translate}}</label>
+				</div>
+			</div>
+
+			<!-- Bill To Email -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="billToEmail" aria-describedby="billToEmail"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="billToEmail">
+					<label for="billToEmail">{{'restaurants.billToEmail' | translate}}</label>
+				</div>
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" rows="3" autocomplete="off" id="deliveryInstruction"
+						aria-describedby="deliveryInstruction" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="deliveryInstruction">
+						</textarea>
+					<label for="deliveryInstruction">{{'restaurants.deliveryInstruction' | translate}}</label>
+				</div>
+			</div>
+		</div>
+		<!-- address -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'restaurants.completeAddress' | translate}}</span>
+		</div>
+		<div class="row rows-cols-2 rows-cols-lg-4">
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input inputNumber onKeyPress="this.defaultValue = this.value" type="number" class="form-control"
+						autocomplete="off" id="unitNo" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="unitNo">
+					<label for="unitNo">{{'restaurants.unit' | translate}} #</label>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="floorNo" aria-describedby="floorNo"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="floorNo">
+					<label for="floorNo">{{'restaurants.floor' | translate}} #</label>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="street" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="street">
+					<label for="street">{{'restaurants.street' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="area" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="area">
+					<label for="area">{{'restaurants.area' | translate}}</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-2">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'restaurants.country' | translate}}</label>
+					<input type="text" class="form-control" autocomplete="off" id="countryName"
+						aria-describedby="countryName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="countryName">
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'restaurants.city/state' | translate}}</label>
+					<input type="text" class="form-control" autocomplete="off" id="city" aria-describedby="city"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="city">
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" autocomplete="off" rows="9" id="exampleInput14"
+						aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="location"></textarea>
+					<label for="exampleInput14">{{'restaurants.completeAddress' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group custom-form-group ">
+					<label class="form-group-label mb-0" for="exampleInput15">{{'restaurants.lMap' | translate}}</label>
+					<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="4" [fullscreenControl]='true'>
+						<agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+							[opacity]="marker.alpha" [markerDraggable]="false">
+						</agm-marker>
+					</agm-map>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- documents -->
+	<div class="d-flex justify-content-start mt-4">
+		<span class="section-head">{{'restaurants.documents' | translate}}</span>
+	</div>
+	<div class="row mt-3">
+		<div class="col-lg-3 col-md-5 col-sm-6" *ngFor="let _ of media.controls;index as i" style="cursor: pointer;">
+			<div class="card" [formGroup]="_" [ngClass]="{'card-border': selectDocumentIndex === i}">
+				<div class="card-body px-3 py-2">
+					<label class="document-label text-capitalize">{{_.value.displayName}}</label>
+					<div class="d-flex justify-content-between">
+						<div>
+							<span class="text-gray-100" *ngIf="_.value.name">
+								{{_.value.name}}
+							</span>
+							<span class="text-gray-100" *ngIf="!_.value.name">
+								No file added
+							</span>
+						</div>
+						<div>
+							<a class="btn-link" [hidden]="!_.value.name" (click)="downloadFile(_.value)"><img
+									src="assets/icons/filedownload.svg"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

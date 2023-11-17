@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="auth-box text-center">
+        <h2>Verification Code</h2>
+        <p>
+            Please enter the verification code received on your registered email address
+        </p>
+        <form [formGroup]="verificationForm">
+            <div class="d-flex justify-content-between mt-2" formArrayName="dataArray">
+                <div class="form-group" *ngFor="let _ of inputArray.controls;index as idx">
+                    <div>
+                        <input [libAutoTab]="idx" [id]="idx" type="text" maxlength="1" class="form-control"
+                            onKeyPress="if(this.value.length==1) return false;" placeholder="0" [formControlName]="idx"
+                            (keydown)="addCode($event,idx)" required onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <button type="submit" (click)="onSubmit()" class="btn-theme btn-blue w-100 border-0">
+                    <span class="text-capitalize" *ngIf="!loading">submit</span>
+                    <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status"
+                        aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <div class="clearfix">
+                    <p class="mb-0">{{minutes}}:{{seconds}}</p>
+                </div>
+                <div class="clearfix">
+                    <a [ngClass]="{'text-gray-100': !enableResend}" type="button"
+                        class="btn-link font-15 text-capitalize pl-2" (click)="resendCode()">
+                        resend code
+                    </a>
+                </div>
+            </div>
+            <div class="m1-2 text-capitalize">
+                <ng-container *ngIf="displayMessage!=null && displayMessage != 'Otp sent sucessfully'">
+                    <span class="error-message font-14">{{displayMessage}}</span>
+                </ng-container>
+                <ng-container *ngIf="displayMessage!=null && displayMessage == 'Otp sent sucessfully'">
+                    <span class="success font-14">{{displayMessage}}</span>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+</div>

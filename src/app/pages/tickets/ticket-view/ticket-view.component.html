@@ -1,0 +1,329 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize font-roboto">{{ticketData?.ticketNumber}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li [routerLink]="['/tickets']" aria-current="page" class="breadcrumb-item">{{'tickets.tickets' |
+                translate}}</li>
+            <li aria-current="page" class="breadcrumb-item font-roboto"> {{ticketData?.ticketNumber}}</li>
+        </ol>
+    </div>
+    <div class="clearfix">
+        <button class="btn btn-theme btn-blue text-capitalize px-4">
+            <img src="assets/icons/plus-white.svg"> {{'tickets.addNew' | translate}}
+        </button>
+    </div>
+</div>
+<div class="container-fluid" id="page-container">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="clearfix text-capitalize">
+                <h3 class="font-20">{{ticketData.subject}}</h3>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-12 text-lg-right text-sm-left">
+            <div class="form-group" ngbDropdown>
+                <a #myDrop class="btn btn-dropdown form-control" id="dropdownBasic1" ngbDropdownToggle>
+                    <div class="d-flex align-items-center">
+                        <img [src]="activeStatus?.icon" class="img-fluid status-circle">
+                        <span class="pl-1 text-capitalize">
+                            {{activeStatus?.key}}
+                        </span>
+                    </div>
+                </a>
+                <div aria-labelledby="dropdownBasic1" ngbDropdownMenu>
+                    <button class="pl-3" (click)="changeStatus(p?.value)" *ngFor="let p of ticketStatus"
+                        ngbDropdownItem>
+                        <div class="d-flex align-items-center">
+                            <img [src]="p?.icon" class="img-fluid status-circle">
+                            <span class="pl-1 text-capitalize">
+                                {{p?.key}}
+                            </span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center profile mt-2">
+        <div class="clearfix">
+            <img [src]="ticketData?.createdBy?.profilePicture || 'assets/images/user.png'"
+                class="img-fluid user-profile">
+        </div>
+        <div class="clearfix pl-2">
+            <h5 class="mb-0 text-bold">
+                <span *ngIf="ticketData?.createdBy?.company">{{ticketData?.createdBy?.company?.name}}</span>
+                <span *ngIf="ticketData?.createdBy?.restaurant">{{ticketData?.createdBy?.restaurant?.name}}</span>
+                <span *ngIf="ticketData?.createdBy?.supplier">{{ticketData?.createdBy?.supplier?.name}}</span>
+                <span
+                    *ngIf="! ticketData?.createdBy?.company && ticketData?.createdBy?.restaurant && !ticketData?.createdBy?.supplier">
+                    {{ticketData?.createdBy?.firstName}}
+                    {{ticketData?.createdBy?.lastName}}
+                </span>
+            </h5>
+            <p class="text-black-200 text-capitalize mt-2">
+                {{'tickets.ticketId' | translate}} <span class="text-gray-100 font-roboto"> {{ticketData?.ticketNumber}}</span>
+                <span class="pl-2">{{'tickets.ticketStatus' | translate}}
+                    <span [ngClass]="checkClass(ticketData?.status)" *ngIf="ticketData?.status === 'open'"> {{'tickets.open' | translate}} </span>
+                    <span [ngClass]="checkClass(ticketData?.status)" *ngIf="ticketData?.status === 'closed'"> {{'tickets.closed' | translate}} </span>
+                    <span [ngClass]="checkClass(ticketData?.status)" *ngIf="ticketData?.status === 'inprogress'"> {{'tickets.inprogress' | translate}} </span>
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-between p-2">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="row">
+                <div class="d-flex align-items-center">
+                    <div class="clearfix">
+                        <img alt="phone" class="mr-1 pb-1" src="assets/icons/calender.svg">
+                    </div>
+                    <div class="clearfix">
+                        <p class="text-black-100 mb-0 pb-0">{{'tickets.date' | translate}} <span
+                                class="text-gray-100 font-roboto">{{ticketData?.createdAt | date:'MMMM d y'}}</span></p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center px-2">
+                    <div class="clearfix">
+                        <img alt="phone" class="mr-1 pb-1" src="assets/icons/time.svg">
+                    </div>
+                    <div class="clearfix">
+                        <p class="text-black-100 mb-0 pb-0">{{'tickets.time' | translate}}<span
+                                class="text-gray-100 font-roboto dir">{{ticketData?.createdAt | date:'shortTime'}}</span></p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="clearfix">
+                        <img alt="phone" class="mr-1 pb-1" src="assets/icons/user.svg">
+                    </div>
+                    <div class="clearfix">
+                        <p class="text-black-100 mb-0 pb-0">{{'tickets.type' | translate}}
+                            <span class="text-gray-100">{{customizeRoleText(ticketData?.createdBy?.role)}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="row justify-content-end">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <div class="media">
+                        <img src="assets/icons/phone.svg" class="align-self-start mr-3" alt="phone">
+                        <div class="media-body">
+                            <h6 class="text-black-100 my-0">{{'tickets.phone' | translate}}</h6>
+                            <p class="text-black-100 mb-0 pb-0">
+                                <span class="text-gray-100">({{ticketData.createdBy?.mobileCode}})
+                                    {{ticketData.createdBy?.mobileNumber}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="media">
+                        <img src="assets/icons/address.svg" class="align-self-start mr-3" alt="address">
+                        <div class="media-body">
+                            <h6 class="text-black-100 my-0">{{'tickets.address' | translate}}</h6>
+                            <p class="text-black-100 mb-0 pb-0">
+                                <span class="text-gray-100">{{ticketData.createdBy?.location || '-'}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card card-bordered">
+            <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow: scroll;">
+                <div class="media media-chat media-chat-reverse" *ngIf="ticketData?.isMe">
+                    <div class="media-body">
+                        <div class="d-flex comment ailgn-self-center flex-column">
+                            <div class="d-flex clearfix">
+                                <p class="mb-0" *ngIf="ticketData?.description">
+                                    {{ticketData?.description}}
+                                </p>
+                            </div>
+                            <div class="d-flex clearfix">
+                                <span class="text-blue-300" style="opacity:0.5">{{ticketData?.createdAt |
+                                    date:'shortTime'}}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex comment ailgn-self-center flex-column" *ngIf="ticketData?.media?.length > 0">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <img src="assets/icons/download-image-grey.png"
+                                        *ngIf="checkFileType(ticketData?.media[0],'image')" class="img-fluid">
+                                    <img src="assets/icons/download-document-grey.png"
+                                        *ngIf="checkFileType(ticketData?.media[0],'document')" class="img-fluid">
+                                </div>
+                                <div class="d-flex justify-content-start align-self-center flex-column px-2">
+                                    <div class="d-flex clearfix">
+                                        <p class="mb-0">
+                                            {{ticketData?.media[0].fileName|truncate:16}}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex clearfix">
+                                        <span class="text-blue-300" style="opacity:0.5">{{ticketData?.createdAt |
+                                            date:'shortTime'}}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img src="assets/icons/download-file-white.png"
+                                        (click)="downloadFile(ticketData.media)" *ngIf="ticketData?.media?.length > 0"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="media media-chat" *ngIf="!ticketData?.isMe">
+                    <img class="avatar" [src]="currentUser?.profilePicture || 'assets/images/placeholder_logo.png'"
+                        alt="...">
+                    <div class="media-body">
+                        <div class="d-flex comment ailgn-self-center flex-column">
+                            <div class="d-flex clearfix">
+                                <span class="text-black-300" style="opacity:0.5">{{ticketData?.createdBy?.firstName}}
+                                    {{ticketData?.createdBy?.lastName}}</span>
+                            </div>
+                            <div class="d-flex clearfix">
+                                <p class="mb-0" *ngIf="ticketData?.description">
+                                    {{ticketData?.description}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex comment ailgn-self-center flex-column" *ngIf="ticketData?.media?.length > 0">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <img src="assets/icons/download-image-grey.png"
+                                        *ngIf="checkFileType(ticketData?.media[0],'image')" class="img-fluid">
+                                    <img src="assets/icons/download-document-grey.png"
+                                        *ngIf="checkFileType(ticketData?.media[0],'document')" class="img-fluid">
+                                </div>
+                                <div class="d-flex align-self-center flex-column px-2"
+                                    [ngClass]="{'w-100': ticketData?.media?.length == 0,'w-75':ticketData?.media?.length > 0}">
+                                    <div class="d-flex clearfix text-black-100">
+                                        <p class="mb-0" *ngIf="ticketData?.media?.length === 0">
+                                            {{ticketData?.description}}
+                                        </p>
+                                        <p class="mb-0" *ngIf="ticketData?.media?.length > 0">
+                                            {{ticketData?.media[0].fileName|truncate:16}}
+                                        </p>
+                                    </div>
+                                    <div class="clearfix text-right">
+                                        <span class="text-black-300" style="opacity:0.5">{{ticketData?.createdAt |
+                                            date:'shortTime'}}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img src="assets/icons/download-grey.png" (click)="downloadFile(ticketData.media)"
+                                        *ngIf="ticketData?.media?.length > 0" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow: scroll;"
+                *ngIf="comments.length > 0 && comments != []">
+                <div *ngFor="let item of comments">
+                    <div class="media media-chat media-chat-reverse" *ngIf="item?.isMe">
+                        <div class="media-body">
+                            <div class="d-flex comment ailgn-self-center flex-column" (click)="downloadFile(item)">
+                                <div class="d-flex flex-row">
+                                    <div *ngIf="item?.media?.length > 0">
+                                        <img src="assets/icons/download-image-grey.png"
+                                            *ngIf="checkFileType(item?.media[0],'image')" class="img-fluid">
+                                        <img src="assets/icons/download-document-grey.png"
+                                            *ngIf="checkFileType(item?.media[0],'document')" class="img-fluid">
+                                    </div>
+                                    <div class="d-flex justify-content-start align-self-center flex-column px-2">
+                                        <div class="d-flex clearfix">
+                                            <p class="mb-0" *ngIf="item?.media?.length === 0">{{item?.comment}}
+                                            </p>
+                                            <p class="mb-0" *ngIf="item?.media?.length > 0">
+                                                {{item?.media[0].fileName|truncate:16}}
+                                            </p>
+                                        </div>
+                                        <div class="d-flex clearfix">
+                                            <span class="text-blue-300 font-roboto dir-ltr" style="opacity:0.5">{{item?.createdAt |
+                                                date:'shortTime'}}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img src="assets/icons/download-file-white.png"
+                                            (click)="downloadFile(item.media)" *ngIf="item?.media?.length > 0"
+                                            class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media media-chat" *ngIf="!item?.isMe">
+                        <img class="avatar" [src]="currentUser?.profilePicture || 'assets/images/placeholder_logo.png'"
+                            alt="...">
+                        <div class="media-body">
+                            <div class="d-flex comment ailgn-self-center flex-column">
+                                <div class="d-flex clearfix">
+                                    <span class="text-black-300" style="opacity:0.5">
+                                        {{item?.createdBy?.firstName}}
+                                        {{item?.createdBy?.lastName}}
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div *ngIf="item?.media?.length > 0">
+                                        <img src="assets/icons/download-image-grey.png"
+                                            *ngIf="checkFileType(item?.media[0],'image')" class="img-fluid">
+                                        <img src="assets/icons/download-document-grey.png"
+                                            *ngIf="checkFileType(item?.media[0],'document')" class="img-fluid">
+                                    </div>
+                                    <div class="d-flex align-self-center flex-column px-2"
+                                        [ngClass]="{'w-100': item?.media.length == 0,'w-75':item?.media?.length > 0}">
+                                        <div class="d-flex clearfix text-black-100">
+                                            <p class="mb-0" *ngIf="item?.media?.length === 0">{{item?.comment}}
+                                            </p>
+                                            <p class="mb-0" *ngIf="item?.media?.length > 0">
+                                                {{item?.media[0].fileName|truncate:16}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix text-right">
+                                            <span class="text-black-300" style="opacity:0.5">{{item?.createdAt |
+                                                date:'shortTime'}}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img src="assets/icons/download-grey.png" (click)="downloadFile(item.media)"
+                                            *ngIf="item?.media?.length > 0" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                </div>
+                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                </div>
+            </div>
+            <div class="row" *ngIf="comments.length == 0 || comments == []">
+                <div class="col-sm-12 text-center mt-5 mb-5">
+                    <p>No past comments!</p>
+                </div>
+            </div>
+            <div class="publisher bt-1 border-light" *ngIf="ticketData?.status != ticketStatus[2]?.value">
+                <img class="avatar avatar-xs" [src]="currentUser.profilePicture || 'assets/images/user.png'" alt="...">
+                <input class="publisher-input" (keyup.enter)="sendMessage()" [(ngModel)]="comment" type="text"
+                    placeholder="Write something">
+                <span (click)="fileInput1.click()" class="publisher-btn file-group"> <i
+                        class="fa fa-paperclip file-browser"></i> <input type="file"></span>
+                <input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file"
+                    (change)="uploadAttachment($event)" required accept="image/png, image/jpeg,application/pdf">
+                <a class="publisher-btn" data-abc="true"><i class="fa fa-smile"></i></a>
+                <a class="btn btn-theme btn-blue btn-rounded" data-abc="true" (click)="sendMessage()"><i
+                        class="fa fa-paper-plane"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

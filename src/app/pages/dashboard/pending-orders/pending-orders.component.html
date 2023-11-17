@@ -1,0 +1,196 @@
+<div class="card top-cards">
+    <div class="card-header border-0 bg-transparent d-flex">
+        <span class="text-capitalize">{{'dashboard.pendingOrders' | translate}}</span>
+        <a class="btn-link ml-auto" [routerLink]="['/orders/']">
+            {{'dashboard.viewMore' | translate}}
+        </a>
+    </div>
+    <div class="card-body pt-0">
+        <div class="table-responsive fixed-height">
+            <table class="table text-nowrap ">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataList|slice:0:20" (click)="navigateToOrder(item)">
+                        <td>
+                            <div class="d-flex image-and-text align-items-center">
+                                <img [src]="item?.logo || 'assets/images/placeholder_logo.png'">
+                                <div class="text-div">
+                                    <!-- <h4 class="text-black-100 text-capitalize">{{item?.restaurantName}}</h4> -->
+                                    <span *ngIf="selectedLang == 'en'">
+                                        <h4 *ngIf="item?.restaurantName">{{item?.restaurantName | truncate:16| capitalize}}</h4>
+                                        <h4 *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                      </span>
+                                      <span *ngIf="selectedLang == 'ar'">
+                                        <h4 *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                        <h4 *ngIf="!item?.restaurantNameTranslation?.ar">
+                                                        {{item?.restaurantName | truncate:16| capitalize}}
+                                        </h4>
+                                      </span>
+                                    <p class="text-gray-100 font-roboto">{{item?.orderId}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100 text-capitalize"> {{'dashboard.companyName' | translate}}</h4>
+                                <!-- <p class="text-gray-100 text-capitalize">{{item?.companyName}}</p> -->
+                                <span *ngIf="selectedLang == 'en'">
+                                    <p *ngIf="item?.companyName">{{item?.companyName | truncate:16| capitalize}}</p>
+                                    <p *ngIf="!item?.companyName">{{item?.companyNameTranslation?.ar}}</p>
+                                  </span>
+                                  <span *ngIf="selectedLang == 'ar'">
+                                    <p *ngIf="item?.companyNameTranslation?.ar">{{item?.companyNameTranslation?.ar}}</p>
+                                    <p *ngIf="!item?.companyNameTranslation?.ar">
+                                                    {{item?.companyName | truncate:16| capitalize}}
+                                    </p>
+                                  </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100 text-capitalize">{{'dashboard.paymentMethod' | translate}}</h4>
+                                <p class="text-gray-100 text-capitalize">{{item?.paymentMethod | translate}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <!-- <h4 class="text-black-100">{{currency}} {{item?.totalPrice.toFixed(2)}}</h4> -->
+                                <h4 class="text-black-100 font-roboto price">{{currency}}</h4>
+                                <h4 class="text-black-100 price">{{(item?.totalPrice + item?.tax).toFixed(2)}}</h4>
+                                <div class="time">
+                                    <span
+                                        [class]="(item?.placedDate | timer: {'time':newTime, 'confirmedAt': item?.confirmedAtDateTime}).class">
+                                        {{(item?.placedDate | timer: {
+                                        'time': newTime,
+                                        'confirmedAt': item?.confirmedAtDateTime
+                                        }).time}}
+                                        <i class="fa fa-clock-o"></i> </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="dataList.length === 0">
+                        <td>{{'noData' | translate}}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <div class="d-flex image-and-text align-items-center">
+                                <img src="assets/images/order2.png" class="">
+                                <div class="text-div">
+                                    <h4 class="text-black-100">Salt Cafe</h4>
+                                    <p class="text-gray-100">#718937</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Company Name</h4>
+                                <p class="text-gray-100">KFC</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Payment Method</h4>
+                                <p class="text-gray-100">Credit</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">AED 240</h4>
+                                <div class="time green-time">02:25 <i class="fa fa-clock-o"></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex image-and-text align-items-center">
+                                <img src="assets/images/order3.png" class="">
+                                <div class="text-div">
+                                    <h4 class="text-black-100">Salt Cafe</h4>
+                                    <p class="text-gray-100">#718937</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">AED 240</h4>
+                                <div class="time red-time">04:44 <i class="fa fa-clock-o"></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex image-and-text align-items-center">
+                                <img src="assets/images/order1.png" class="">
+                                <div class="text-div">
+                                    <h4 class="text-black-100">Salt Cafe</h4>
+                                    <p class="text-gray-100">#718937</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">AED 240</h4>
+                                <div class="time red-time">04:44 <i class="fa fa-clock-o"></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex image-and-text align-items-center">
+                                <img src="assets/images/order1.png" class="">
+                                <div class="text-div">
+                                    <h4 class="text-black-100">Salt Cafe</h4>
+                                    <p class="text-gray-100">#718937</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">Salt Cafe</h4>
+                                <p class="text-gray-100">#718937</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-div">
+                                <h4 class="text-black-100">AED 240</h4>
+                                <div class="time red-time">04:44 <i class="fa fa-clock-o"></i></div>
+                            </div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

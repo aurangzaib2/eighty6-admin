@@ -1,0 +1,9 @@
+
+.ov-scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.tab-inner-div {
+	max-height: 46vh;
+	overflow-y: auto;
+}

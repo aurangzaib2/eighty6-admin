@@ -1,0 +1,168 @@
+<div class="card profile-card border-0">
+	<img [src]="transactionData?.banner || 'assets/images/placeholder_banner.jpg'" class="card-img-top" alt="banner">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/white-cross.svg" class="img-fluid">
+	</div>
+	<div class="card-body mx-4">
+		<div class="d-flex justify-content-center">
+			<div class="profile-logo">
+				<img [src]="transactionData?.logo || 'assets/images/placeholder_logo.png'"
+					class="img-fluid user-profile">
+			</div>
+		</div>
+		<div class="text-center mt-5">
+			<div class="clearfix text-capitalize">
+				<h5 class="mb-0 pb-0">{{transactionData?.restaurantName}}</h5>
+				<p class="mb-1">{{transactionData?.companyName}}</p>
+			</div>
+			<div class="d-flex justify-content-center align-items-center">
+				<div class="clearfix text-capitalize">
+					<p>{{transactionData?.city}},{{transactionData?.countryName}} </p>
+				</div>
+				<!-- <div class="clearfix px-1">
+					<p> &bull; 4.3
+						<i class="fa fa-star text-orange-100"></i>
+					</p>
+				</div> -->
+			</div>
+		</div>
+
+		<div *ngIf="transactionData?.status === 'paid'"
+			class="d-flex justify-content-center align-items-center badge-success">
+			<div class="clearfix">
+				<i class="fa fa-check-circle text-green-100"></i>
+			</div>
+			<div class="clearfix">
+				<span class="text-green-100 pl-2 text-capitalize">{{'restaurants.paymentReceived' | translate}}</span>
+			</div>
+		</div>
+		<div *ngIf="transactionData?.status === 'due'"
+			class="d-flex justify-content-center align-items-center badge-red">
+			<div class="clearfix">
+				<i class="fa fa-info-circle text-red-100"></i>
+			</div>
+			<div class="clearfix">
+				<span class="text-red-100 pl-2 text-capitalize">{{'restaurants.paymentPending' | translate}}</span>
+			</div>
+		</div>
+		<div class="receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'transactions.paymentDetails' | translate}}</span>
+			</div>
+			<div [hidden]="true" class="d-flex justify-content-between ">
+				<div class="clearfix">
+					<span class="text-value text-capitalize" *ngIf="transactionData?.paymentMethod === 'card'">
+						{{transactionData?.scheme}} *** *** ***
+						{{transactionData?.last4}}</span>
+					<span class="text-value text-capitalize" *ngIf="transactionData?.paymentMethod != 'card'">
+						{{'cash'|translate}}</span>
+				</div>
+				<div class="clearfix" *ngIf="transactionData?.paymentMethod === 'card'">
+					<img src="assets/icons/card.svg" *ngIf="transactionData?.scheme === 'Mastercard'">
+					<img src="assets/icons/visa.png" *ngIf="transactionData?.scheme === 'Visa'">
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'transactions.supplier' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{transactionData?.supplierName}}</span>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'transactions.item' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{transactionData?.itemsCount}}</span>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between receipt-items" *ngIf="transactionData?.discountedPromoPrice > 0">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.orderAmount' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{currency}}</span>
+				<span class="text-value text-capitalize font-geflow"> {{transactionData?.subTotal.toFixed(2)}}</span>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between receipt-items" *ngIf="transactionData?.discountedPromoPrice > 0">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.promoCode' | translate}} ({{order?.voucher}})</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{currency}}</span>
+				<span class="text-value text-capitalize font-geflow">{{transactionData?.discountedPromoPrice}}</span>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between receipt-items" *ngIf="transactionData?.discountInPercentage > 0">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.subtotal' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{transactionData?.discountInPercentage}} %</span>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.subtotal' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{currency}}</span>
+				<span class="text-value text-capitalize font-geflow"> {{transactionData?.totalPrice.toFixed(2)}}</span>
+			</div>
+		</div>
+
+
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.vat' | translate}} ({{TAX}} %)</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{currency}}</span>
+				<span class="text-value text-capitalize font-geflow"> {{transactionData?.tax.toFixed(2)}}</span>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'transactions.totalAmount' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{currency}}</span>
+				<span class="text-value text-capitalize font-geflow"> {{(transactionData?.amount).toFixed(2)}}</span>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-3">
+			<div class="d-flex align-items-center">
+				<div class="clearfix">
+					<img alt="phone" class="mr-2" src="assets/icons/phone.svg">
+				</div>
+				<div class="clearfix">
+					<label class="mb-0 pb-0">{{'transactions.phone' | translate}}</label>
+					<p>({{transactionData?.mobileCode}}) {{transactionData?.mobileNumber}}</p>
+				</div>
+			</div>
+			<div class="d-flex align-items-center" (click)="startChat()" style="cursor:pointer">
+				<div class="clearfix">
+					<img alt="message" class="mr-2" src="assets/icons/message.svg">
+				</div>
+				<div class="clearfix">
+					<label class="mb-0 pb-0">{{'transactions.message' | translate}}</label>
+					<p>{{'directWithCustomer' | translate}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center mt-3">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+				{{'transactions.close' | translate}}
+			</button>
+		</div>
+	</div>
+</div>

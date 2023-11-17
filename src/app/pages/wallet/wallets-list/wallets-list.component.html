@@ -1,0 +1,270 @@
+<div class="inner-header d-flex justify-content-between"> 
+  <div class="clearfix">
+    <h2 class="text-capitalize">{{ "sidebar.wallets" | translate }}</h2>
+    <ol class="breadcrumb inner-header-breadrumb">
+      <li class="breadcrumb-item" aria-current="page">
+        {{ "sidebar.wallets" | translate }}
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="container-fluid" id="page-container">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="form-group">
+      <div class="input-group mb-0 search-box">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <img src="assets/icons/search.svg" />
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          #search
+          placeholder="{{ 'search' | translate }}"
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+          (change)="tableSetFilter('search', $event.currentTarget.value)"
+        />
+      </div>
+    </div>
+    <form class="form-inline" style="margin-top: -10px">
+      <div class="form-group">
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="{{ 'wallet1.fromDateText' | translate }}"
+            name="fromDate"
+            (dateSelect)="firstDateSelected($event)"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary calendar"
+              (click)="d.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <select
+    style="height: 50px; width: 360px; border-radius: 3px; border-color: grey"
+    class="select-option"
+    #mySelect
+    (change)="onOptionsSelected(mySelect.value)"
+  >
+    <option class="option" value="all">
+      &nbsp;&nbsp;{{ "wallet1.allText" | translate }}
+    </option>
+    <option class="option" value="myTransactions">
+      &nbsp;&nbsp;{{ "wallet1.myTransactions" | translate }}
+    </option>
+    <option class="option" value="credit">
+      &nbsp;&nbsp;{{ "wallet1.creditText" | translate }}
+    </option>
+    <option class="option" value="debit">
+      &nbsp;&nbsp;{{ "wallet1.debitText" | translate }}
+    </option>
+    <option class="option" value="aedCurrency">
+      &nbsp;&nbsp;{{ "wallet1.aedCurrencyText" | translate }}
+    </option>
+    <option class="option" value="sarCurrency">
+      &nbsp;&nbsp;{{ "wallet1.sarCurrencyText" | translate }}
+    </option>
+    <option class="option" value="kwdCurrency">
+      &nbsp;&nbsp;{{ "wallet1.kwdCurrencyText" | translate }}
+    </option>
+    <option class="option" value="restaurant">
+      &nbsp;&nbsp;{{ "wallet1.restaurantText" | translate }}
+    </option>
+  </select>
+
+  <div style="display: flex; justify-content: flex-end; margin-top: -60px">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="{{ 'wallet1.toDateText' | translate }}"
+            name="toDate"
+            (dateSelect)="lastDateSelected($event)"
+            ngbDatepicker
+            #e="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary calendar"
+              (click)="e.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="walletFilterSelected == true" class="my-3">
+    <div class="table-responsive page-table text-nowrap">
+      <table
+        class="table table-borderless"
+        datatable
+        [dtOptions]="dtOptions"
+        style="width: 100%"
+      >
+        <thead class="table-header no-border">
+          <tr>
+            <th scope="col">{{ "orders.orderID" | translate }}</th>
+            <th scope="col">{{ "wallet1.restaurantName" | translate }}</th>
+            <th scope="col">{{ "suppliers.supplierName" | translate }}</th>
+            <th scope="col">{{ "wallet1.amount" | translate }}</th>
+            <th scope="col">{{ "wallet1.creditDebit" | translate }}</th>
+            <th scope="col">{{ "wallet1.transactionDate" | translate }}</th>
+            <th scope="col">{{ "orders.orderStatus" | translate }}</th>
+            <th scope="col">{{ "orders.paymentStatus" | translate }}</th>
+            <th scope="col">{{ "wallet1.action" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody class="table-body" *ngIf="dataList && dataList.length">
+          <tr
+            *ngFor="let item of dataList; let i = index"
+          >
+            <td (click)="navigateTo(item)"> {{ item?.uniqueId }}</td>
+            <!-- <td>{{ item?.restaurantName }}</td> -->
+            <td>
+              <span *ngIf="selectedLang == 'en'">
+                <span *ngIf="item?.restaurantName">{{item?.restaurantNameTranslation?.en | truncate:16| capitalize}}</span>
+                <span *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</span>
+              </span>
+              <span *ngIf="selectedLang == 'ar'">
+                <span *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</span>
+                <span *ngIf="!item?.restaurantNameTranslation?.ar">
+                                {{item?.restaurantName | truncate:16| capitalize}}
+                </span>
+              </span>
+            </td>
+            
+            <td>
+              <span *ngIf="selectedLang == 'en'">
+                <span *ngIf="item?.supplierName">{{item?.supplierNameTranslation?.en | truncate:16| capitalize}}</span>
+                <span *ngIf="!item?.supplierName">{{item?.supplierNameTranslation?.ar}}</span>
+              </span>
+              <span *ngIf="selectedLang == 'ar'">
+                <span *ngIf="item?.supplierNameTranslation?.ar">{{item?.supplierNameTranslation?.ar}}</span>
+                <span *ngIf="!item?.supplierNameTranslation?.ar">
+                                {{item?.supplierName | truncate:16| capitalize}}
+                </span>
+              </span>
+            </td>
+            <td>{{ item?.currency }} {{ item?.amount.toFixed(2) }}</td>
+            <td>
+              <img
+                [src]="
+                  item?.in > 0
+                    ? 'assets/icons/credit.png'
+                    : 'assets/icons/debit.png'
+                "
+                class="img-fluid image-creditDebit"
+              />
+            </td>
+
+            <td>{{ item?.createdAt | date: "medium" }}</td>
+
+            <td>
+              <span
+                *ngIf="item?.deliveryStatus === 'confirmed'"
+                class="green-badge"
+              >
+                {{ item?.deliveryStatus }}
+              </span>
+              <span
+                *ngIf="item?.deliveryStatus === 'delivered'"
+                class="green-badge"
+              >
+                {{ item?.deliveryStatus }}
+              </span>
+              <span
+                *ngIf="item?.deliveryStatus === 'completed'"
+                class="green-badge"
+              >
+                {{ "Completed" }}
+              </span>
+              <span
+                *ngIf="item?.deliveryStatus === 'dispatched'"
+                class="blue-badge"
+              >
+                {{ item?.deliveryStatus }}
+              </span>
+              <span
+                *ngIf="item?.deliveryStatus === 'rejected'"
+                class="red-badge"
+              >
+                {{ item?.deliveryStatus }}
+              </span>
+              
+            </td>
+
+
+            <td>{{ item?.isPaid }}</td>
+
+            <td>
+              <div class="d-flex action-btns">
+                <a (click)="openConfirm(item)" class=""><img src="assets/icons/action-blue.png"></a>
+              </div>
+            </td>
+
+
+          </tr>
+        </tbody>
+        <ng-container
+          *ngIf="(!dataList || dataList.length === 0) && !processing"
+          class="table-body"
+        >
+          <tr>
+            <td class="text-center" colspan="5">{{ "noData" | translate }}</td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="restaurantFilterSelected == true" class="my-3">
+    <div class="table-responsive page-table text-nowrap">
+      <table
+        class="table table-borderless"
+        datatable
+        [dtOptions]="dtOptions"
+        style="width: 100%"
+      >
+        <thead class="table-header no-border">
+          <tr>
+            <th scope="col">{{ "wallet1.restaurantName" | translate }}</th>
+
+            <th scope="col">{{ "wallet1.totalCredit" | translate }}</th>
+            <th scope="col">{{ "wallet1.totalDebit" | translate }}</th>
+            <th scope="col">{{ "wallet1.balance" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody class="table-body" *ngIf="dataList && dataList.length">
+          <tr *ngFor="let item of dataList; let i = index">
+            <td (click)="walletsAgainstRestaurants(item.id)">
+              {{ item?.name }}
+            </td>
+
+            <td>{{ item?.currency }} {{ item?.totalCredit }}</td>
+            <td>{{ item?.currency }} {{ item?.totalDebit }}</td>
+            <td>{{ item?.currency }} {{ item?.balance }}</td>
+          </tr>
+        </tbody>
+        <ng-container
+          *ngIf="(!dataList || dataList.length === 0) && !processing"
+          class="table-body"
+        >
+          <tr>
+            <td class="text-center" colspan="5">{{ "noData" | translate }}</td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+</div>

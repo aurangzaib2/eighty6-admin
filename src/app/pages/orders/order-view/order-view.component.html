@@ -1,0 +1,784 @@
+<meta name="description" content="This is an article about Angular Meta service">
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize">{{'sidebar.orders'| translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li [routerLink]="['/orders']" aria-current="page" class="breadcrumb-item">{{'sidebar.orders'| translate}}
+            </li>
+            <li *ngIf="order" [queryParams]="{tab:activeTab}" [routerLink]="['/orders']" aria-current="page"
+                class="breadcrumb-item">{{statusType}}</li>
+            <li aria-current="page" class="breadcrumb-item">#{{orderId}}</li>
+        </ol>
+    </div>
+</div>
+<div *ngIf="order" class="container-fluid" id="page-container">
+    <div class="row justify-content-between h-100 align-items-center">
+        <div class="col-lg-5 col-md-8 col-sm-12">
+            <div class="d-flex align-items-center profile mt-2">
+                <div class="clearfix">
+                    <img [src]="order?.restaurant?.logo || 'assets/images/placeholder_logo.png'"
+                        class="img-fluid user-profile">
+                </div>
+                <div class="clearfix pl-2 ">
+                    <h5 class="mb-0 text-bold text-capitalize">{{order?.restaurant?.name}}
+                        <small class="text-gray-100 px-1">{{'orders.companyName' | translate}}:
+                            {{order?.restaurant?.company?.name}}</small>
+                    </h5>
+                    <h5 class="mb-0 text-bold text-capitalize pl-1">
+                        <small class="text-black-300 text-capitalize">{{'orders.orderID' | translate}}
+                            <span class="text-black-100 font-roboto"> #{{order?.uniqueId}}</span>
+                        </small>
+                    </h5>
+                    <p class="text-gray-100 text-capitalize">
+                        <img src="assets/icons/user.svg" class="img-fluid">
+                        {{'orders.restaurant' | translate}} {{'orders.contactPerson' | translate}}
+                        <span class="text-black-100">
+                            {{order?.restaurant?.contactPerson?.firstName}}
+                            {{order?.restaurant?.contactPerson?.lastName}}
+                        </span>
+                    </p>
+                    <!-- <p class="text-black-200 text-capitalize">
+                        order ID <span class="text-gray-100"> {{order?.uniqueId}}</span>
+                        <span class="pl-2">
+                            Timer
+                            <span
+                                [class]="(order?.createdAt | timer:{newTime: newTime, confirmedAt: order?.confirmedAt}).class">
+                                {{(order?.createdAt | timer:{
+                                newTime: newTime,
+                                confirmedAt: order?.confirmedAt
+                                }).time}} <i class="fa fa-clock-o"></i> </span>
+                        </span>
+                    </p> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-12 col-sm-12">
+            <div class="row justify-content-end">
+                <div class="col-lg-3 col-md-5 col-sm-12">
+                    <div class="media">
+                        <img src="assets/icons/phone.svg" class="align-self-start mr-3" alt="phone">
+                        <div class="media-body">
+                            <h6 class="text-black-100 my-0">{{'orders.phone' | translate}}</h6>
+                            <p>{{order?.restaurant?.mobileNumber}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-sm-12">
+                    <div class="media">
+                        <img src="assets/icons/address.svg" class="align-self-start mr-3" alt="address">
+                        <div class="media-body">
+                            <h6 class="text-black-100 my-0">{{'orders.address' | translate}}</h6>
+                            <p>
+                                <span *ngIf="order?.restaurant?.unitNo">{{order?.restaurant?.unitNo}},</span>
+                                <span *ngIf="order?.restaurant?.floorNo">{{order?.restaurant?.floorNo}},</span>
+                                <span *ngIf="order?.restaurant?.street">{{order?.restaurant?.street}},</span>
+                                <span *ngIf="order?.restaurant?.area">{{order?.restaurant?.area}},</span>
+                                {{order?.restaurant?.city}},{{order?.restaurant?.countryName}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-5 col-sm-12" *ngIf="order?.restaurant?.locationPoint != null">
+                    <div class="media">
+                        <img src="assets/icons/location-blue.svg" class="align-self-start mr-3" alt="phone" width="50">
+                        <div class="media-body">
+                            <h6 class="text-black-100 my-0">{{'restaurants.location' | translate}}</h6>
+                            <p>
+                                <a 
+                                    target="_blank" 
+                                    href="http://maps.google.com/?q={{order?.restaurant?.locationPoint[0]}},{{order?.restaurant?.locationPoint[1]}}">
+                                    {{'orders.openGoogleMaps' | translate}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div class="d-flex text-capitalize h-100 align-items-center my-1 timerSection">
+        <div class="d-flex align-items-center">
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0 text-start">
+                    {{'orders.timer' | translate}}
+                    <span
+                        [class]="(order?.createdAt | timer:{newTime: newTime, confirmedAt: order?.confirmedAt}).class">
+                        {{(order?.createdAt | timer:{
+                        newTime: newTime,
+                        confirmedAt: order?.confirmedAt
+                        }).time}} <i class="fa fa-clock-o"></i> </span>
+                </p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center pl-1">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/calender.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">{{'orders.date' | translate}} <span
+                        class="text-gray-100 font-roboto">{{order?.createdAt |
+                        date:'mediumDate'}}</span></p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center px-2">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/time.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">{{'orders.time' | translate}} <span
+                        class="text-gray-100 font-roboto dir">{{order?.createdAt |
+                        date:'hh:mm a'}}</span></p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/payment.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0 ">{{'orders.paymentMethod' | translate}}
+                    <span class="text-gray-100" *ngIf="order?.paymentMethod === 'cash'">{{'cash' | translate}}</span>
+                    <span class="text-gray-100" *ngIf="order?.paymentMethod === 'card'">{{'card' | translate}}</span>
+                    <span class="text-gray-100" *ngIf="order?.paymentMethod === 'credit'">{{'credit' |  translate}}</span>
+                    <span class="text-gray-100" *ngIf="order?.paymentMethod === 'wallet'">{{'wallet' |  translate}}</span>
+                    <span class="text-gray-100" *ngIf="order?.paymentMethod === 'bank'">{{'Cheque'|translate}}</span>
+                </p>
+            </div>
+         
+        </div>
+        <div class="d-flex align-items-center pl-1">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/sort-blue.svg">
+            </div>
+            <div class="clearfix">
+                <div class="d-flex align-items-center">
+                    <p class="text-black-100 mb-0 pb-0">{{'orders.paymentStatus' | translate}}
+                        <img *ngIf="order?.status === 'paid'" class="img-fluid status-circle"
+                            src="assets/icons/status-paid.svg">
+                        <img *ngIf="order?.status === 'pending_payment'" class="img-fluid status-circle"
+                            src="assets/icons/status-pending.svg">
+                        <span class="px-1  text-gray-100" *ngIf="order?.status === orderStatus.PENDING_PAYMENT">
+                            {{ 'pending'|translate}}
+                        </span>
+                        <span class="px-1  text-gray-100" *ngIf="order?.status != orderStatus.PENDING_PAYMENT">
+                            {{ 'paid'|translate}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix" *ngIf="activeTab == 'acknowledged'">
+            <p class="text-black-100 m-1 pb-0"> Status
+                <span class="text-gray-100" >{{order.acknowledgeStatus}}</span>
+            </p>
+            </div>
+    </div>
+    <div class="d-flex text-capitalize h-100 align-items-center my-2">
+        <div class="d-flex align-items-center pl-1">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/account-blue.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">
+                    {{'orders.supplier' | translate}} <span class="text-gray-100">
+                        {{order?.supplier?.name}}</span>
+                </p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center px-2">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/call-blue.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">
+                    {{'orders.supplier' | translate}} {{'orders.phoneNumber' | translate}}: <span class="text-gray-100">
+                        ({{order?.supplier?.mobileCode}})
+                        {{order?.supplier?.mobileNumber}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/payment.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">
+                    {{'orders.supplier' | translate}} {{'orders.contactPerson' | translate}}
+                    <span *ngIf="order?.supplier?.contactPerson"
+                        class="text-gray-100">{{order?.supplier?.contactPerson[0]?.fullName || '-'}}</span>
+                    <span *ngIf="!order?.supplier?.contactPerson" class="text-gray-100">-</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex text-capitalize h-100 align-items-center" *ngIf="order?.isAmended">
+        <div class="d-flex align-items-center pl-1">
+            <div class="clearfix">
+                <img alt="phone" class="mr-1 pb-1" src="assets/icons/payment.svg">
+            </div>
+            <div class="clearfix">
+                <p class="text-black-100 mb-0 pb-0">{{'orders.amendStatus' | translate}}
+                    <img *ngIf="order?.amendOrderStatus === 'confirmed'" class="img-fluid status-circle"
+                        src="assets/icons/status-paid.svg">
+                    <img *ngIf="order?.amendOrderStatus === 'pending'" class="img-fluid status-circle"
+                        src="assets/icons/status-pending.svg">
+                        <!-- <span class="text-gray-100">{{order?.amendOrderStatus}}</span> -->
+                        <span class="text-gray-100" *ngIf="order?.amendOrderStatus === 'pending'">{{'suppliers.pending' | translate}}</span>
+                        <span class="text-gray-100" *ngIf="order?.amendOrderStatus === 'confirmed'">{{'suppliers.confirmed' | translate}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button (click)="openConfirmDelete()" class="btn red-time btn-theme text-capitalize vertical-middle"
+            *ngIf="order.deliveryStatus ==='pending'">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            {{'orders.deleteOrder'| translate}}
+        </button>
+        <button (click)="downloadInvoice()" class="btn btn-theme blue-time text-capitalize vertical-middle ml-3"
+            *ngIf="order.deliveryStatus ==='pending'">
+            <img class="img-fluid pr-1" style="height: 1.2em;" src="assets/icons/download-blue.png">
+            {{'orders.LPODownload'| translate}}
+        </button>
+        <button (click)="downloadInvoice()" class="btn btn-theme blue-time text-capitalize vertical-middle ml-3"
+            *ngIf="order.deliveryStatus !=='pending'">
+            <img class="img-fluid pr-1" style="height: 1.2em;" src="assets/icons/download-blue.png">
+            {{'orders.invoiceDownload'| translate}}
+        </button>
+        
+        <button (click)="copyText(link)"class="btn btn-theme blue-time text-capitalize vertical-middle ml-3"
+            *ngIf="order.deliveryStatus =='pending' && !isCopied">
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            {{'orders.copyLink'| translate}}
+        </button>
+        <button (click)="copyText(link)"class="btn btn-theme blue-time text-capitalize vertical-middle ml-3"
+        *ngIf="order.deliveryStatus =='pending' && isCopied">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        {{'orders.copied'| translate}}
+    </button>
+    </div>
+    <div class="col-md-12 col-lg-12" >
+        <div style="padding-left:35px;">
+            <label>{{'orders.receivedOrderDetails' | translate}}</label>
+        </div>
+        <table class="table table-striped" >
+            <thead>
+                <tr class="table-header">
+                    <th scope="col">{{'orders.productCode' | translate}}</th>
+                    <th scope="col">{{'orders.productName' | translate}}</th>
+                    <th scope="col">{{'products.origin' | translate}}</th>
+                    <th scope="col">{{'products.type' | translate}}</th>
+                    <th scope="col">{{'orders.unit' | translate}}</th>
+                    <th scope="col">{{'orders.quantity' | translate}}</th>
+                    <th scope="col">{{'orders.unitPrice' | translate}}</th>
+                    <th scope="col">{{'orders.totalAmount' | translate}}</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of orderItems; let i = index">
+                    <td type="button" id="dropdownMenuButton" (mouseover)="showDownArrow(i)"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown" >
+                            <img [src]="product?.image" class="me-2" style="width: 20px" />
+                            {{ product?.sku }}
+                            <ng-container class="dropdown"
+                                *ngIf="product.orderAmendItems.length >= 1 && (activeTab == 'acknowledged' || activeTab == 'completed') ">
+                                <i class="fa fa-angle-down"  >
+    
+                                </i>
+                                <table class="dropdown-content dropdown-menu dropdown-multicol2  scrollable-menu scrollup new-table" style="width: 750px;"
+                                aria-labelledby="dropdownMenuButton">
+                                            <tr>
+                                                <th class="drpdwn-col-left" scope="col">{{'orders.productName' | translate}}
+                                                </th>
+    
+    
+                                                <th class="drpdwn-col-left" scope="col">{{'orders.unit' | translate}}</th>
+    
+                                                <th class="drpdwn-col-left" scope="col">{{'orders.quantity' | translate}}
+                                                </th>
+    
+                                                <th class="drpdwn-col-left" scope="col">{{'orders.unitPrice' | translate}}
+                                                </th>
+    
+                                                <th class="drpdwn-col-left" scope="col">{{'orders.totalAmount' | translate}}
+                                                </th>
+    
+                                                <th class="drpdwn-col-left" scope="col">{{'restaurants.message' |
+                                                    translate}}</th>
+    
+                                                    <!-- <th class="drpdwn-col-left" scope="col">{{'products.action' | translate}}
+                                                    </th> -->
+                                            </tr>
+                                            <tr>
+                                                <td class="drpdwn-col">
+                                                    {{ product?.name }}
+                                                </td>
+                                                <td class="drpdwn-col">{{ ackOrder?.restaurantUnitType}} {{ ackOrder?.units}}</td>
+    
+                                                <td class="drpdwn-col">{{ ackOrder?.restaurantQuantity }}</td>
+    
+                                                <td class="drpdwn-col">{{ ackOrder?.restaurantPrice }}</td>
+    
+                                                <td class="drpdwn-col">{{ ackOrder?.restaurantTotal | number : '1.2-2' }}</td>
+                                                <td class="drpdwn-col">
+                                                    {{ackOrder?.restaurantMessage}}
+    
+                                                </td>
+                                           
+                                            </tr>
+                                            <tr *ngIf="ackOrder?.status == 'replaced'">
+                                                <td>
+                                                    {{ product?.name }}
+                                                </td>
+                                                <td>{{ ackOrder?.unitType}} {{ ackOrder?.units}}</td>
+    
+                                                <td>{{ ackOrder?.quantity }}</td>
+    
+                                                <td>{{ ackOrder?.price }}</td>
+    
+                                                <td>{{ ackOrder?.total | number : '1.2-2' }}</td>
+                                                <td>
+                                                    {{ackOrder?.supplierMessage}}
+    
+                                                </td>
+                                  
+                                            </tr>
+                                </table>
+                            </ng-container>
+                      </div>
+             
+                    </td>
+                    <td>{{ product?.name }}</td>
+                    <td>{{ product?.origin }}</td>
+                    <td>{{ product?.type }}</td>
+                    <td>{{ product?.unitType}} {{ product?.units}}</td>
+                    <td>{{ product?.quantity }}</td>
+                    <td>{{ product?.price }}</td>
+                    <td>{{ product?.total | number : '1.2-2' }}</td>
+
+                </tr>
+            </tbody>
+
+        </table>
+      
+        <!-- <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel id="toggle-1" *ngIf="activeTab == 'acknowledged'">
+                <ng-template ngbPanelContent>
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr class="table-header">
+                                <th scope="col">{{'orders.productName' | translate}}</th>
+                                <th scope="col">{{'products.type' | translate}}</th>
+                                <th scope="col">{{'orders.unit' | translate}}</th>
+                                <th scope="col">{{'orders.quantity' | translate}}</th>
+                                <th scope="col">{{'orders.unitPrice' | translate}}</th>
+                                <th scope="col">{{'orders.totalAmount' | translate}}</th>
+                                <th scope="col">{{'restaurants.message' | translate}}</th>
+                                <th scope="col">{{'products.action' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container style="width: 100%;">
+                                <tr class="mt-3">
+                                    <td>{{ product?.name }}</td>
+                                    <td>{{ product?.type }}</td>
+
+                                    <td>{{ ackOrder?.restaurantUnitType}} {{ ackOrder?.units}}</td>
+                                    <td>{{ ackOrder?.restaurantQuantity }}</td>
+                                    <td>{{ ackOrder?.restaurantPrice }}</td>
+                                    <td>{{ ackOrder?.restaurantTotal | number : '1.2-2' }}</td>
+                                    <td>
+                                        {{ackOrder?.restaurantMessage}}
+                                    </td>
+                                    <td>
+                                        <ng-container>
+                                            <button class="btn btn-blue-badge text-capitalize"
+                                                (click)="openOrderAmendItem(roleType.Restaurant,row,item,defaultStatus.ACCEPTED)"
+                                                [disabled]="order?.acknowledgeAt !== null">
+                                                {{'orders.accept' | translate}}
+                                            </button>
+                                            <button class="btn btn-green-badge text-capitalize mx-4"
+                                                (click)="openOrderAmendItem(roleType.Restaurant,ackOrder,defaultStatus.REPLACED)"
+                                                [disabled]="order?.acknowledgeAt !== null">
+                                                {{'orders.replace' | translate}}
+                                            </button>
+
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion> -->
+        <div class="table-responsive page-table">
+            <ng-template let-row="row">
+                <table class="table table-borderless " style="width:100%">
+                    <thead class="table-header no-border">
+                        <tr>
+                            <th scope="col">{{'orders.productName' | translate}}</th>
+                            <th scope="col">{{'orders.unit' | translate}}</th>
+                            <th scope="col">{{'orders.quantity' | translate}}</th>
+                            <th scope="col">{{'orders.unitPrice' | translate}}</th>
+                            <th scope="col">{{'orders.totalAmount' | translate}}</th>
+                            <th scope="col">{{'restaurants.message' | translate}}</th>
+                            <!-- <th scope="col">{{'products.action' | translate}}</th> -->
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="row.orderAmendItems && row.orderAmendItems.length" class="table-body">
+                        <tr *ngFor="let item of row.orderAmendItems;let j=index"
+                            [ngClass]="{'yellow-200-bg': item?.isAmended === true}">
+                            <td class="text-wrap">
+                                {{row?.name | capitalize}}
+                            </td>
+                            <td>
+                                {{item?.restaurantUnitType}} <span
+                                    class="text-lowercase font-roboto">{{item?.units}}</span>
+                            </td>
+                            <td>{{item?.restaurantQuantity}}</td>
+                            <td>{{item?.discountedPrice || item?.restaurantPrice}}</td>
+                            <td>{{item?.restaurantTotal | number : '1.2-2'}}
+                                <span class="blue-badge" *ngIf="item.isFOC">
+                                    FOC
+                                </span>
+                            </td>
+                            <td class="text-wrap pr-4">
+                                <p class="px-2">{{item?.restaurantMessage}}</p>
+                            </td>
+                            <!-- <td>
+                              
+                                <ng-container *ngIf="item?.status === deliveryStatus.PENDING">
+                                    <button class="btn btn-blue-badge text-capitalize"
+                                        (click)="openOrderAmendItem(roleType.Restaurant,row,item,defaultStatus.ACCEPTED)"
+                                        [disabled]="order?.acknowledgeAt !== null">
+                                        {{'orders.accept' | translate}}
+                                    </button>
+                                    <button class="btn btn-green-badge text-capitalize mx-4"
+                                        (click)="openOrderAmendItem(roleType.Restaurant,row,item,defaultStatus.REPLACED)"
+                                        [disabled]="order?.acknowledgeAt !== null">
+                                        {{'orders.replace' | translate}}
+                                    </button>
+                                    <button class="btn btn-orange-badge text-capitalize"
+                                        (click)="openOrderAmendItem(roleType.restaurant,row,item,defaultStatus.DISPUTE)"
+                                        [disabled]="order?.acknowledgeAt !== null">
+                                        {{'orders.dispute' | translate}}
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="item?.status != deliveryStatus.PENDING">
+                                    <span class="text-capitalize">{{item?.restaurantStatus}}</span>
+                                </ng-container>
+                            </td> -->
+                        </tr>
+
+                        <tr *ngFor="let item of row.orderAmendItems;let j=index">
+                            <ng-container *ngIf="item?.supplierMessage !== null">
+                                <td class="text-wrap yellow-200-bg">{{row?.name |capitalize}}</td>
+                                <td class="yellow-200-bg">
+                                    {{item?.unitType}} <span class="text-lowercase font-roboto">{{item?.units}}</span>
+                                </td>
+                                <td class="yellow-200-bg">{{item?.quantity}}</td>
+                                <td class="yellow-200-bg">{{item?.discountedPrice || item?.price}}</td>
+                                <td class="yellow-200-bg">{{item?.total | number : '1.2-2'}}
+                                    <span class="blue-badge" *ngIf="item.isFOC">
+                                        FOC
+                                    </span>
+                                </td>
+                                <td class="text-wrap pr-4 yellow-200-bg">
+                                    <!-- <p class="px-2">{{item?.restaurantMessage}}</p> -->
+                                    <p class="yellow-200-bg px-2">{{item?.supplierMessage}}</p>
+                                </td>
+                                <td class="yellow-200-bg">
+                                    <ng-container *ngIf="item?.status === deliveryStatus.PENDING">
+                                        <button class="btn btn-blue-badge text-capitalize"
+                                            (click)="openOrderAmendItem(roleType.Supplier,row,item,defaultStatus.ACCEPTED)">
+                                            {{'orders.accept' | translate}}
+                                        </button>
+                                        <button class="btn btn-green-badge text-capitalize mx-4"
+                                            (click)="openOrderAmendItem(roleType.Supplier,row,item,defaultStatus.REPLACED)">
+                                            {{'orders.replace' | translate}}
+                                        </button>
+                                        <button class="btn btn-orange-badge text-capitalize"
+                                            (click)="openOrderAmendItem(roleType.Supplier,row,item,defaultStatus.DISPUTE)">
+                                            {{'orders.dispute' | translate}}
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="item?.status != deliveryStatus.PENDING">
+                                        <span class="text-capitalize">{{item?.status}}</span>
+                                    </ng-container>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </div>
+    </div>
+    <div class="d-flex my-3">
+        <div class="card grey-200-bg w-100 rounded">
+            <div class="card-body">
+                <label>{{'orders.deliveryInstructions'| translate}}</label>
+                <p *ngIf="order?.deliveryInstruction">{{order?.deliveryInstruction}}</p>
+                <p *ngIf="!order?.deliveryInstruction">-</p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex my-2" *ngIf="order?.reason">
+        <div class="card grey-200-bg w-100 rounded">
+            <div class="card-body">
+                <label>{{'orders.reasonRejection' | translate}}</label>
+                <p *ngIf="order?.reason">{{order?.reason}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix my-2">
+        <div class="table-responsive page-table text-nowrap">
+            <!-- <table [dtOptions]="dtOptions" class="table table-borderless" datatable style="width:100%">
+                <thead class="table-header no-border">
+                    <tr>
+                        <th class="px-4" scope="col">{{'orders.productCode' | translate}}</th>
+                        <th scope="col">{{'orders.productName' | translate}}</th>
+                        <th scope="col">{{'orders.unit' | translate}}</th>
+                        <th scope="col">{{'orders.quantity' | translate}}</th>
+                        <th scope="col">{{'orders.unitPrice' | translate}}</th>
+                        <th scope="col">{{'orders.totalAmount'| translate}}</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="orderItems && orderItems.length" class="table-body">
+                    <tr *ngFor="let item of orderItems;let i=index"
+                        [ngClass]="{'yellow-200-bg': item?.isAmended === true}">
+                        <td class="px-4 font-roboto">
+                            <span class="text-black-100">{{item?.sku}}</span>
+                        </td>
+                        <td class="text-wrap">{{item?.name | capitalize}}</td>
+                        <td> {{item?.unitType}} <span class="text-lowercase font-roboto">{{item?.units}}</span></td>
+                        <td>{{item?.quantity}}</td>
+                        <td>
+                            <span *ngIf="item?.discountedPrice > 0">
+                                {{item?.discountedPrice.toFixed(2)}}
+                            </span>
+                            <span *ngIf="item?.discountedPrice === 0">
+                                {{item?.price.toFixed(2)}}
+                            </span>
+                        </td>
+                        <td>{{item?.total.toFixed(2)}} <span class="blue-badge" *ngIf="item.isFOC">
+                                FOC
+                            </span></td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!orderItems || !orderItems.length  && !processing" class="table-body">
+                    <tr>
+                        <td class="no-data-available" colspan="7">No data Available!</td>
+                    </tr>
+                </tbody>
+            </table> -->
+            <!-- <ngx-datatable #orderItemTable class="material expandable" [columnMode]="'force'" [headerHeight]="50"
+                rowHeight="auto" [scrollbarH]="true" [rows]="orderItems" emptyMessage="{{ 'noData' | translate}}"
+                [rowClass]="checkIsAmended">
+                <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                    [canAutoResize]="false">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                        <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
+                            [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                            (click)="toggleExpandRow(row)" *ngIf="row?.orderAmendItems.length >0">
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-row-detail rowHeight="auto" #orderAmendItem>
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                        <div style="padding-left:35px;">
+                            <label>{{'orders.receivedOrderDetails' | translate}}</label>
+                        </div>
+                        <div class="table-responsive page-table">
+                            <table class="table table-borderless" style="width:100%">
+                                <thead class="table-header no-border">
+                                    <tr>
+                                        <th scope="col">{{'orders.productName' | translate}}</th>
+                                        <th scope="col">{{'orders.unit' | translate}}</th>
+                                        <th scope="col">{{'orders.quantity' | translate}}</th>
+                                        <th scope="col">{{'orders.unitPrice' | translate}}</th>
+                                        <th scope="col">{{'orders.totalAmount' | translate}}</th>
+                                        <th scope="col">{{'restaurants.message' | translate}}</th>
+                                        <th scope="col">{{'onBoarding.status' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="row.orderAmendItems && row.orderAmendItems.length" class="table-body">
+                                    <tr *ngFor="let item of row.orderAmendItems;let j=index">
+                                        <td class="text-wrap">{{row?.name |capitalize}}</td>
+                                        <td>
+                                            {{item?.restaurantUnitType}} <span class="text-lowercase">{{item?.units}}</span>
+                                        </td>
+                                        <td>{{item?.restaurantQuantity}}</td>
+                                        <td>{{item?.discountedPrice || item?.restaurantPrice}}</td>
+                                        <td>{{item?.restaurantTotal.toFixed(2)}}
+                                            <span class="blue-badge" *ngIf="item.isFOC">
+                                                FOC
+                                            </span>
+                                        </td>
+                                        <td class="text-wrap pr-4">
+                                            <p class="px-2">{{item?.restaurantMessage}}</p>
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize">{{item?.status}}</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngFor="let item of row.orderAmendItems;let j=index">
+                                        <ng-container *ngIf="item?.supplierMessage !== null">
+                                            <td class="text-wrap yellow-200-bg">{{row?.name |capitalize}}</td>
+                                            <td class="yellow-200-bg">
+                                                {{item?.unitType}} <span
+                                                    class="text-lowercase">{{item?.units}}</span>
+                                            </td>
+                                            <td class="yellow-200-bg">{{item?.quantity}}</td>
+                                            <td class="yellow-200-bg">{{item?.discountedPrice || item?.price}}</td>
+                                            <td class="yellow-200-bg">{{item?.total.toFixed(2)}}
+                                                <span class="blue-badge" *ngIf="item.isFOC">
+                                                    FOC
+                                                </span>
+                                            </td>
+                                            <td class="text-wrap pr-4 yellow-200-bg">
+                                                <p class="yellow-200-bg px-2">{{item?.supplierMessage}}</p>
+                                            </td>
+                                            <td class="yellow-200-bg">
+                                                {{item?.status}}
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-row-detail>
+
+                <ngx-datatable-column name="{{'orders.productCode' | translate}}" [flexGrow]="1" [minWidth]="120"
+                    [width]="150" [sortable]="false" prop="sku">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span class="mr-2" *ngIf="row.isFoodics == true">
+                            <img src="../../../../assets/images/foc-tag.png" />
+                        </span>
+                        {{ row.sku }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'orders.productName' | translate}}" [flexGrow]="1" [width]="200"
+                    [sortable]="false" prop="name">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span class="text-capitalize">{{ row.name }}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'products.origin' | translate}}" [flexGrow]="1" [width]="100"
+                    [sortable]="false" prop="origin">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span class="text-capitalize">{{ row?.supplierInventory?.product?.origin }}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'products.type' | translate}}" [flexGrow]="1" [width]="100"
+                    [sortable]="false" prop="type">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span class="text-capitalize" *ngFor="let p of row?.supplierInventory?.product?.productType;let i =index">
+                            {{p.name}}
+                            <span *ngIf="row?.supplierInventory?.product?.productType-1 > i">, </span>
+                        </span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'orders.unit' | translate}}" [flexGrow]="1" [sortable]="false"
+                    prop="unitType">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row?.unitType}} <span class="text-lowercase">{{row?.units}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'orders.quantity' | translate}}" [flexGrow]="1" [sortable]="false"
+                    prop="quantity">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.quantity }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'orders.unitPrice' | translate}}" [flexGrow]="1" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row?.discountedPrice || row?.price }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="{{'orders.totalAmount' | translate}}" [flexGrow]="1" [sortable]="false"
+                    prop="total">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.total.toFixed(2) }}
+                        <span class="blue-badge" *ngIf="row.isFOC">
+                            FOC
+                        </span>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable> -->
+        
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end my-2">
+        <div class="card grey-200-bg card-order border-0">
+            <div class="card-body">
+                <label class="text-capitalize">{{'orders.orderDetails' | translate}}</label>
+                <div class="d-flex justify-content-between list-items" *ngIf="order?.discountedPromoPrice > 0">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize">{{'orders.orderAmount' | translate}}</span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-value text-capitalize">{{currency}}</span>
+                        <span class="text-value text-capitalize font-geflow">{{order?.subTotal | number : '1.2-2'}} </span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between list-items" *ngIf="order?.discountedPromoPrice > 0">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize">{{'orders.promoCode' | translate}}
+                            ({{order?.voucher}})
+                        </span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-value text-capitalize">- {{currency}}  </span>
+                        <span class="text-value text-capitalize font-geflow">{{order?.discountedPromoPrice}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between list-items" *ngIf="order?.discountInPercentage > 0">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize">{{'orders.discount' | translate}}</span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-value text-capitalize"> {{order?.discountInPercentage}} %</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between list-items">
+                    <div class="clearfix">
+                        <span class="text-label">{{'orders.subtotal' | translate}}</span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-value text-capitalize">{{currency}}
+                        </span>
+                        <span class="text-value text-capitalize font-geflow">{{order?.totalPrice | number : '1.2-2'}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between list-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize">{{'orders.vat' | translate}} ({{TAX}} %)</span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-value text-capitalize">{{currency}}</span>
+                        <span class="text-value text-capitalize font-geflow"> {{order?.tax | number : '1.2-2'}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between list-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize">{{'orders.total' | translate}} </span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-final-value text-capitalize">
+                            {{currency}}
+                        </span>
+                        <span class="text-final-value text-capitalize font-geflow"> {{order?.totalPrice + order?.tax | number : '1.2-2'}}</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

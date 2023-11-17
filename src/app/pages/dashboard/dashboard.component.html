@@ -1,0 +1,31 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2>{{'dashboard.welcome' | translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li class="breadcrumb-item text-black-400" aria-current="page">
+                {{'sidebar.dashboard' | translate }}
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="row align-item-start dashboard ">
+        <div class="col-lg-8 col-md-12 col-sm-12 align-items-center">
+            <app-pending-orders></app-pending-orders>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 align-items-center">
+            <app-order-stats #orderStats></app-order-stats>
+        </div>
+    </div>
+    <div class="row align-items-center mt-4 dashboard">
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+            <app-top-restaurants></app-top-restaurants>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+            <app-rejected-orders></app-rejected-orders>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+            <app-top-categories></app-top-categories>
+        </div>
+    </div>
+</div>

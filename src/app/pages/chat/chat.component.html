@@ -1,0 +1,206 @@
+<div class="container-fluid" id="page-container">
+	<div class="row">
+		<div class="col-lg-4 col-md-5 col-sm-12 user-list">
+			<div class="p-4">
+				<div class="clearfix">
+					<h2>{{'chats.chats' | translate}}</h2>
+				</div>
+				<div class="claerfix">
+					<div class="form-group w-90">
+						<div class="input-group mb-0 search-box" style="width: 100%;">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1" style="background-color: transparent;">
+									<img src="assets/icons/search.svg">
+								</span>
+							</div>
+							<input type="text" class="form-control" placeholder="{{ 'search' | translate}}"
+								aria-label="Search" aria-describedby="basic-addon1"
+								(keyup)="searchUser($event.target.value)">
+						</div>
+					</div>
+				</div>
+				<div class="claerfix">
+					<h6>{{'chats.recentChat' | translate}}</h6>
+				</div>
+
+				<div class="d-flex">
+					<div class="table-responsive fixed-height" (scroll)="onScroll($event)">
+						<table class="table">
+							<thead></thead>
+							<tbody>
+								<tr *ngFor="let item of userList" (click)="selectUser(item)">
+									<td>
+										<div class="d-flex image-and-text align-items-center">
+											<img [src]="item?.coverUrl || 'assets/images/placeholder_logo.png'"
+												class="">
+											<div class="text-div text-capitalize">
+												<h4 class="text-black-100">{{item?.senderName}}</h4>
+												<p class="text-gray-100">{{item?.lastMessage?.message}}</p>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="text-div dir-ltr">
+											<h4 class="text-black-100 font-roboto">
+												{{create_human_friendly_date(item?.lastMessage?.createdAt, "Yesterday",
+												"Today",
+												"Tomorrow", "en")}}
+											</h4>
+										</div>
+									</td>
+								</tr>
+								<div class="d-flex align-items-center" *ngIf="userList.length ===0">
+									<label class="text-black-200">
+										{{ 'noData' | translate}}
+									</label>
+								</div>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-8 col-md-7 col-sm-12 chat-screen" *ngIf="selectedUser">
+			<div class="card card-bordered">
+				<div class="card-header">
+					<h4 class="card-title">
+						<strong>{{'chats.chatWith' | translate}}</strong>
+					</h4>
+					<div class="claerfix text-capitalize">
+						<h2>{{selectedUser?.senderName}}</h2>
+					</div>
+				</div>
+
+				<div #scrollMe class="card-body ps-container ps-theme-default ps-active-y" id="chat-content"
+					style="overflow: scroll;" [scrollTop]="scrollMe?.scrollHeight">
+					<div *ngFor="let item of messages">
+						<div class="media media-chat media-chat-reverse" *ngIf="item?.user._id === 'me'">
+							<div class="media-body">
+								<div class="d-flex comment ailgn-self-center flex-column" (click)="downloadFile(item)">
+									<!-- <div class="d-flex clearfix">
+										<span class="text-blue-300" style="opacity:0.5">{{selectedUser
+											?.newData?.receiver}}
+										</span>
+									</div> -->
+									<div class="d-flex flex-row">
+										<div>
+											<img src="assets/icons/download-image.png"
+												*ngIf="item?.type === 'image/png'|| item?.type === 'image/jpg' || item?.type === 'image/svg' || item?.type === 'image/jpeg' || item?.type === 'image/gif'"
+												class="img-fluid">
+											<img src="assets/icons/download-document.png"
+												*ngIf="item?.type && item?.type != 'image/png' && item?.type != 'image/jpg' && item?.type != 'image/svg' && item?.type != 'image/jpeg' && item?.type != 'image/gif'"
+												class="img-fluid">
+										</div>
+										<div class="d-flex justify-content-start align-self-center flex-column px-2">
+											<div class="d-flex clearfix">
+												<p class="mb-0" *ngIf="item?.customType != 'file'">{{item?.text}}</p>
+												<p class="mb-0" *ngIf="item?.customType === 'file'">{{item?.text
+													|truncate:16}}</p>
+											</div>
+											<div class="d-flex clearfix dir-ltr">
+												<span class="text-blue-300 font-roboto" style="opacity:0.5">{{item?.createdAt |
+													date:'shortTime'}}</span>
+											</div>
+										</div>
+										<div>
+											<img src="assets/icons/download-file-white.png" (click)="downloadFile(item)"
+												*ngIf="item?.customType === 'file'" class="img-fluid">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="media media-chat" *ngIf="item?.user._id != 'me'"> <img class="avatar"
+								[src]="selectedUser?.coverUrl || 'assets/images/placeholder_logo.png'" alt="...">
+							<!-- <div class="media-body">
+										<div class="d-flex comment ailgn-items-center" (click)="downloadFile(item)">
+											<p>{{item?.text}}</p>
+											<img src="assets/icons/download-blue.png" *ngIf="item?.customType === 'file'"
+												class="img-fluid">
+										</div>
+									</div> -->
+							<div class="media-body">
+								<div class="d-flex comment ailgn-self-center flex-column">
+									<div class="d-flex clearfix">
+										<span class="text-black-300" style="opacity:0.5">{{item?.user?.name}}</span>
+									</div>
+									<div class="d-flex flex-row">
+										<div>
+											<img src="assets/icons/download-image-grey.png"
+												*ngIf="item?.type === 'image/png'|| item?.type === 'image/jpg' || item?.type === 'image/svg' || item?.type === 'image/jpeg' || item?.type === 'image/gif'"
+												class="img-fluid">
+											<img src="assets/icons/download-document-grey.png"
+												*ngIf="item?.type && item?.type != 'image/png' && item?.type != 'image/jpg' && item?.type != 'image/svg' && item?.type != 'image/jpeg' && item?.type != 'image/gif'"
+												class="img-fluid">
+										</div>
+										<div class="d-flex align-self-center flex-column px-2"
+											[ngClass]="{'w-100': item?.customType != 'file','w-75':item?.customType === 'file'}">
+											<div class="d-flex clearfix text-black-100">
+												<p class="mb-0" *ngIf="item?.customType != 'file'">{{item?.text}}</p>
+												<p class="mb-0" *ngIf="item?.customType === 'file'">{{item?.text
+													|truncate:16}}</p>
+											</div>
+											<div class="clearfix text-right dir-ltr">
+												<span class="text-black-300 font-roboto" style="opacity:0.5">{{item?.createdAt |
+													date:'shortTime'}}</span>
+											</div>
+										</div>
+										<div>
+											<img src="assets/icons/download-grey.png" (click)="downloadFile(item)"
+												*ngIf="item?.customType === 'file'" class="img-fluid">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="media media-chat media-chat-reverse">
+							                    <div class="media-body">
+							                        <p>Hi !!</p>
+							                        <p>I will meet you Sandon Square sharp at 10 AM</p>
+							                        <p>Is that okay?</p>
+							                    </div>
+							                </div> -->
+					<!-- <div class="media media-chat"> <img class="avatar"
+							                        src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+							                    <div class="media-body">
+							                        <p>Okay i will meet you on Sandon Square </p>
+							                    </div>
+							                </div>
+							                <div class="media media-chat media-chat-reverse">
+							                    <div class="media-body">
+							                        <p>Do you have pictures of Matley Marriage?</p>
+							                    </div>
+							                </div> -->
+					<!-- <div class="media media-chat"> <img class="avatar"
+							                        src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+							                    <div class="media-body">
+							                        <p>Sorry I don't have. i changed my phone.</p>
+							                    </div>
+							                </div> -->
+					<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+						<div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+					</div>
+					<div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+						<div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+					</div>
+				</div>
+				<div class="card-footer border-0">
+					<div class="publisher"> <img class="avatar avatar-xs"
+							[src]="currentUser?.profilePicture || 'assets/images/placeholder_logo.png'" alt="...">
+						<input (keyup.enter)="sendMessage()" [(ngModel)]="message" class="publisher-input" type="text"
+						placeholder="{{ 'translations.writeSomething' | translate}}">
+						<span (click)="fileInput1.click()" class="publisher-btn file-group"> <i
+								class="fa fa-paperclip file-browser"></i> <input type="file">
+						</span>
+						<input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file"
+							(change)="uploadImage($event)" required accept="image/png, image/jpeg,application/pdf">
+						<a class="publisher-btn" data-abc="true"><i class="fa fa-smile"></i></a>
+						<a (click)="sendMessage()" class="btn btn-theme btn-blue btn-rounded" data-abc="true"><i
+								class="fa fa-paper-plane"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

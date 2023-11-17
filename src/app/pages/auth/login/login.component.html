@@ -1,0 +1,77 @@
+<div class="loginContainer d-flex align-items-center">
+  <div class="w-50">
+    <img src="../../../../assets/images/login-bg.jpg" class="img-fluid w-100">
+  </div>
+  <div class="w-50">
+    <div class="loginForm">
+      <div class="text-block">
+        <img src="../../../../assets/images/logo.png" class="logo ">
+        <h2>Welcome to Eighty6 <br>Admin Panel</h2>
+        <p>Manage Restaurant, Supplier and Users across the platform</p>
+        <div>
+          <h3>Login</h3>
+          <p>Enter your details below</p>
+        </div>
+        <form [formGroup]="loginForm">
+          <div class="form-group mb-4 mt-4">
+            <input type="email" class="form-control" autocomplete="off" id="exampleInputEmail1" data-testid="email"
+              aria-describedby="emailHelp" placeholder="demo@eightysix.com" formControlName="email">
+            <label for="exampleInputEmail1">Email address</label>
+            <div class="text-left" *ngFor="let error of errorMessages.email">
+              <ng-container
+                *ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched) && submitted">
+                <span class="error-message font-14">{{error.message}}</span>
+              </ng-container>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <div class="input-group input-group-alternative">
+              <input [type]="passwordType" autocomplete="off" class="form-control" id="exampleInputPassword1" data-testid="password"
+                placeholder="Password" formControlName="password">
+              <div class="input-group-append" (click)="onClickEye()">
+                <span class="showPassword">
+                  <img *ngIf="!showEye" src="assets/icons/eye-fill.svg">
+                  <img *ngIf="showEye" src="assets/icons/eye-slash-fill.svg">
+                </span>
+              </div>
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.password">
+              <ng-container
+                *ngIf="form.password.hasError(error.type) && (form.password.dirty || form.password.touched) && submitted">
+                <span class="error-message font-14">{{error.message}}</span>
+              </ng-container>
+            </div>
+          </div>
+
+
+          <div class="form-check d-flex pl-0">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" (change)="toggleRememberMe($event)" data-testid="rememberMe"
+                [checked]="isRememberMe">
+              <label class="custom-control-label" for="customCheck1">Remember me</label>
+            </div>
+            <a [routerLink]="['/forgot-password']" routerLinkActive="router-link-active" class="ml-auto" data-testid="forgetPassword">Forgot 
+              Password?</a>
+          </div>
+
+          <div class="mt-2 text-capitalize">
+            <ng-container *ngIf="displayMessage!=null">
+              <span class="error-message font-14">{{displayMessage}}</span>
+            </ng-container>
+          </div>
+
+          <ng-container>
+            <button type="submit" (click)="onSubmit()" class="btn-theme btn-blue w-100 mt-4 border-0" data-testid="submit-btn">
+              <span *ngIf="!loading">Login</span>
+              <span class="spinner-border spinner-border-sm" *ngIf="loading " role="status"
+                aria-hidden="true"></span>
+            </button>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

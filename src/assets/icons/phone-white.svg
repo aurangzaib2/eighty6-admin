@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+    <defs>
+        <filter id="egybtzv6na">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.043137 0 0 0 0 0.447059 0 0 0 0 0.811765 0 0 0 1.000000 0"/>
+        </filter>
+        <path id="sczw11uzvb" d="M18.333 14.208c-1.145 0-2.245-.183-3.272-.522-.321-.101-.678-.028-.935.22l-2.017 2.016c-2.594-1.32-4.72-3.437-6.04-6.04l2.016-2.026c.257-.239.33-.596.23-.917-.34-1.027-.523-2.127-.523-3.272 0-.504-.413-.917-.917-.917H3.667c-.504 0-.917.413-.917.917 0 8.607 6.976 15.583 15.583 15.583.505 0 .917-.413.917-.917v-3.208c0-.504-.413-.917-.917-.917zM17.417 11h1.833c0-4.556-3.694-8.25-8.25-8.25v1.833c3.547 0 6.417 2.87 6.417 6.417zm-3.667 0h1.833c0-2.53-2.053-4.583-4.583-4.583V8.25c1.522 0 2.75 1.228 2.75 2.75z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g transform="translate(-1095.000000, -270.000000) translate(270.000000, 181.000000) translate(0.000000, 0.500000) translate(825.000000, 88.500000)">
+                        <rect width="44" height="44" fill="#FFF" fill-opacity=".739" fill-rule="nonzero" rx="22"/>
+                        <g filter="url(#egybtzv6na)">
+                            <g transform="translate(11.000000, 12.000000)">
+                                <mask id="8visd7m1zc" fill="#fff">
+                                    <use xlink:href="#sczw11uzvb"/>
+                                </mask>
+                                <g fill="#000" fill-rule="nonzero" mask="url(#8visd7m1zc)">
+                                    <path d="M0 0H22V22H0z"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,110 @@
+<div class="card profile-card border-0">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div class="d-flex justify-content-center my-4">
+		<h5 class="text-black-100 mb-0 text-capitalize" *ngIf="!data?.id">{{'products.createNewCategory' | translate}}
+		</h5>
+		<h5 class="text-black-100 mb-0 text-capitalize" *ngIf="data?.id">{{'products.editCategory' | translate}}</h5>
+	</div>
+	<div class="mx-4 mb-4">
+		<form [formGroup]="categoryForm">
+			<div class="row">
+				<div class="col-12 col-height">
+					<div class="form-group mb-4 mt-4">
+						<input type="text" class="form-control" autocomplete="off" id="categoryName"
+							aria-describedby="category name" placeholder="{{ 'enterHere' | translate}}"
+							formControlName="name">
+						<label for="exampleInput1">{{'products.categoryName' | translate}} {{'products.english_text' | translate}}*</label>
+						<div class="text-left" *ngFor="let error of errorMessages.name">
+							<ng-container
+								*ngIf="form.name.hasError(error.type) && (form.name.dirty || form.name.touched)">
+								<span class="error-message font-13">{{'categoryFormErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-height">
+					<div class="form-group mb-4 mt-4">
+						<input type="text" class="form-control" autocomplete="off" id="categoryName" dir="rtl"
+							aria-describedby="category name" placeholder="أدخل هنا"
+							formControlName="arabicName">
+						<label for="rlt exampleInput1" dir="auto">{{'products.categoryName' | translate}} {{'products.arabic_text' | translate}}*</label>
+						<div class="text-left" *ngFor="let error of errorMessages.name">
+							<ng-container
+								*ngIf="form.arabicName.hasError(error.type) && (form.arabicName.dirty || form.arabicName.touched)">
+								<div class="rlt error-message font-13" lang="ar" dir="rtl">'أدخل اسم الفئ</div>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-between align-item-center mt-3">
+				<span class="section-head">{{'products.categoryImage' | translate}}</span>
+			</div>
+			<div class="row mt-3" *ngIf="fileUploaded">
+				<div class="col-5 mb-4 mt-4">
+					<div>
+						<div class="image-box rounded border text-center position-relative">
+							<img [src]="fileInfo?.image" *ngIf="fileInfo?.image != null">
+							<button (click)="clearImage()"
+								class="btn btn-grey btn-circular btn-photo-close btn-sm btn-sm-close">
+								<i class="fa fa-times fa-lg"></i>
+							</button>
+						</div>
+					</div>
+					<h4 class="text-black-100 font-13 mt-2">{{fileInfo?.originalname}}</h4>
+					<span class="text-black-100 font-12" *ngIf="form?.id.value === null">
+						Size: {{fileInfo?.originalSize }} kb
+					</span>
+					<div class="d-flex align-items-center">
+						<button class="btn btn-green-badge btn-circular btn-sm btn-sm-check">
+							<i class="fa fa-check"></i>
+						</button>
+						<span class="text-gray-400 pl-2 font-12">{{'products.imageDimension' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 px-0" *ngIf="!fileUploaded">
+				<div (fileDropped)="onFileDropped($event)">
+					<div class="upload-box mt-2">
+						<input #fileDropRef autocomplete="on" type="file" name="file"
+							(change)="fileBrowseHandler($event.target.files)" required
+							accept="image/png, image/jpeg,image/jpg">
+						<img src="assets/icons/download.svg" class="img-fluid download-img">
+						<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+							translate}}</label>
+						<p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="mt-1 text-capitalize d-flex align-items-center">
+			<ng-container *ngIf="displayMessage!=null">
+				<i class="fa fa-info-circle text-red-100"></i>
+				<span class="error-message font-14 pl-2">{{displayMessage}}</span>
+			</ng-container>
+		</div>
+		<div class="d-flex justify-content-between mt-3">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+				{{'products.cancel' | translate}}
+			</button>
+
+			<button *ngIf="!loading && !data?.id" type="submit" (click)="onSubmit()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<span>
+					<img src="assets/icons/plus-white.svg">{{'products.create' | translate}}
+				</span>
+			</button>
+			<button *ngIf="loading" class="btn btn-theme btn-blue text-capitalize">
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			</button>
+			<button type="submit" *ngIf="!loading && data?.id" (click)="update()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<span>{{'products.saveUpdate' | translate}}</span>
+			</button>
+		</div>
+	</div>
+</div>

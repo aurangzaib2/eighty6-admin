@@ -1,0 +1,27 @@
+.auth-box {
+  max-width: 582px;
+  min-height: 335px;
+  padding: 46px 89px 50px;
+  border-radius: 4px;
+  background: var(--white);
+  box-shadow: 1px 1px 18px var(--grey-200);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 23vh;
+  margin: auto;
+  .form-group {
+    .form-control {
+      width: 90%;
+      margin: auto;
+      height: 56px;
+      text-align: center;
+    }
+  }
+  .text-gray-100:hover {
+    color: var(--grey-100);
+  }
+}
+.success{
+  color: green;
+}

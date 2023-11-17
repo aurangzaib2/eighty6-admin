@@ -1,0 +1,26 @@
+.btn-dropdown {
+  text-align: left;
+  padding-top: 12px;
+}
+.dropdown-toggle::after {
+  display: inline-block;
+  float: right;
+  padding-top: 12px;
+  position: absolute;
+  right: 12px;
+  top: 22px;
+}
+.dropdown-menu.show {
+  width: 100%;
+}
+.ng-select.ng-select-single ::ng-deep .ng-select-container {
+  border: none !important;
+  color: var(--grey-100) !important;
+}
+
+.ng-select.ng-select-single ::ng-deep .ng-select-container:hover {
+  box-shadow: none !important;
+}
+.ng-select.ng-select-focused:not(.ng-select-opened)>::ng-deep.ng-select-container {
+  box-shadow: none !important;
+}

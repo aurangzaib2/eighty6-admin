@@ -1,0 +1,349 @@
+<!-- <header class="theme-bg">
+
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-sm theme-bg">
+      <div class="d-flex">
+        Brand
+        <a class="navbar-brand" href="#"><img src="assets/images/logo-white.png"></a>
+        <div class="search">
+          
+        </div>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        (click)="toggleCollapsed()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      Links
+      <div class="collapse navbar-collapse" id="navbarSupportedContent"
+        [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+
+      </div>
+    </nav>
+  </div>
+</header> -->
+<header class="theme-bg">
+  <div class="container-fluid">
+    <nav class="">
+      <div class="d-flex align-items-center flex-nowrap justify-content-between">
+        <div class="d-flex " style="width: 250px;">
+          <!-- Brand -->
+          <a class="navbar-brand" href="#"><img src="assets/images/logo.svg"></a>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="isAuthenticated" style="width: 480px;padding-right: 10px;">
+          <div class="search w-100">
+            <!-- <div ngbDropdown container="body">
+                      <input type="search" (keyup)="search()" class="form-control" [(ngModel)]="term"
+                        (click)="fileInput1.click()" placeholder="Search for Restaurants, Orders, and Products">
+                      <button class="btn btn-outline-primary btn-sm hidden-btn " #fileInput1 ngbDropdownToggle>Actions</button>
+                      <div ngbDropdownMenu class="search-dropdown"
+                        *ngIf=" orders.length > 0 || product.length > 0 || restaurant.length > 0">
+                        <div *ngIf="orders.length > 0">
+                          <h6 class="text-uppercase px-3">orders</h6>
+                          <div class="table-responsive fixed-height">
+                            <table class="table ">
+                              <thead>
+        
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of orders" ngbDropdownItem>
+                                  <td (click)="navigateToOrder(item)" width="84%">
+                                    <div class="d-flex image-and-text align-items-center">
+                                      <img [src]="item?.restaurant?.logo || 'assets/images/placeholder_logo.png'">
+                                      <div class="text-div">
+                                        <h4 class="text-capitalize text-black-100">Orders: {{item?.orderId}}</h4>
+                                        <p class="text-gray-100">
+                                          {{item?.createdAt | date: 'dd MMMM yyyy'}}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="text-div text-right">
+                                      <h4 class="text-black-100">AED {{item?.totalPrice}}</h4>
+                                      <div class="time red-time">04:44 <i class="fa fa-clock-o"></i></div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div *ngIf="product.length > 0">
+                          <h6 class="text-uppercase px-3">products</h6>
+                          <div class="table-responsive fixed-height">
+                            <table class="table">
+                              <thead>
+        
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of product" ngbDropdownItem>
+                                  <td (click)="navigateToProductView(item)">
+                                    <div class="d-flex image-and-text align-items-center">
+                                      <img src="assets/images/promo1.png" *ngIf="item?.image === null">
+                                      <img [src]="item?.image" *ngIf="item?.image != null">
+                                      <div class="text-div">
+                                        <h4 class="text-capitalize text-black-100">{{item?.name}}</h4>
+                                        <p class="text-gray-100 text-capitalize">
+                                          <strong class="text-black-200">category: </strong>
+                                          {{item?.category?.name}}
+                                          <strong class="text-black-200">origin: </strong>{{item?.product?.origin}}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div *ngIf="restaurant.length > 0">
+                          <h6 class="text-uppercase px-3">restaurant</h6>
+                          <div class="table-responsive fixed-height">
+                            <table class="table">
+                              <thead>
+        
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of restaurant" ngbDropdownItem>
+                                  <td>
+                                    <div class="d-flex image-and-text align-items-center">
+                                      <img [src]="item?.logo || 'assets/images/placeholder_logo.png'">
+                                      <div class="text-div ">
+                                        <h4 class="text-capitalize text-black-100">{{item?.name}}</h4>
+                                        <p class="text-gray-100 text-capitalize">
+                                          <strong class="text-black-200">
+                                            company name: </strong>
+                                          {{item?.company.name}}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+            <div ngbDropdown #searchDropDown>
+              <input type="search" (keyup)="search()" class="form-control" [(ngModel)]="term"
+                [placeholder]="'placeholder.value' | translate" id="dropdownConfig" ngbDropdownToggle>
+              <div ngbDropdownMenu aria-labelledby="dropdownConfig"
+                *ngIf="term && ( orders.length > 0 || product.length > 0 || restaurant.length > 0) ">
+                <div class="search-dropdown p-0">
+                  <div *ngIf="orders.length > 0">
+                    <h6 class="text-uppercase px-3">{{'sidebar.orders' | translate}}</h6>
+                    <div class="table-responsive fixed-height">
+                      <table class="table ">
+                        <thead></thead>
+                        <tbody>
+                          <tr *ngFor="let item of orders" ngbDropdownItem (click)="navigateToOrder(item)">
+                            <td width="84%">
+                              <div class="d-flex image-and-text align-items-center">
+                                <img [src]="item?.restaurant?.logo || 'assets/images/placeholder_logo.png'">
+                                <div class="text-div">
+                                  <h4 class="text-capitalize text-black-100">{{'sidebar.orders' | translate}}:
+                                    {{item?.uniqueId}}</h4>
+                                  <p class="text-gray-100">
+                                    {{item?.createdAt | date: 'dd MMMM yyyy'}}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-div text-right">
+                                <h4 class="text-black-100">{{currency}} {{item?.totalPrice}}</h4>
+                                <div class="time red-time">04:44 <i class="fa fa-clock-o"></i></div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div *ngIf="product.length > 0">
+                    <h6 class="text-uppercase px-3">{{'sidebar.products' | translate}}</h6>
+                    <div class="table-responsive fixed-height">
+                      <table class="table">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of product" ngbDropdownItem>
+                            <td (click)="navigateToProductView(item)">
+                              <div class="d-flex image-and-text align-items-center">
+                                <img [src]="item?.image || 'assets/images/placeholder_category.svg'">
+                                <div class="text-div">
+                                  <h4 class="text-capitalize text-black-100">{{item?.displayName}}</h4>
+                                  <p class="text-gray-100 text-capitalize">
+                                    <strong class="text-black-200">category: </strong>
+                                    {{item?.category?.name}}
+                                    <strong class="text-black-200" *ngIf="item?.origin">origin:
+                                    </strong>{{item?.origin}}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div *ngIf="restaurant.length > 0">
+                    <h6 class="text-uppercase px-3">{{'sidebar.restaurants' | translate}}</h6>
+                    <div class="table-responsive fixed-height">
+                      <table class="table">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of restaurant" (click)="navigateToRestaurant(item)" ngbDropdownItem>
+                            <td>
+                              <div class="d-flex image-and-text align-items-center">
+                                <img [src]="item?.logo || 'assets/images/placeholder_logo.png'">
+                                <div class="text-div ">
+                                  <h4 class="text-capitalize text-black-100">{{item?.name}}</h4>
+                                  <p class="text-gray-100 text-capitalize">
+                                    <strong class="text-black-200">
+                                      {{'orders.companyName' | translate}}: </strong>
+                                    {{item?.company.name}}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="links ml-auto d-flex align-items-center" *ngIf="isAuthenticated">
+          <a class="top-link text-white font-20" [routerLink]="['/chat']" routerLinkActive="router-link-active">
+            <!-- <span class="iconify" data-icon="bx:bx-comment" data-inline="false"></span> -->
+            <!-- <img src="assets/icons/message.png" class="img-fluid">
+            <span>4</span> -->
+            <a class="btn btn-transparent">
+              <!-- <span class="iconify" data-icon="clarity:bell-line" data-inline="false"></span> -->
+              <img src="assets/icons/message.png" class="img-fluid">
+              <!-- <span>2</span> -->
+            </a>
+          </a>
+          <a class="top-link text-white font-20" ngbDropdown #myDrop="ngbDropdown">
+            <div class="d-inline-block">
+              <a class="btn btn-transparent" id="dropdownBasic1" ngbDropdownToggle (click)="getNotifications()">
+                <!-- <span class="iconify" data-icon="clarity:bell-line" data-inline="false"></span> -->
+                <img src="assets/icons/notifications.png" class="img-fluid">
+                <ng-container *ngIf="notificationCount > 99; else notificationCountElseCase">
+                  <span class="notification">{{ "99+" }}</span>
+                </ng-container>
+                <ng-template #notificationCountElseCase>
+                  <span class="notification">{{ notificationCount }}</span>
+                </ng-template>
+              </a>
+              <div ngbDropdownMenu class="notification-dropdown" aria-labelledby="dropdownBasic1">
+                <div class="d-flex justify-content-between align-items-center custom-dropdown-heading">
+                  <h6 class="text-capitalize">{{'sidebar.notifications' | translate}}</h6>
+                  <a (click)="markAsRead();$event.stopPropagation(); myDrop.close();">{{'sidebar.markAsRead' |
+                    translate}}</a>
+                </div>
+                <div>
+                  <div class="table-responsive fixed-height">
+                    <table class="table ">
+                      <thead>
+
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of notificationList" ngbDropdownItem (click)="navigation(item)">
+                          <td>
+                            <div class="d-flex image-and-text align-items-center">
+                              <!-- <img [src]="item.restaurantLogo" class="img-fluid image-rounded"
+                                  *ngIf="item?.restaurantLogo != null"> -->
+                              <img src="assets/images/resto5.png" class="img-fluid image-rounded">
+                              <div class="text-div">
+                                <h4 class="text-capitalize text-black-100" *ngIf="selectedLang == 'en'">{{item?.title}}
+                                </h4>
+                                <h4 class="text-capitalize text-black-100" *ngIf="selectedLang == 'ar'">
+                                  {{item?.titleTranslation?.ar}}</h4>
+                                <p *ngIf="selectedLang == 'en'">
+                                  {{item?.message |truncate:50}}
+                                </p>
+                                <p *ngIf="selectedLang == 'ar'">
+                                  {{item?.messageTranslation?.ar |truncate:50}}
+                                </p>
+                                <p class="text-gray-100">
+                                  {{item?.createdAt | date: 'shortTime'}}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <!-- <td>
+                            <div class="text-div text-right">
+                              <img src="assets/icons/action-dot.svg" class="rotate90 menu-icon">
+                            </div>
+                          </td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr style="margin:0px;">
+                <div ngbDropdownItem class="text-center" [routerLink]="['/notifications']"
+                  routerLinkActive="router-link-active">
+                  <a class="text-blue-100 btn btn-theme ">{{'sidebar.showAllNotification' | translate}}</a>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="top-link text-white font-20">
+            <img [src]="selectedRegionIcon" class="img-fluid">
+          </a>
+          <div class="lang">
+            <span class="text-white text-capitalize" style="font-size:small" for="language">{{'sidebar.country' |
+              translate}}</span>
+            <div class="input-group input-group-sm align-items-center" style="position: relative;top: -8px;">
+              <select (change)="changeCountry($event)" [(ngModel)]="selectedRegionValue" disabled
+                class="custom-select custom-select-sm font-roboto" id="inputGroupSelect01">
+                <option class="text-black-100 font-roboto" *ngFor="let c of countryList" [value]="c.value">
+                  {{c.value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <span class="text-white text-capitalize" style="font-size:small" for="language">{{'sidebar.language' |
+              translate}}</span>
+            <div class="input-group input-group-sm align-items-center" style="position: relative;top: -8px;">
+              <div class="input-group-prepend">
+                <img src="assets/icons/globe.png">
+              </div>
+              <select (change)="changeLanguage($event.target.value)" [(ngModel)]="selectedLang"
+                class="custom-select custom-select-sm font-roboto" id="inputGroupSelect02">
+                <option class="text-black-100 font-roboto" *ngFor="let lang of languageArr" [value]="lang.value">
+                  {{lang.lang}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="trans-button">
+            <button type="button" class="btn btn-primary pl-0" data-toggle="dropdown">
+              <img src="assets/images/user.png" *ngIf="currentUser?.profilePicture === null">
+              <img [src]="currentUser?.profilePicture" *ngIf="currentUser?.profilePicture != null">
+              <span class="res-hide pl-1 text-capitalize font-roboto">{{currentUser?.firstName}}</span>
+            </button>
+          </div>
+          <!-- <div class="dropdown trans-button">
+            <div class="dropdown-menu"> -->
+          <a class="text-white pl-1 text-capitalize font-roboto logout-btn" (click)="logout()">{{'logout'|
+            translate}}</a>
+          <!-- </div>
+          </div> -->
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

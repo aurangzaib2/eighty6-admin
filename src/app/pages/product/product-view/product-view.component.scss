@@ -1,0 +1,21 @@
+.product-img {
+	margin: 0 auto;
+	position: relative;
+	.organic {
+		left: 15px;
+	}
+	img {
+		height: 300px;
+	}
+}
+h4 {
+	font-size: 24px;
+}
+#page-container {
+	min-height: 74vh;
+}
+.product-view-text{
+	label{
+		width: 80px;
+	}
+}

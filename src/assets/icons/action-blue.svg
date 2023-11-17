@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38" height="36" viewBox="0 0 38 36">
+    <defs>
+        <filter id="5ifuiuqzob">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.043137 0 0 0 0 0.447059 0 0 0 0 0.811765 0 0 0 1.000000 0"/>
+        </filter>
+        <rect id="fvad783a1a" width="38" height="36" x="0" y="0" rx="5"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g transform="translate(-1316 -416) translate(300 416) translate(972) translate(44)">
+                        <mask id="u0ej5pnv0c" fill="#fff">
+                            <use xlink:href="#fvad783a1a"/>
+                        </mask>
+                        <use fill="#0B72CF" opacity=".3" xlink:href="#fvad783a1a"/>
+                        <g filter="url(#5ifuiuqzob)" font-family="FontAwesome5Pro-Light, Font Awesome 5 Pro" font-size="13" font-weight="300" letter-spacing=".163">
+                            <g mask="url(#u0ej5pnv0c)">
+                                <text transform="translate(12 12)">
+                                    <tspan x=".419" y="11" fill="#000">pencil</tspan>
+                                </text>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+    <defs>
+        <filter id="a3szp5qxza">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.383589 0 0 0 0 0.383589 0 0 0 0 0.383589 0 0 0 1.000000 0"/>
+        </filter>
+        <filter id="20z7thjblb">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.101961 0 0 0 0 0.101961 0 0 0 0 0.101961 0 0 0 1.000000 0"/>
+        </filter>
+        <path id="0ze7ssebyc" d="M9.167 7.5h1.666V5h2.5V3.333h-2.5v-2.5H9.167v2.5h-2.5V5h2.5v2.5zM5.833 15c-.916 0-1.658.75-1.658 1.667 0 .916.742 1.666 1.658 1.666.917 0 1.667-.75 1.667-1.666C7.5 15.75 6.75 15 5.833 15zm8.334 0c-.917 0-1.659.75-1.659 1.667 0 .916.742 1.666 1.659 1.666.916 0 1.666-.75 1.666-1.666 0-.917-.75-1.667-1.666-1.667zM6.75 10.833h6.208c.625 0 1.175-.341 1.459-.858l3.216-5.842-1.458-.8-3.217 5.834h-5.85l-3.55-7.5H.833v1.666H2.5l3 6.325-1.125 2.034c-.608 1.116.192 2.475 1.458 2.475h10V12.5h-10l.917-1.667z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g filter="url(#a3szp5qxza)" transform="translate(-442 -211) translate(300 203)">
+                <g filter="url(#20z7thjblb)" transform="translate(138)">
+                    <g>
+                        <g transform="translate(4 6) translate(0 2)">
+                            <mask id="u657mec45d" fill="#fff">
+                                <use xlink:href="#0ze7ssebyc"/>
+                            </mask>
+                            <g fill="#000" fill-opacity=".7" fill-rule="nonzero" mask="url(#u657mec45d)">
+                                <path d="M0 0H20V20H0z"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

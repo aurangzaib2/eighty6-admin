@@ -1,0 +1,19 @@
+.user-profile {
+  // height: 100px;
+  width: 110px;
+  border-radius: 50%;
+  cursor: pointer;
+  // object-fit: cover;
+}
+
+.profile-card .profile-logo {
+  cursor: pointer;
+  position: absolute;
+  top: 65px;
+  display: flex;
+  border-radius: none;
+  // background-color: transparent;
+  // padding: 14px;
+  width: 110px;
+  height: 110px;
+}

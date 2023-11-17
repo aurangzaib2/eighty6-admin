@@ -1,0 +1,51 @@
+<div class="card top-cards">
+	<div class="card-header border-0 bg-transparent d-flex">
+		<span>{{'dashboard.rejectedOrders' | translate}}</span>
+		<a class="btn-link ml-auto" (click)="navigateTo()" routerLinkActive="router-link-active">
+			{{'dashboard.viewMore' | translate}}
+		</a>
+	</div>
+	<div class="card-body pt-0">
+		<div class="table-responsive fixed-height pr-2">
+			<table class="table">
+				<thead>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of dataList|slice:0:10" style="cursor: default;">
+						<td>
+							<div class="d-flex image-and-text align-items-center">
+								<img [src]="item?.logo || 'assets/images/placeholder_logo.png'">
+								<div class="text-div">
+									<!-- <h4 class="text-black-100 text-capitalize">{{item?.restaurantName}}</h4> -->
+									<span *ngIf="selectedLang == 'en'">
+                                        <h4 *ngIf="item?.restaurantName">{{item?.restaurantName | truncate:16| capitalize}}</h4>
+                                        <h4 *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                      </span>
+                                      <span *ngIf="selectedLang == 'ar'">
+                                        <h4 *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                        <h4 *ngIf="!item?.restaurantNameTranslation?.ar">
+                                                        {{item?.restaurantName | truncate:16| capitalize}}
+                                        </h4>
+                                      </span>
+									<p class="text-gray-100 font-roboto">{{item?.orderId}}</p>
+								</div>
+							</div>
+						</td>
+
+						<td>
+							<div class="text-div pr-2 dis-flex">
+								<!-- <h4 class="text-black-100">{{currency}} {{item?.totalPrice.toFixed(2)}}</h4> -->
+								<h4 class="text-black-100 font-roboto price">{{currency}}</h4>
+								<h4 class="text-black-100 price">{{(item?.totalPrice + item?.tax).toFixed(2)}}</h4>
+							</div>
+						</td>
+					</tr>
+					<tr *ngIf="dataList.length === 0">
+						<td>{{'noData' | translate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

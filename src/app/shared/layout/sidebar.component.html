@@ -1,0 +1,258 @@
+<div class="sidenav">
+  <div class="side-open">
+    <img src="assets/images/arrow-down.png" />
+  </div>
+  <h5>{{ "sidebar.menu" | translate }}</h5>
+  <ul>
+    <li
+      [ngClass]="linkActive('/dashboard')"
+      (click)="redirectTo('/dashboard')"
+      *ngIf="user?.role === 'SYSTEM_OWNER' || user?.role === 'SYSTEM_MANAGER'"
+      data-testid="dashboard"
+    >
+      <a
+        ><img src="assets/icons/dashboard.svg" class="mr-2" /><span>{{
+          "sidebar.dashboard" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/reports')"
+      (click)="redirectTo('/reports')"
+      *ngIf="user?.role === 'SYSTEM_OWNER' || user?.role === 'SYSTEM_MANAGER'"
+      data-testid="reports"
+    >
+      <a
+        ><img src="assets/icons/reports.svg" class="mr-2" /><span>{{
+          "sidebar.reports" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/user-management')"
+      (click)="redirectTo('/user-management')"
+      *ngIf="user?.role === 'SYSTEM_OWNER'"
+      data-testid="user management"
+    >
+      <a
+        ><img src="assets/icons/user.svg" class="mr-2" />{{
+          "sidebar.userManagement" | translate
+        }}</a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/company')"
+      (click)="redirectTo('/company')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="restaurants"
+    >
+      <a
+        ><img src="assets/icons/restaurants.svg" class="mr-2" /><span>{{
+          "sidebar.restaurants" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/supplier')"
+      (click)="redirectTo('/supplier')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="suppliers"
+    >
+      <a
+        ><img src="assets/icons/supplier.svg" class="mr-2" /><span>{{
+          "sidebar.suppliers" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/wallet')"
+      (click)="redirectTo('/wallet')"
+      *ngIf="user?.role === 'SYSTEM_OWNER'"
+      data-testid="wallets"
+    >
+      <a
+        ><img src="assets/icons/wallet-icon.png" class="mr-2" />{{
+          "sidebar.wallets" | translate
+        }}</a
+      >
+    </li>
+
+    <li
+      [ngClass]="linkActive('/card-management')"
+      (click)="redirectTo('/card-management')"
+      *ngIf="user?.role === 'SYSTEM_OWNER'"
+      data-testid="card management"
+    >
+      <a
+        ><img src="assets/icons/credit-card-logo.png" class="mr-2" />{{
+          "sidebar.cardManagement" | translate
+        }}</a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/orders')"
+      [queryParams]="{ tab: 'pending' }"
+      [routerLink]="['/orders']"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="orders"
+    >
+      <a
+        ><img src="assets/icons/order.svg" class="mr-2" /><span>{{
+          "sidebar.orders" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/product')"
+      (click)="redirectTo('/product')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="products"
+    >
+      <a
+        ><img src="assets/icons/products.svg" class="mr-2" />
+        <span>{{ "sidebar.products" | translate }}</span>
+      </a>
+    </li>
+    <li
+      [ngClass]="linkActive('/marketing')"
+      (click)="redirectTo('/marketing/list/ads')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="marketing"
+    >
+      <a
+        ><img src="assets/icons/marketing.svg" class="mr-2" /><span>{{
+          "sidebar.marketing" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/transactions')"
+      (click)="redirectTo('/transactions')"
+      *ngIf="user?.role === 'SYSTEM_OWNER' || user?.role === 'SYSTEM_MANAGER'"
+      data-testid="transactions"
+    >
+      <a
+        ><img src="assets/icons/transactions.svg" class="mr-2" /><span>{{
+          "sidebar.transactions" | translate
+        }}</span></a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/onboarding')"
+      (click)="redirectTo('/onboarding')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="onboarding"
+    >
+      <a
+        ><img src="assets/icons/onboarding.svg" class="mr-2" /><span>{{
+          "sidebar.onboarding" | translate
+        }}</span>
+      </a>
+    </li>
+    <li
+      [ngClass]="linkActive('/registration')"
+      (click)="redirectTo('/registration')"
+      *ngIf="user?.role === 'SYSTEM_OWNER' || user?.role === 'SYSTEM_MANAGER'"
+      data-testid="registrations"
+    >
+      <a
+        ><img src="assets/icons/registration.svg" class="mr-2" /><span>{{
+          "sidebar.registrations" | translate
+        }}</span>
+      </a>
+    </li>
+  </ul>
+  <h5>{{ "sidebar.support" | translate }}</h5>
+  <ul>
+    <li
+      [ngClass]="linkActive('/faq')"
+      (click)="redirectTo('/faq')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="faq"
+    >
+      <a
+        ><img src="assets/icons/faq.svg" class="mr-2" />{{
+          "sidebar.faq" | translate
+        }}</a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/translations')"
+      (click)="redirectTo('/translations')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="transactions"
+    >
+      <a
+        ><i class="fa fa-language mr-2 ml-1" aria-hidden="true"></i>{{'translations.translations' | translate}}</a
+      >
+    </li>
+    <li
+      [ngClass]="linkActive('/tickets')"
+      (click)="redirectTo('/tickets')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="tickets"
+    >
+      <a
+        ><img src="assets/icons/tickets.svg" class="mr-2" />{{
+          "sidebar.tickets" | translate
+        }}</a
+      >
+    </li>
+    <!-- <li [ngClass]="linkActive('/user-management/settings')">
+      <a (click)="redirectTo('/user-management/settings')"><img src="assets/icons/user.svg" class="mr-2">User
+        Management</a>
+    </li> -->
+    <li
+      [ngClass]="linkActive('/account-settings')"
+      (click)="redirectTo('/account-settings')"
+      *ngIf="
+        user?.role === 'SYSTEM_OWNER' ||
+        user?.role === 'SYSTEM_MANAGER' ||
+        user?.role === 'SYSTEM_USER'
+      "
+      data-testid="account-settings"
+    >
+      <a
+        ><img src="assets/icons/settings.svg" class="mr-2" />{{
+          "sidebar.accountSettings" | translate
+        }}</a
+      >
+    </li>
+  </ul>
+</div>

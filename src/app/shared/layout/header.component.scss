@@ -1,0 +1,175 @@
+header {
+  background-color: var(--blue-100);
+  padding: 5px 0;
+  nav {
+    img {
+      max-width: 111px;
+    }
+    .top-link {
+      position: relative;
+      margin-right: 15px;
+      img {
+        width: 24px;
+      }
+      span {
+        width: 20px;
+        // height: 15px;
+        display: inline-block;
+        background: var(--yellow-100);
+        border-radius: 100%;
+        text-align: center;
+        font-size: 11px;
+        position: absolute;
+        color: var(--black-100);
+        top: 1px;
+        right: -3px;
+      }
+    }
+  }
+  .hidden-btn {
+    position: absolute;
+    opacity: 0;
+    top: 1px;
+  }
+}
+.search-dropdown {
+  min-width: 475px !important;
+  margin-top: 0px;
+  transform: none !important;
+  // top: 30px !important;
+  z-index: 999;
+  .dropdown-menu {
+    background: transparent;
+  }
+  .dropdown-item.active,
+  .dropdown-item:active {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+  .dropdown-item.active,
+  .dropdown-item:focus {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+  .dropdown-item {
+    border-bottom: 2px solid var(--grey-300) !important;
+  }
+  .fixed-height {
+    .time {
+      font-size: 11px;
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 30px;
+    }
+    .table td,
+    .table th {
+      padding: 0.5rem;
+    }
+    .table {
+      td {
+        vertical-align: middle;
+        border: none;
+        .image-and-text {
+          min-width: max-content;
+        }
+      }
+      tr:first-child {
+        td {
+          border: none;
+        }
+      }
+    }
+  }
+}
+input[type="search"] {
+  border-radius: 0.2em;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 50em;
+  background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg)
+    no-repeat 50% 50%;
+  background-size: contain;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+input[type="search"]:focus::-webkit-search-cancel-button {
+  opacity: 0.6;
+  pointer-events: all;
+}
+
+input[type="search"].dark::-webkit-search-cancel-button {
+  filter: invert(1);
+}
+
+.btn-transparent {
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1em;
+  padding: 0px;
+  margin-left: 8px;
+}
+
+select {
+  background: url("../.././../assets/icons/arrow-down-white.svg") no-repeat !important;
+  background-position: calc(100% - 0.75rem) center !important;
+}
+.custom-select-sm {
+  border: none;
+  outline: none;
+  color: var(--white);
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  font-size: smaller !important;
+  box-shadow: none !important;
+}
+.select :focus,
+.select :focus-within {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.notification-dropdown {
+  min-width: 300px;
+  .custom-dropdown-heading {
+    padding: 0.25rem 1.5rem;
+    a {
+      text-decoration: underline;
+      color: var(--grey-100);
+      cursor: pointer;
+    }
+  }
+  .table td,
+  .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+    width: inherit !important;
+    .image-rounded {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .menu-icon {
+      width: 18px;
+    }
+  }
+}
+.lang{
+	margin-left: 10px;
+}
+.btn-primary{
+	margin-left: 20px;
+	margin-right: 5px;
+}
+.img-fluid{
+  margin-left: 15px;
+}
+.logout-btn{
+  cursor: pointer;
+}

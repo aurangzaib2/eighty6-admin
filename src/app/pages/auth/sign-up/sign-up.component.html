@@ -1,0 +1,94 @@
+<section class="theme-bg-2 pb-3 white-bg">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="d-flex justify-content-center">
+          <div class="w-50 mw-420">
+            <div>
+              <h4 class="text-center font-weight-bold mb-4"></h4>
+              <p class="sign-in-text"></p>
+
+              <p class="sign-in-text"></p>
+
+              <p class="sign-in-text"></p>
+            </div>
+            <div>
+              <h4 class="text-center font-weight-bold mb-4"></h4>
+              <p class="sign-in-text"></p>
+
+              <p class="sign-in-text"></p>
+
+              <p class="sign-in-text"></p>
+            </div>
+          </div>
+          <div class="test mw-420 ml-3">
+            <h5 class="text-center">Sign Up</h5>
+            <form [formGroup]="registrationForm" class="mt-4" (ngSubmit)="onSubmit()">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Ensley Christina">
+              </div>
+              <div *ngIf="submitted && f.name.errors">
+                <small *ngIf="f.name.errors?.required" class="text text-danger">Name is required</small>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input formControlName="email" type="email" class="form-control" id="email"
+                  placeholder="sperez@centimia.org">
+              </div>
+              <div *ngIf="submitted && f.email.errors">
+                <small *ngIf="f.email.errors?.required" class="text-danger">Email is required</small>
+                <small *ngIf="f.email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Credentials"
+                  formControlName="password">
+              </div>
+              <div *ngIf="submitted && f.password.errors">
+                <small *ngIf=" f.password.errors.required" class="text-danger">Password is required</small>
+                <small *ngIf="f.password.errors?.minlength" class="text text-danger">Password should not be less than 6
+                  characters</small>
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword"
+                  placeholder="Credentials">
+              </div>
+
+              <div *ngIf="submitted && f.confirmPassword.errors">
+                <small *ngIf="f.confirmPassword.errors.required" class="text-danger">Confirm Password is
+                  required</small>
+              </div>
+              <div>
+                <small *ngIf="registrationForm.errors?.mismatch" class="text text-danger">Password didn't match.</small>
+              </div>
+              <app-list-errors [errors]="registrationFormErrors"></app-list-errors>
+              <p></p>
+              <p></p>
+              <button [disabled]="button" type="submit" class="theme-bg btn-theme btn mt-1">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Sign up
+              </button>
+              <div class="text-center mt-5">
+                <a routerLink="/login" class=" theme-color font-weight-bold"></a>
+              </div>
+            </form>
+          </div>
+
+          <div class="mt-4 mw-320 text-center">
+            <h5></h5>
+            <p class="mt-3"></p>
+            <p class="mt-3"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,101 @@
+<div class="card profile-card border-0">
+	<img [src]="data?.banner ||'assets/images/placeholder_banner.jpg'" alt="banner" class="card-img-top">
+	<div (click)="closeModal()" class="close-icon">
+		<img class="img-fluid" src="assets/icons/white-cross.svg">
+	</div>
+	<div class="card-body mx-4">
+		<div class="d-flex justify-content-center">
+			<div class="profile-logo">
+				<img [src]="data?.logo || 'assets/images/placeholder_logo.png'" class="img-fluid">
+			</div>
+		</div>
+		<div class="text-center mt-5">
+			<div class="clearfix text-capitalize">
+				<h5 class="mb-0 pb-0">{{data?.supplierName}}</h5>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between receipt-items" *ngIf="data?.categoryName">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'products.category' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{data?.categoryName}}</span>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'products.productName' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">{{data?.name}}</span>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items border-0">
+			<div class="clearfix">
+				<div>
+					<span class="text-label text-capitalize">{{'products.productImage' | translate}}</span>
+				</div>
+				<div>
+					<h4 class="text-black-100 font-13 mt-2">{{data?.originalname}}</h4>
+					<span class="text-black-100 font-12" *ngIf="form?.id.value === null">
+						Size: {{data?.originalSize }} kb
+					</span>
+					<div class="d-flex align-items-center">
+						<button class="btn btn-green-badge btn-circular btn-sm btn-sm-check">
+							<i class="fa fa-check"></i>
+						</button>
+						<span class="text-gray-400 pl-2 font-12">{{'products.imageDimension' | translate}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="rounded border text-center mt-2 p-2">
+					<img [src]="data?.image || 'assets.images.placeholder_product.svg'" class="img-fluid image-box ">
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="showRejectForm">
+			<div class="col-12">
+				<form [formGroup]="rejectForm">
+					<label class="text-capitalize" for="exampleInput1">{{'products.rejectReason' | translate}}</label>
+					<div class="form-group">
+						<textarea aria-describedby="emailHelp" autocomplete="off" class="form-control"
+							formControlName="reason" id="exampleInput1" placeholder="{{ 'enterHere' | translate}}"
+							rows="4" type="text"></textarea>
+						<label for="exampleInput1">Reason</label>
+						<div *ngIf="form.reason?.errors">
+							<span *ngIf="form.reason?.errors.required" class="error-message font-13">Reason is
+								required.</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="mt-1 text-capitalize">
+			<ng-container *ngIf="displayMessage!=null">
+				<span class="error-message font-14">{{displayMessage}}</span>
+			</ng-container>
+		</div>
+		<div class="d-flex justify-content-between mt-4" *ngIf="!showRejectForm">
+			<button (click)="openReject()" class="btn btn-red-badge text-capitalize mx-4 my-2">
+				<i class="fa fa-times"></i>
+				{{'products.reject' | translate}}
+			</button>
+			<button (click)="approved()" class="btn btn-green-badge text-capitalize my-2">
+				<i class="fa fa-check"></i>
+				approve
+			</button>
+		</div>
+		<div class="d-flex justify-content-between mt-4" *ngIf="showRejectForm">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+				{{'products.cancel' | translate}}
+			</button>
+			<button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+				<span *ngIf="!loading">{{'products.saveUpdate' | translate}}</span>
+				<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+</div>

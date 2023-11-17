@@ -1,0 +1,50 @@
+.nav-tabs .nav-link {
+  margin-bottom: -1px !important;
+}
+.select-and-input input {
+  padding-left: 72px;
+}
+/* tag inputs */
+tag-input {
+  height: 200px;
+  .ng2-tag-input .ng2-tag-input--focused {
+    box-shadow: none;
+    border-bottom: none !important;
+  }
+}
+
+/* map */
+agm-map {
+  height: 80px;
+}
+
+.custom-form-group > label {
+  position: relative;
+  left: 0px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black-100);
+  padding: 0 5px;
+}
+
+.card-border {
+  border: 1px solid var(--blue-100);
+}
+.user-profile {
+  width: 110px;
+  // height: 110px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.profile-card .profile-logo {
+  position: absolute;
+  top: 65px;
+  display: flex;
+  border-radius: none;
+  background-color: transparent;
+  // padding: 14px;
+  width: 110px;
+  height: 110px;
+}

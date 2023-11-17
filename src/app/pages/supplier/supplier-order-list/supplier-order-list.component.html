@@ -1,0 +1,119 @@
+<div class="conatiner-fluid" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="clearfix">
+			<h3 class="text-capitalize text-black-200">{{'suppliers.orderHistory' | translate}}</h3>
+		</div>
+		<div class="clearfix">
+			<select class="custom-select form-control text-capitalize" [(ngModel)]="activeFilters.status"
+				(change)="tableRefresh()">
+				<option value="pending">{{'suppliers.newOrder' | translate}}</option>
+				<option value="active">{{'suppliers.activeOrder' | translate}}</option>
+				<option value="completed">{{'suppliers.completedOrder' | translate}}</option>
+			</select>
+		</div>
+	</div>
+	<div class="table-responsive page-table text-nowrap mt-2">
+		<table [dtOptions]="dtOptions" class="table table-borderless" datatable style="width:100%">
+			<thead class="table-header no-border">
+				<tr>
+					<th class="pl-2" scope="col">{{'suppliers.orderID' | translate}}</th>
+					<th scope="col">{{'suppliers.restaurant' | translate}}</th>
+					<th scope="col">{{'suppliers.date' | translate}}</th>
+					<th scope="col">{{'suppliers.time' | translate}}</th>
+					<th scope="col">{{'suppliers.orderStatus' | translate}}</th>
+					<th scope="col">{{'suppliers.totalAmount' | translate}}</th>
+					<th scope="col">{{'suppliers.paymentStatus' | translate}}</th>
+					<th scope="col">{{'suppliers.commission' | translate}}</th>
+					<th scope="col">{{'suppliers.timer' | translate}}</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="dataList && dataList.length" class="table-body">
+				<tr (click)='navigateToViewOrder(item)' *ngFor="let item of dataList;let i=index" data-testid="navigateToViewOrder"
+					[ngClass]="{'yellow-200-bg': item?.isAmended && item?.amendOrderStatus !='confirmed','bg-green' : item?.isAmended && item?.amendOrderStatus==='confirmed'}">
+					<td class="pl-2">
+						<span class="text-black-100 font-roboto">{{item?.uniqueId}}</span>
+					</td>
+					<td>{{item?.restaurantName}}</td>
+					<td class="font-roboto">
+						<span *ngIf="item?.deliveryStatus ==='pending'">
+							{{item?.createdAt| date:'mediumDate'}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='rejected'">
+							{{item?.rejectedAt | date:'mediumDate'}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='confirmed'">
+							{{item?.confirmedAt | date:'mediumDate'}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='delivered'">
+							{{item?.deliveredAt | date:'mediumDate'}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='completed'">
+							{{item?.completedAt | date:'mediumDate'}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='dispatched'">
+							{{item?.dispatchedAt | date:'mediumDate'}}
+						</span>
+					</td>
+					<td class="text-uppercase font-roboto dir-ltr">{{item?.createdAt |date:'hh:mm a'}}</td>
+					<td>
+						<span *ngIf="item?.deliveryStatus ==='rejected'" class="red-badge">
+							{{'suppliers.rejected' | translate}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='pending'" class="orange-badge">
+							{{'suppliers.pending' | translate}}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='confirmed'" class="green-badge">
+							{{'suppliers.confirmed' | translate}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='delivered'" class="green-badge">
+							{{'suppliers.delivered' | translate}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='completed'" class="green-badge">
+							{{'suppliers.completed' | translate}}
+						</span>
+						<span *ngIf="item?.deliveryStatus ==='dispatched'" class="blue-badge">
+							{{'suppliers.dispatched' | translate}}
+						</span>
+					</td>
+					<!-- <td>{{currency}} {{(item?.totalPrice+item?.tax).toFixed(2)}}</td> -->
+					<td>
+						<span class="font-roboto m-1">{{currency}}</span>
+						<span>{{(item?.totalPrice+item?.tax).toFixed(2)}}</span>
+					</td>
+					<td>
+						<div class="d-flex align-items-center">
+							<img *ngIf="item?.status === 'paid'" class="img-fluid status-circle"
+								src="assets/icons/status-paid.svg">
+							<img *ngIf="item?.status === 'pending_payment'" class="img-fluid status-circle"
+								src="assets/icons/status-pending.svg">
+							<!-- <span class="pl-1">
+								{{item?.status === 'pending_payment' ? 'pending' : item?.status}}
+							</span> -->
+							<span class="pl-1" *ngIf="item?.status == 'pending_payment'">
+								{{'suppliers.pending' | translate}}
+							</span>
+							<span class="pl-1" *ngIf="item?.status == 'paid'">
+								{{'suppliers.paid' | translate}}
+							</span>
+						</div>
+					</td>
+					<td>{{item?.commission}}</td>
+					<td>
+						<span
+							[class]="(item?.placedDate | timer: {'time':newTime, 'confirmedAt': item?.confirmedAtDateTime}).class">
+							{{(item?.placedDate | timer: {
+							'time': newTime,
+							'confirmedAt': item?.confirmedAtDateTime
+							}).time}}
+							<i class="fa fa-clock-o"></i> </span>
+					</td>
+				</tr>
+			</tbody>
+			<ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+				<tr>
+					<td class="text-center" colspan="9">{{ 'noData' | translate}}</td>
+				</tr>
+			</ng-container>
+		</table>
+	</div>
+</div>

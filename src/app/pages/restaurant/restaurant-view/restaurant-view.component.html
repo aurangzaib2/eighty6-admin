@@ -1,0 +1,101 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'sidebar.restaurants' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" [routerLink]="['/company']">{{'restaurants.companyListing' | translate}}</li>
+			<li class="breadcrumb-item" (click)="goBack()">{{companyData?.name}}</li>
+			<li class="breadcrumb-item" aria-current="page">{{restaurantData?.name}} </li>
+		</ol>
+	</div>
+</div>
+
+<div class="container-fluid px-0">
+
+	<div class="card profile-head-card">
+		<img [src]="getUrl()" class="card-top-image">
+		<div class="profile">
+			<div class="row justify-content-between align-items-center ">
+				<div class="col-8 d-flex align-items-center">
+					<div>
+						<div class="clearfix">
+							<img [src]="restaurantData?.logo  || 'assets/images/placeholder_logo.png'"
+								class="img-fluid user-profile">
+						</div>
+					</div>
+					<div class="clearfix pl-2">
+						<label class="mb-0 name">{{restaurantData?.name}}
+							<small class="email">{{restaurantData?.company?.name}}</small>
+						</label>
+						<p class="email">
+							{{restaurantData?.city}}, {{restaurantData?.countryName}}
+						</p>
+					</div>
+				</div>
+				<div class="col-4 d-flex align-items-center">
+					<div class="media">
+						<img src="assets/icons/phone-white.svg" class="mr-3" alt="...">
+						<div class="media-body">
+							<label class="mb-0 pb-0 text-white-100">{{'restaurants.phone' | translate}}</label>
+							<p class="text-white-100">{{restaurantData?.mobileNumber}}</p>
+						</div>
+					</div>
+					<div class="media pl-3" style="cursor: pointer;" (click)="startChat()">
+						<img src="assets/icons/chat-white.svg" class="mr-3" alt="...">
+						<div class="media-body">
+							<label class="mb-0 pb-0 text-white-100">{{'restaurants.chat' | translate}}</label>
+							<p class="text-white-100">{{'restaurants.withRestaurant'| translate}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-body py-0">
+			<div class="d-flex align-items-center justify-content-between head">
+				<div class="clearfix">
+					<ul ngbNav [(activeId)]="activeTab" class="nav nav-tabs w-100 flex-nowrap ov-scroll">
+						<li class="nav-link text-nowrap" [ngbNavItem]="link.fragment" *ngFor="let link of links">
+							<a ngbNavLink [routerLink]="link.fragment"
+								[queryParams]="{id:restaurantData?.id,cid: companyData.id, cn: companyData.name}"
+								routerLinkActive="router-link-active" class="text-capitalize">
+								<img [src]="link.image" class="mr-2">
+								{{ link.title }}
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="clearfix">
+					<div ngbDropdown class="drop-small">
+						<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+							<img src="assets/icons/action-dot.svg" class="rotate90">
+						</button>
+						<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+							<button ngbDropdownItem (click)="openConfirmStatus()">
+								<label>
+									<img src="assets/icons/block-gray.svg" class="mx-2">
+									<span *ngIf="restaurantData?.status === 'active'">{{'userManagement.block' |
+										translate}}</span>
+									<span *ngIf="restaurantData?.status === 'inactive'">Un-block</span>
+								</label>
+							</button>
+							<button ngbDropdownItem (click)="edit()">
+								<label><img src="assets/icons/edit-gray.svg" class="mx-2">{{'userManagement.edit' |
+									translate}}</label>
+							</button>
+							<button ngbDropdownItem (click)="openConfirmDelete()">
+								<label>
+									<img src="assets/icons/delete-gray.svg" class="mx-2">{{'userManagement.delete' |
+									translate}}
+								</label>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="mt-3">
+	<!-- render info/user list -->
+	<router-outlet></router-outlet>
+</div>

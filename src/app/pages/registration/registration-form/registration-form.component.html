@@ -1,0 +1,289 @@
+<div class="card profile-card border-0">
+	<img [src]="getUrl()" class="card-img-top" alt="banner" style="object-fit: none">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/white-cross.svg" class="img-fluid">
+	</div>
+	<div class="card-body">
+		<div class="d-flex justify-content-center">
+			<div class="profile-logo">
+				<img [src]="form.logo?.value || 'assets/images/placeholder_logo.png'" class="img-fluid user-profile">
+			</div>
+		</div>
+		<div class="text-center mt-4">
+			<div class="clearfix text-capitalize">
+				<h5 class="mb-0 pb-0">{{user?.firstName}} {{user?.lastName}}</h5>
+				<p class="mb-1">{{user?.name}}</p>
+			</div>
+			<div class="d-flex justify-content-center align-items-center " *ngIf="user?.city || user?.countryName">
+				<div class="clearfix text-capitalize">
+					<p>{{user?.city}},{{user?.countryName}} </p>
+				</div>
+			</div>
+		</div>
+
+		<form [formGroup]="profileForm">
+			<div class="clearfix mx-3">
+				<ul ngbNav #nav="ngbNav" [(activeId)]="activeTab"
+					class="nav nav-tabs w-100 flex-nowrap justify-content-center text-center">
+					<li [ngbNavItem]="1" class="nav-links text-nowrap text-capitalize w-50">
+						<a ngbNavLink class="w-100">
+							<img src="assets/icons/document-blue.svg" class="mr-2">
+							{{'registrations.generalInformation' | translate}}
+						</a>
+						<ng-template ngbNavContent>
+							<div class="row">
+								<div class="col-6">
+									<div class="form-group mt-3">
+										<input type="text" class="form-control" autocomplete="off" id="firstName"
+											readonly aria-describedby="firstName"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="firstName">
+										<label for="exampleInput1"> {{'registrations.fname' | translate}}</label>
+									</div>
+								</div>
+								<div class="col-6 ">
+									<div class="form-group mt-3">
+										<input type="text" class="form-control" autocomplete="off" id="lastName"
+											readonly aria-describedby="lastName"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+										<label for="exampleInput2">{{'registrations.lname' | translate}}</label>
+									</div>
+								</div>
+								<div class="col-6" *ngIf="profileForm.value.name">
+									<div class="form-group mt-3">
+										<input type="text" class="form-control" autocomplete="off" id="name" readonly
+											aria-describedby="name" readonly placeholder="{{ 'enterHere' | translate}}"
+											formControlName="name">
+										<label for="exampleInput3">{{checkRoleName()}} {{'registrations.name' |
+											translate}}</label>
+									</div>
+								</div>
+								<div class="col-6" *ngIf="profileForm.value.Aname">
+									<div class="form-group mt-3" >
+										<input type="text" class="form-control" autocomplete="off" id="name" readonly
+											aria-describedby="name" readonly placeholder="{{ 'enterHere' | translate}}"
+											formControlName="Aname">
+										<label for="exampleInput3">{{checkRoleName()}} {{'registrations.name' |
+											translate}} Arabic</label>
+									</div>
+								</div>
+								<div class="col-6 ">
+									<div class="form-group mt-3">
+										<input type="text" class="form-control" autocomplete="off" id="exampleInput2"
+											readonly aria-describedby="email" placeholder="{{ 'enterHere' | translate}}"
+											formControlName="email">
+										<label for="exampleInput4"> {{'registrations.email' | translate}}</label>
+									</div>
+								</div>
+								<div class="col-6 ">
+									<div class="form-group mt-3">
+										<div class="select-and-input">
+											<select class="bg-transparent" formControlName="mobileCode">
+												<option disabled [value]="item?.dail_code"
+													*ngFor="let item of countryList">
+													{{item?.dail_code}}
+												</option>
+											</select>
+											<input readonly type="number" class="form-control" id="exampleInput3"
+												formControlName="mobileNumber">
+										</div>
+										<label for="exampleInput3">{{'registrations.mobileNo' | translate}}#</label>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group ">
+										<div class="select-and-input">
+											<select class="bg-transparent" formControlName="officePhoneCountryCode">
+												<option disabled [value]="item?.dail_code"
+													*ngFor="let item of countryList">
+													{{item?.dail_code}}
+												</option>
+											</select>
+											<input readonly type="number" class="form-control" autocomplete="off"
+												id="exampleInput4" aria-describedby="office mobileNumber"
+												placeholder="{{ 'enterHere' | translate}}"
+												formControlName="officePhoneNumber">
+										</div>
+										<label for="exampleInput5">{{'registrations.officeNo' | translate}}#</label>
+									</div>
+								</div>
+								<!-- <div class="col-6" *ngIf="form.role.value === 'RESTAURANT_ADMIN'">
+									<div class="form-group ">
+										<textarea type="number" class="form-control" rows="3" autocomplete="off"
+											id="deliveryInstruction" aria-describedby="deliveryInstruction"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="deliveryInstruction">
+																	</textarea>
+										<label for="deliveryInstruction">delivery instructions</label>
+									</div>
+								</div> -->
+							</div>
+						</ng-template>
+					</li>
+					<li [ngbNavItem]="2" class="nav-links text-nowrap text-capitalize w-50">
+						<a ngbNavLink class="w-100">
+							<img src="assets/icons/location-blue.svg" class="mr-2">
+							{{'registrations.address' | translate}} & {{'registrations.documents' | translate}}
+						</a>
+						<ng-template ngbNavContent>
+							<div class="row">
+								<div class="col-6" *ngIf="form.role.value === 'RESTAURANT_ADMIN'">
+									<div class="form-group ">
+										<input type="number" class="form-control" autocomplete="off" id="unitNo"
+											readonly aria-describedby="commission"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="unitNo">
+										<label for="unitNo">{{'registrations.unit' | translate}} #</label>
+										<div class="text-left" *ngFor="let error of errorMessages.unitNo">
+											<ng-container
+												*ngIf="form.unitNo.hasError(error.type) && (form.commission.dirty || form.unitNo.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6" *ngIf="form.role.value === 'RESTAURANT_ADMIN'">
+									<div class="form-group ">
+										<input type="number" class="form-control" autocomplete="off" id="floorNo"
+											readonly aria-describedby="commission"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="floorNo">
+										<label for="floorNo">{{'registrations.floor' | translate}} #</label>
+										<div class="text-left" *ngFor="let error of errorMessages.floorNo">
+											<ng-container
+												*ngIf="form.floorNo.hasError(error.type) && (form.commission.dirty || form.floorNo.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6" *ngIf="form.role.value === 'RESTAURANT_ADMIN'">
+									<div class="form-group ">
+										<input type="text" class="form-control" autocomplete="off" id="street" readonly
+											aria-describedby="commission" placeholder="{{ 'enterHere' | translate}}"
+											formControlName="street">
+										<label for="street">{{'registrations.street' | translate}}</label>
+										<div class="text-left" *ngFor="let error of errorMessages.street">
+											<ng-container
+												*ngIf="form.street.hasError(error.type) && (form.commission.dirty || form.street.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6" *ngIf="form.role.value === 'RESTAURANT_ADMIN'">
+									<div class="form-group">
+										<input type="text" class="form-control" autocomplete="off" id="area" readonly
+											aria-describedby="commission" placeholder="{{ 'enterHere' | translate}}"
+											formControlName="area">
+										<label for="area">{{'registrations.area' | translate}}</label>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group ">
+										<input type="text" class="form-control" autocomplete="off" id="countryName"
+											readonly aria-describedby="commission"
+											placeholder="{{ 'enterHere' | translate}}" formControlName="countryName">
+										<label for="countryName">{{'registrations.country' | translate}}</label>
+										<div class="text-left" *ngFor="let error of errorMessages.countryName">
+											<ng-container
+												*ngIf="form.countryName.hasError(error.type) && (form.countryName.dirty || form.countryName.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group ">
+										<label>{{'registrations.city/state' | translate}}</label>
+										<input type="text" class="form-control" autocomplete="off" id="city" readonly
+											aria-describedby="city" placeholder="{{ 'enterHere' | translate}}"
+											formControlName="city">
+										<div class="text-left" *ngFor="let error of errorMessages.city">
+											<ng-container
+												*ngIf="form.city.hasError(error.type) && (form.city.dirty || form.city.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group ">
+										<textarea readonly type="text" class="form-control" autocomplete="off" rows="3"
+											id="exampleInput14" aria-describedby="emailHelp"
+											placeholder="{{ 'enterHere' | translate}}"
+											formControlName="location"></textarea>
+										<label for="exampleInput14">{{'registrations.address' | translate}}</label>
+										<div class="text-left" *ngFor="let error of errorMessages.location">
+											<ng-container
+												*ngIf="form.location.hasError(error.type) && (form.location.dirty || form.location.touched)">
+												<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+											</ng-container>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group custom-form-group ">
+										<label class="form-group-label mb-0" for="exampleInput15">{{'registrations.lMap'
+											| translate}}</label>
+										<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="4"
+											(mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+											<agm-marker *ngFor="let marker of markers" [latitude]="marker.lat"
+												[longitude]="marker.lng" [opacity]="marker.alpha"
+												[markerDraggable]="true" (markerClick)="selectMarker($event)">
+											</agm-marker>
+										</agm-map>
+									</div>
+								</div>
+							</div>
+
+							<div class="d-flex justify-content-start mt-2">
+								<span class="section-head">{{'registrations.documents' | translate}}</span>
+							</div>
+							<div class="row mt-3">
+								<div class="col-lg-4 col-md-4 col-sm-6 px-1" *ngFor="let _ of media.controls;index as i"
+									style="cursor: pointer;">
+									<div class="card" [formGroup]="_"
+										[ngClass]="{'card-border': selectDocumentIndex === i}">
+										<div class="card-body px-3 py-2">
+											<label
+												class="document-label text-capitalize">{{_.value.displayName}}</label>
+											<div class="d-flex justify-content-between">
+												<div>
+													<small class="text-gray-100 text-small" *ngIf="_.value.name">
+														{{_.value.name | truncate:10}}
+													</small>
+													<small class="text-gray-100 " *ngIf="!_.value.name">
+														No file added
+													</small>
+												</div>
+												<div>
+													<a class="btn-link" (click)="downloadFile(_.value)"><img
+															src="assets/icons/filedownload.svg">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="mt-1 text-capitalize">
+								<ng-container *ngIf="displayMessage!=null">
+									<span class="error-message font-14">{{displayMessage}}</span>
+								</ng-container>
+							</div>
+						</ng-template>
+					</li>
+				</ul>
+				<div [ngbNavOutlet]="nav" class="mt-2"></div>
+			</div>
+		</form>
+
+		<div class="d-flex justify-content-between mt-4">
+			<button (click)="openReject()" class="btn btn-red-badge text-capitalize mx-4 my-2">
+				<i class="fa fa-times"></i>
+				{{'registrations.reject' | translate}}
+			</button>
+			<button (click)="openConfirm()" class="btn btn-green-badge text-capitalize my-2">
+				<i class="fa fa-check"></i>
+				{{'registrations.accept' | translate}}
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<div class="card reataurant-card border-0">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div class="card-body">
+		<div class="d-flex justify-content-center my-1" *ngIf="order.deliveryStatus ==='pending'">
+			<h4 class="text-black text-capitalize mb-0">
+				{{'orders.LPODownload' | translate}}
+			</h4>
+		</div>
+		<div class="d-flex justify-content-center my-1" *ngIf="order.deliveryStatus !=='pending'">
+			<h4 class="text-black text-capitalize mb-0">
+				{{'orders.invoiceDownload' | translate}}
+			</h4>
+		</div>
+		<div class="d-flex justify-content-between receipt-items">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.currentDownload' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">
+					<a (click)="downloadInvoice('current')" class="btn-link">{{'orders.download' | translate}} <img
+							src="assets/icons/filedownload.svg"></a>
+				</span>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between receipt-items border-0">
+			<div class="clearfix">
+				<span class="text-label text-capitalize">{{'orders.originalDownload' | translate}}</span>
+			</div>
+			<div class="clearfix">
+				<span class="text-value text-capitalize">
+					<a (click)="downloadInvoice('original')" class="btn-link">{{'orders.download' | translate}} <img
+							src="assets/icons/filedownload.svg"></a>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

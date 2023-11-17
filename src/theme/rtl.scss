@@ -1,0 +1,720 @@
+.rtl {
+    // style.scss
+    font-family: var(--font-dynalight) !important;
+    direction: rtl;
+    text-align: right;
+
+    .font-roboto {
+        font-family: var(--font-roboto) !important;
+    }
+    .font-geflow{
+        font-family: var(--font-dynalight) !important;
+    }
+    .form-control {
+        font-family: var(--font-dynalight) !important;
+    }
+    .btn-link {
+        font-family: var(--font-dynalight) !important;
+    }
+    .input-group>.form-control:not(:first-child) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: 4px !important;
+        border-bottom-left-radius: 4px !important;
+    }
+    .input-group>.input-group-prepend>.input-group-text {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 4px !important;
+        border-bottom-right-radius: 4px !important;
+    }
+    .dir-ltr {
+        direction: ltr;
+    }
+    .dis-flex,.document-label{
+        display: flex;
+    }
+    .dir{
+        direction: ltr;
+        display: inline-flex;
+    }
+    .section-head{
+        font-family: var(--font-dynalight);
+    }
+    .inner-header {
+        h2 {
+            text-align: right;
+        }
+    }
+    .input-group-append{
+        margin-right: -1px;
+    }
+    .input-group:not(.has-validation)>.form-control:not(:last-child){
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    .input-group>.input-group-append>.btn{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    /*boostrap padding and margins*/
+    .mr-1{
+        margin-right: 0 !important;
+        margin-left: 0.25rem !important;
+    }
+    .mr-2{
+        margin-right: 0 !important;
+        margin-left: 0.5rem !important;
+    }
+    .ml-2{
+        margin-left: 0 !important;
+        margin-right: 0.5rem !important;
+    }
+    .pl-1 {
+        padding-right: 0.25rem !important;
+        padding-left: 0 !important;
+    }
+    .pl-2 {
+        padding-right: 0.5rem !important;
+        padding-left: 0 !important;
+    }
+    .mr-3{
+        margin-left: 1rem !important;
+        margin-right: 0 !important;
+    }
+    .ml-3{
+        margin-right: 1rem !important;
+        margin-left: 0 !important;
+    }
+    .ml-auto{
+        margin-left: 0 !important;
+        margin-right: auto !important;
+    }
+    .text-left{
+        text-align: right !important;
+    }
+
+    /* image */
+    .image-and-text img{
+        margin: 5px 0px 5px 15px;
+    }
+
+    /** search box */
+    .search-box {
+        .input-group-text {
+            border-right: 1px solid var(--gray-500);
+            border-left: none;
+            padding-left: 0 !important;
+            padding-right: 10px;
+        }
+        .form-control,
+        .form-control:focus-visible {
+            border-right: none;
+            border-left: 1px solid var(--gray-500);
+        }
+    }
+
+    /* modal*/
+    .profile-card {
+        .card-body {
+            .text-right {
+                text-align: left !important;
+            }
+        }
+    }
+
+    .receipt-items {
+        .text-label {
+            font-family: var(--font-dynalight) !important;
+        }
+    }
+    .close-icon {
+        right: auto;
+        left: 10px;
+    }
+    .modal-header .close {
+        margin: -1rem auto -1rem -1rem;
+    }
+
+    /* input form */
+    .form-group span.showPassword {
+        right: auto;
+        left: 15px;
+    }
+    .form-group>label {
+        left: auto;
+        right: 10px;
+    }
+    .form-group-label{
+        display: flex;
+    }
+
+    /* dropdown menu */
+    .dropdown-menu.show {
+        transform: translate(30px, 30px) !important;
+        text-align: right;
+        font-family: var(--font-dynalight);
+        h6 {
+            padding-right: 1.5rem !important;
+            padding-left: 0 !important;
+        }
+    }
+    .drop-small .dropdown-menu .dropdown-item {
+        padding: 0 0 0 15px !important;
+    }
+
+    /* tables*/
+    .dataTables_scrollHeadInner {
+        padding-right: 0 !important;
+        padding-left: 12px !important;
+    }
+    .page-table {
+        text-align: right;
+        .table-header {
+            font-family: var(--font-dynalight) !important;
+        }
+        .table-body {
+            td{
+                font-family: var(--font-dynalight);
+            }
+        }
+    }
+    .page-table .table-header tr > th{
+        font-family: var(--font-dynalight) !important;
+    }
+    datatable-header .datatable-header-cell{
+        font-family: var(--font-dynalight) !important;
+    }
+    .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell, .ngx-datatable.material .datatable-header .datatable-header-cell{
+        text-align: right;
+    }
+    
+
+    /* breadcrumbs */
+    .breadcrumb-item+.breadcrumb-item::before {
+        float: right !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0 !important;
+    }
+
+    /* cards */
+    .card,
+    .profile-head-card,
+    .card-order {
+        .profile {
+            left: 0;
+            .name,
+            .email>p {
+                display: flex;
+            }
+            small {
+                display: flex;
+                align-items: center;
+                margin: 8px;
+            }
+            .media {
+                padding-left: 0 !important;
+            }
+        }
+        .card-body {
+            .head {
+                padding-left: 0 !important;
+                padding-right: 100px;
+            }
+            .list-items{
+                .text-label{
+                    font-family: var(--font-dynalight);
+                }
+            }
+        }
+    }
+
+    /*ng-select */
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        text-align: right;
+    }
+    .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input
+    {
+        padding-left: 50px;
+        padding-right: 10px;
+    }
+
+    /*toaster*/
+    app-toast{
+        .alert-content {
+            right: auto;
+            left:20px;
+            .alert-description{
+                text-align: right;
+            }
+        }
+    }
+
+     /* custom select box */
+     app-user-form,app-restaurant-user-form,app-card-form{
+        .custom-select {
+            background-position: calc(13% - 0.75rem) center !important;
+        }
+    }
+    app-restaurant-form, app-profile-form{
+        .custom-select {
+            background-position: calc(5% - 0.75rem) center !important;
+        }
+    }
+    /* custom checkbox*/
+    .custom-control{
+        padding-left: 0;
+        padding-right: 1.5rem;
+    }
+    .custom-checkbox{
+        .custom-control-label::after,  .custom-control-label::before{
+            right: -1.5rem;
+            left: 0;
+        }
+    }
+
+    /* angular-select*/
+    app-supplier-restaurant,app-marketing-voucher-form{
+        angular2-multiselect{
+            .c-angle-down, .c-angle-up{
+                right: auto;
+                left: 10px;
+            }
+            .selected-list .c-list .c-token{
+                float:right;
+                padding: 4px 8px 4px 22px;
+                margin-left:4px;
+            }
+            .selected-list .c-list .c-token .c-remove{
+                left: 8px;
+                right: auto;
+            }
+            .selected-list .countplaceholder{
+                left:45px;
+            }
+            .clear-all{
+                left: 30px;
+                right: auto;
+            }
+            .pure-checkbox,.select-all{
+                    text-align: right;
+                input[type=checkbox]+label:before{
+                    left: auto;
+                    right: 0;
+                }
+                input[type=checkbox]+label:after{
+                    left: auto;
+                    right: 3px;
+                }
+                input[type=checkbox]+label{
+                    padding-right: 2em;
+                    padding-left: 0;
+                }
+            } 
+            .list-filter{
+                input{
+                    padding-right: 40px;
+                }
+                .c-search{
+                    right: 10px;
+                    left: auto;
+                }
+                .c-clear{
+                    right: auto;
+                    left: 10px;
+                }
+            }
+        }
+    }
+
+    /* default container */
+    app-default {
+        .mainwrap {
+            margin-right: auto;
+            margin-left: 0;
+        }
+    }
+
+    /* header */
+    app-header {
+        .links {
+            margin-left: 0 !important;
+            margin-right: auto;
+        }
+        select {
+            background-position: calc(55% - 0.75rem) center !important;
+        }
+
+        .input-group-sm>.custom-select {
+            padding-left: 1.75rem;
+            padding-right: 7px !important;
+        }
+
+        .custom-select {
+            padding-left: 2rem;
+            padding-right: 0 !important;
+        }
+
+        header {
+            text-align: right;
+            nav {
+                .top-link {
+                    margin-left: 15px;
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+
+    /* sidebar */
+    app-sidebar {
+        right: 0;
+        left: auto;
+        .sidenav {
+            h5 {
+                display: flex;
+            }
+            li {
+                font-family: var(--font-dynalight) !important;
+                display: flex;
+            }
+            img {
+                margin-right: 0 !important;
+                margin-left: 0.5rem;
+            }
+            .active {
+                border-left: 3px solid var(--blue-100);
+                border-right: 0 !important;
+            }
+        }
+    }
+
+    /* dashboard components */
+    .dashboard table td:last-child .text-div {
+        text-align: center;
+        direction: ltr;
+    }
+    app-pending-orders,
+    app-order-stats,
+    app-rejected-orders {
+        .card-header {
+            a {
+                margin-right: auto !important;
+                margin-left: 0 !important;
+            }
+        }
+        .card-body {
+            text-align: right;
+            .image-and-text {
+                img {
+                    margin-left: 15px !important;
+                }
+            }
+        }
+    }
+    app-order-stats {
+        .sales-box {
+            background-image: url(../assets/images/graph-rtl.png);
+            background-size: 230px;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            text-align: right !important;
+        }
+        table {
+            td {
+                &:last-child .text-div {
+                    text-align: left !important;
+                }
+            }
+        }
+        .tip-transaction{
+            left :10px !important;
+        }
+    }
+    app-pending-orders {
+        .text-div {
+            h4 {
+                display: inline-block;
+            }
+        }
+        .fixed-height {
+            .time {
+                display: block !important;
+            }
+        }
+    }
+    app-top-restaurants,
+    app-top-categories {
+        .card-body {
+            text-align: right;
+            .image-and-text {
+                img {
+                    margin-left: 15px !important;
+                }
+            }
+        }
+    }
+
+    /*report component*/
+    app-report-form {
+        .receipt-items {
+            .text-right {
+                text-align: left !important;
+            }
+        }
+    }
+
+    /*supplier component*/
+    app-supplier-view {
+        app-supplier-product-list{
+            .text-div{
+                text-align: right;
+            }
+            .dropdown-menu.show{
+                transform: translate(-140px,30px) !important;
+            }
+        }
+        app-supplier-sub-category-listing{
+            table{
+                tr{
+                    th:nth-of-type(2){
+                     text-align: left;
+                    }
+                }
+            }
+        }
+        app-supplier-order-list{
+            .custom-select {
+                background-position: calc(20% - 0.75rem) center !important;
+                padding: 0.375rem 0.75rem 0.375rem 1.75rem !important;
+            }
+        }
+    }
+    app-supplier-order-view{
+        h2,li:nth-child(3){
+            font-family: var(--font-roboto);
+            text-align: right;
+            direction: ltr;
+        }
+        .profile{
+            h5{
+                text-align: right;
+            }
+        }
+        img,.mr-2{
+                margin-right: 0 !important;
+                margin-left: 0.5rem;
+        }
+        div{
+            text-align: right;
+        }
+    }
+
+    /*orders*/
+    app-order-view{
+        li:nth-child(3){
+            font-family: var(--font-roboto);
+            text-align: right;
+            direction: ltr;
+        }
+        .profile{
+            text-align: right;
+        }
+        .text-lg-right{
+            text-align: left !important;
+        }
+    }
+
+    /*wallet*/
+    app-wallets-list{
+        select{
+            display: block;
+        }
+    }
+
+    /*products*/
+    app-category-list{
+        .product-box{
+            text-align: right;
+            .dropdown-menu{
+                left: auto !important;
+                right: 50px !important;
+            }
+            div{
+                flex-direction: row-reverse;
+            }
+        }
+    }
+    app-product-list{
+        .text-div{
+            text-align: right;
+        }
+    }
+    app-product-form,app-product-request-form{
+        .c-select{
+            background-position: calc(13% - 0.75rem) center !important;
+        }
+        .custom-select-and-input {
+            select{
+                background-position: calc(40% - 0.75rem) center !important;
+                right: 150px !important;
+                padding-left: 2rem;
+                padding-right: 10px !important;
+            }
+            input{
+                padding-left: 54px;
+                padding-right: 0 !important;
+            }
+        }
+        .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.left{
+            border-left: 1px solid #b8dbff;
+            border-right: 0;
+        }
+    }
+    app-product-view{
+        text-align: right;
+    }
+
+    /*transaction*/
+    app-transactions-receipt{
+        .receipt-items{
+            .text-label{
+                display: flex;
+            }
+        }
+    }
+
+    /* onboarding component */
+    app-onboarding-details {
+        .form-group>label {
+            right: 10px;
+            left: auto;
+        }
+        .showPassword {
+            right: auto;
+            left: 15px;
+        }
+    }
+    app-onboarding-details{
+        .profile{
+            left: auto !important;
+            right: 20px;
+        }
+    }
+
+    /*quill editor*/
+    quill-editor{
+        .ql-formats{
+            display: flex;
+        }
+        .ql-editor{
+            text-align: right;
+        }
+        .ql-toolbar.ql-snow{
+            float: left;
+            display: flex;
+        }
+    }
+    app-faq{
+        .card-body{
+            text-align: right;
+        }
+    }
+
+    /*ticket*/
+    app-ticket-view,app-chat{
+        h3,h5,h2,h4,p{
+            text-align: right;
+        }
+        .dropdown-toggle::after{
+            float: left;
+            left: 10px;
+            right: auto;
+        }
+        .media-chat-reverse{
+            padding-left: 12px !important;
+            padding-right: 64px !important;
+        }
+        .media-chat.media-chat-reverse .media-body .comment {
+            float: left !important;
+        }
+    }
+
+    /*chats*/
+    app-chat{
+        .chat-screen{
+            .media-chat{
+                padding-left: 64px !important;
+                padding-right: 0 !important;
+            }
+        }
+    }
+
+    /*user profile*/
+    app-profile-form{
+        .profile{
+            right: 20px;
+            left: auto;
+        }
+    }
+
+    /* media queries*/
+    @media (max-width: 768px) {
+
+        /*input form*/
+        .custom-select {
+            background-position: calc(20% - 0.75rem) center !important;
+            padding: 0.375rem 0.75rem 0.375rem 1.75rem !important;
+        }
+
+        /*sidebar*/
+        app-sidebar {
+            right: -240px;
+
+            .side-open {
+                display: block !important;
+                right: -39px;
+                left: auto !important;
+                transform: rotate(90deg) scaleX(-1);
+            }
+        }
+        app-sidebar:hover {
+            right: 0;
+            left: auto;
+
+            .side-open {
+                right: 190px;
+                left: 0;
+            }
+        }
+
+        /*product*/
+        app-product-form{
+            .custom-select-and-input {
+                select{
+                    right: 6px !important;
+                }
+            }
+        }
+    }
+    app-order-view .dropdown-menu.show.new-table {
+        right: 0 !important;
+        transform: translate(10px, 10px) !important;
+        left: unset !important;
+    }
+    table.dataTable thead th{
+        text-align: right !important;
+    }
+    div.dataTables_wrapper div.dataTables_paginate {
+        text-align: left;
+        width: 100%;
+    }
+     .page-table .table-header tr > th{
+         padding-right: 0 !important;
+     }
+}

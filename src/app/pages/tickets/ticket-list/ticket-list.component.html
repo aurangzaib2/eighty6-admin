@@ -1,0 +1,92 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize">{{'tickets.tickets' | translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li class="breadcrumb-item" aria-current="page">{{'tickets.tickets' | translate}}</li>
+        </ol>
+    </div>
+    <div class="clearfix" *ngIf="shouldCreateTicket">
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="open()">
+            <img src="assets/icons/plus-white.svg"> {{'tickets.addNew' | translate}}
+        </button>
+    </div>
+
+</div>
+<div class="container-fluid" id="page-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="form-group">
+            <div class="input-group mb-0 search-box">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                        <img src="assets/icons/search.svg">
+                    </span>
+                </div>
+                <input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="tableSetFilters('search', $event.currentTarget.value)">
+            </div>
+        </div>
+        <div>
+            <div ngbDropdown>
+                <button class="btn" id="dropdownConfig" ngbDropdownToggle>
+                    <img src="../../../../assets/icons/filter.svg">
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                    <h6 class="pl-4 text-black-100">{{'tickets.status' | translate}}</h6>
+                    <!-- <button ngbDropdownItem>
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="customCheck1" type="checkbox"
+                                [checked]="activeFilters.status.length === ticketStatus.length"
+                                (change)="tableSetFilters('status', 'all', $event)">
+                            <label class="custom-control-label text-capitalize" for="customCheck1">All</label>
+                        </div>
+                    </button> -->
+                    <button *ngFor="let p of ticketStatus" ngbDropdownItem>
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="tableSetFilters('status', p.value, $event)"
+                                [checked]="activeFilters?.status?.includes(p)" [id]="p.value"
+                                class="custom-control-input" type="checkbox">
+                            <label [for]="p.value" class="custom-control-label text-capitalize">{{p.key}}</label>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="table-responsive page-table text-nowrap">
+            <table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+                <thead class="table-header no-border">
+                    <tr>
+                        <th class="pl-2" style="width:1.3em;" scope="col">{{'tickets.ticketId' | translate}}</th>
+                        <th scope="col">{{'tickets.type' | translate}}</th>
+                        <th scope="col">{{'tickets.subjectTopic' | translate}}</th>
+                        <th scope="col">{{'tickets.date' | translate}} & {{'tickets.time' | translate}}</th>
+                        <th scope="col">{{'tickets.status' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <ng-container *ngIf="dataList && dataList.length">
+                        <tr *ngFor="let item of dataList;let i=index" (click)="navigateTo(item)">
+                            <td>
+                                <span class="px-2 font-roboto">{{item?.ticketNumber}}</span>
+                            </td>
+                            <td>{{customizeRoleText(item?.role) | capitalize | truncate: 18}}</td>
+                            <td>{{item?.subject | truncate: 18}}</td>
+                            <td class="font-roboto dir-ltr">{{item?.createdAt | date: 'dd MMM yyyy'}} , {{item?.createdAt | date:'HH:mm a' }}</td>
+                            <td>
+                                <span [ngClass]="checkClass(item?.status)" *ngIf="item?.status === 'open'">{{'tickets.open' | translate}}</span>
+                                <span [ngClass]="checkClass(item?.status)" *ngIf="item?.status === 'closed'">{{'tickets.closed' | translate}}</span>
+                                <span [ngClass]="checkClass(item?.status)" *ngIf="item?.status === 'inprogress'">{{'tickets.inprogress' | translate}}</span>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+                <ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+                    <tr>
+                        <td class="text-center" colspan="7">{{ 'noData' | translate}}</td>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,412 @@
+@import "./theme/variables.scss";
+@import "./theme/search-box.scss";
+@import "./theme/input-form.scss";
+@import "./theme/tables.scss";
+@import "./theme/buttons.scss";
+@import "./theme/text-field.scss";
+@import "./theme/modal.scss";
+@import "./theme/cards.scss";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
+@import "./theme/rtl.scss";
+
+body {
+  background-color: var(--white-2);
+  margin: 0;
+  font-family: var(--font-roboto);
+}
+a {
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: 0.15px;
+}
+a:hover {
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+}
+h3 {
+  font-size: 28px;
+  line-height: 1.5;
+  letter-spacing: 0.21px;
+  color: var(--black-200);
+}
+h2 {
+  font-size: 34px;
+  line-height: 1.24;
+  letter-spacing: 0.25px;
+  color: var(--black-200);
+}
+p {
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: 0.15px;
+  color: var(--grey-100);
+}
+a {
+  color: var(--blue-100);
+}
+img {
+  max-width: 100%;
+}
+a {
+  color: var(--blue-100);
+}
+.rotate90 {
+  transform: rotate(91deg);
+}
+
+/* background */
+.blue-bg {
+  background-color: var(--blue-100) !important;
+  color: var(--white);
+}
+.yellow-100-bg {
+  background-color: var(--yellow-100) !important;
+}
+.yellow-200-bg {
+  background-color: var(--yellow-200) !important;
+}
+.orange-100-bg {
+  background-color: var(--orange-200) !important;
+}
+.grey-200-bg {
+  background-color: var(--grey-300) !important;
+}
+.grey-300-bg {
+  background-color: var(--grey-300) !important;
+}
+.black-bg-300 {
+  background-color: var(--black-300) !important;
+  color: var(--white);
+}
+.bg-green {
+  background-color: var(--green-200) !important;
+}
+
+/* sidebar related css */
+app-sidebar {
+  position: fixed;
+  left: 0;
+  z-index: 9;
+  border-right: 1px solid #ececec;
+}
+@media (max-width: 768px) {
+  app-sidebar {
+    position: fixed;
+    left: -240px;
+  }
+  app-sidebar:hover {
+    left: 0;
+    .sidenav {
+      box-shadow: 0px 11px 30px #ccc;
+    }
+    .side-open {
+      left: 190px;
+      box-shadow: -1px 5px 6px #171616;
+    }
+  }
+}
+/* sidebar related css ends here */
+
+/* header related css */
+
+app-header {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 9;
+  top: 0;
+}
+// inner header css
+.inner-header {
+  padding: 10px 2px;
+  h2 {
+    font-size: 24px;
+    color: var(--black-300);
+  }
+  p {
+    color: var(--black-400);
+  }
+  .inner-header-breadrumb {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    .breadcrumb-item {
+      cursor: pointer;
+      text-transform: capitalize;
+    }
+  }
+}
+.image-and-text .text-div h4 {
+  font-size: 14px;
+}
+// inner header css ends
+
+/* header related css ends here */
+
+/*layout css*/
+.main-layout {
+  margin-top: 64px;
+}
+.mainwrap {
+  width: calc(100% - 240px);
+  padding: 20px;
+  background-color: var(--white-2);
+  margin-left: auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+#page-container {
+  background: var(--white);
+  padding: 1.4em;
+  border: 1px solid var(--gray-500);
+  border-radius: 4px;
+}
+/*layout css ends here*/
+
+// tabs inside card related css
+.nav-tabs {
+  .nav-link {
+    border: none !important;
+    margin-bottom: -0.28rem !important;
+    padding: 10px 10px 9px;
+    font-size: 14px;
+    color: var(--black-300);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    img {
+      filter: grayscale(1);
+    }
+    :hover {
+      border: none;
+      border-color: transparent !important;
+    }
+  }
+  :hover,
+  :focus {
+    border: none !important;
+    border-color: transparent !important;
+    text-decoration: none;
+  }
+  .nav-link.active {
+    border: none !important;
+    border-bottom: 3px solid var(--blue-100) !important;
+    color: var(--blue-100);
+    img {
+      filter: none;
+    }
+  }
+}
+// tabs inside card related css ends here
+.image-and-text img {
+  width: 54px;
+  height: 54px;
+  margin-right: 15px;
+  border-radius: 52px;
+  margin: 5px 15px 5px 0px;
+}
+.text-div h4 {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.text-div p {
+  font-size: 12px;
+  margin-bottom: 0;
+  line-height: 1;
+}
+// offer tag
+.promo {
+  font-size: 12px;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px 6px;
+  width: max-content;
+}
+.discount-box {
+  cursor: pointer;
+
+  .image-box {
+    padding-top: 30px;
+    img {
+      height: 100px;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+  .discount-promo-badge {
+    position: absolute !important;
+    right: 0 !important;
+    font-size: 10px;
+  }
+  .text-div p {
+    font-size: 14px;
+  }
+}
+
+// organic item tag
+.organic {
+  // background-image: url(assets/icons/organic-tag.png);
+  // background-size: 20px;
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // position: absolute;
+  // top: 0;
+  img {
+    min-width: 24px;
+    height: 24px;
+  }
+}
+/*width */
+.max-300 {
+  max-width: 300px;
+}
+
+/* height */
+.col-height {
+  height: 80px;
+}
+// common css responsive
+@media (max-width: 1200px) {
+#page-container {
+  padding: 12px 14px;
+}
+.timerSection p {
+  font-size: 13px
+
+}
+}
+
+@media (max-width: 768px) {
+  .res-hide {
+    display: none;
+  } //hidden in responsive
+}
+
+@media screen and (max-height: 720px) {
+  .auth-box {
+    transform: scale(0.8);
+    transform-origin: top;
+  }
+}
+
+/** search box */
+.search-box {
+  width: 360px;
+  .input-group-text {
+    border: 1px solid var(--gray-500);
+    border-right: none;
+    background-color: var(--white);
+    padding-right: 0;
+  }
+  .form-control {
+    border: 1px solid var(--gray-500);
+    border-left: none;
+  }
+  .form-control:focus-visible {
+    border: 1px solid var(--gray-500);
+    border-left: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    width: 200px;
+    margin-right: 15px;
+  }
+}
+
+/** ngx-quill toolbar content right */
+.ql-toolbar.ql-snow {
+  text-align: end !important;
+  border: none !important;
+  box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.02),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  float: right;
+}
+.ql-container.ql-snow {
+  border: none !important;
+  padding: 30px 4px !important;
+  ::placeholder {
+    padding: 30px !important;
+  }
+  input::-moz-placeholder {
+    padding: 30px !important;
+  }
+  input:-ms-input-placeholder {
+    padding: 30px !important;
+  }
+  input::-ms-input-placeholder {
+    padding: 30px !important;
+  }
+}
+dp-date-picker.dp-material .dp-picker-input {
+  background: transparent !important;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  border-radius: 0;
+  padding: 0;
+  width: 80px !important;
+}
+
+/* sorting arrow proper alignment here*/
+.dataTables_scrollHeadInner table.dataTable thead .sorting:after {
+  content: url("./assets/icons/sort-asc-desc.svg") !important;
+  bottom: unset;
+  opacity: 1 !important;
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: unset;
+  margin-left: 9px;
+  right: unset;
+  font-family: none !important;
+}
+
+.dataTables_scrollHeadInner table.dataTable thead .sorting_asc:after {
+  content: url("./assets/icons/sort-asc.svg") !important;
+  bottom: unset;
+  opacity: 1 !important;
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: unset;
+  margin-left: 9px;
+  right: unset;
+  font-family: none !important;
+}
+
+.dataTables_scrollHeadInner table.dataTable thead .sorting_desc:after {
+  content: url("./assets/icons/sort-desc.svg") !important;
+  bottom: unset;
+  opacity: 1 !important;
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: unset;
+  margin-left: 9px;
+  right: unset;
+  font-family: none !important;
+}
+.dataTables_scrollHeadInner table.dataTable thead .sorting {
+  background-image: none !important;
+}

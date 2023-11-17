@@ -1,0 +1,11 @@
+#page-container {
+  min-height: 74vh;
+}
+.tab-inner-div {
+  max-height: 46vh;
+  overflow-y: auto;
+  .inner-div {
+    padding-bottom: 100px;
+    overflow-y: auto;
+  }
+}

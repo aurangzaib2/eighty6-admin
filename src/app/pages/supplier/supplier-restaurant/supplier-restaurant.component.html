@@ -1,0 +1,130 @@
+<div class="tab-inner-div mt-4">
+  <form [formGroup]="restaurantsForm">
+    <div class="row justify-content-between">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mb-4 mt-4">
+          <angular2-multiselect
+            class="form-control"
+            style="height: auto !important"
+            data-testid="restaurant-multi-select"
+            placeholder="'Select restaurant'"
+            [settings]="dropdownSettings"
+            [data]="restaurantList"
+            formControlName="restaurants"
+          >
+          </angular2-multiselect>
+          <label for="exampleInput6">{{
+            "marketing.selectResturant" | translate
+          }}</label>
+          <div
+            class="text-left"
+            *ngFor="let error of errorMessages.restaurantId"
+          >
+            <ng-container
+              *ngIf="
+                form.restaurants.hasError(error.type) &&
+                (form.restaurants.dirty || form.restaurants.touched)
+              "
+            >
+              <span class="error-message font-13">{{ error.message }}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 my-4">
+        <button
+          class="btn btn-theme btn-blue text-capitalize px-4"
+          (click)="onSubmit()"
+          data-testid="save-restaurant-selection"
+        >
+          {{ "userManagement.saveUpdate" | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <h5>{{ "relation" | translate }}</h5>
+  <form [formGroup]="restaurantSupplierForm">
+    <div class="row justify-content-between">
+      <div class="col-lg-6">
+        <div class="form-group mb-4 mt-4">
+          <ng-select
+            [items]="companyList"
+            [dropdownPosition]="'bottom'"
+            [multiple]="false"
+            data-testid="restaurant-select"
+            bindLabel="name"
+            bindValue="id"
+            (change)="selectCompany($event)"
+            formControlName="companyId"
+            placeholder="{{ 'marketing.selectCompany' | translate }}"
+          >
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-lg-6 my-4">
+        <button
+          class="btn btn-theme btn-blue text-capitalize px-4"
+          (click)="save()"
+          data-testid="save-rest-sup-selection"
+        >
+          {{ "userManagement.saveUpdate" | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <section>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ "onBoarding.company" | translate }}</th>
+          <th scope="col">{{ "restaurants.action" | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+          *ngFor="let item of allSuppliersRestaurants; let i = index"
+        >
+          <tr>
+            <th>{{ item?.name }}</th>
+            <td>
+              <img
+                src="assets/icons/trash.png"
+                alt="trash-icon"
+                height="20"
+                width="20"
+                (click)="remove(item)"
+                data-testid="remove-relation"
+              />
+              <div
+                data-toggle="collapse"
+                [attr.data-target]="'#cat-' + i"
+                aria-expanded="false"
+                class="accordion-toggle collapsed d-inline ml-3"
+              >
+                <img
+                  src="assets/icons/caret-icon.svg"
+                  class="rotate-icon"
+                  alt=""
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="p-0">
+              <div class="accordian-body collapse" [attr.id]="'cat-' + i">
+                <table class="w-100">
+                  <ng-container *ngFor="let restaurant of item.restaurant">
+                    <tr>
+                      <td>{{ restaurant.name }}</td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+</div>

@@ -1,0 +1,148 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize">{{'sidebar.cardManagement' | translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li class="breadcrumb-item" aria-current="page">{{'sidebar.cardManagement' | translate}}</li>
+        </ol>
+    </div>
+    <div *ngIf="cardManagement == false" class="clearfix">
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="setManageCards(true)">
+            {{'cardManagement.manageCards' | translate}}
+        </button>
+    </div>
+    <div *ngIf="cardManagement == true" class="clearfix">
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="setManageCards(false)">
+            {{'cardManagement.topupRestaurants' | translate}}
+        </button>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <button class="btn btn-theme btn-blue text-capitalize px-4" (click)="add()">
+            <img src="assets/icons/plus-white.svg"> {{'cardManagement.addNewCard' | translate}}
+        </button>
+    </div>
+</div>
+<div class="container-fluid" id="page-container">
+    <div *ngIf="cardManagement == false" class="d-flex justify-content-between align-items-center">
+        <div class="form-group">
+            <div class="input-group mb-0 search-box">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                        <img src="assets/icons/search.svg">
+                    </span>
+                </div>
+                <input type="text" class="form-control" #search placeholder="{{ 'search' | translate}}"
+                    aria-label="Search" aria-describedby="basic-addon1"
+                    (keyup)="tableSetFilter('search', $event.currentTarget.value)">
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="cardManagement == false" class="my-3">
+        <div class="table-responsive page-table text-nowrap ">
+            <table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+                <thead class="table-header no-border">
+                    <tr>
+                        <th class="pl-2" scope="col">{{'cardManagement.logo' | translate}}</th>
+                        <th scope="col">{{'cardManagement.restaurantName' | translate}}</th>
+                        <th scope="col">{{'cardManagement.topup' | translate}}</th>
+                        <th scope="col" width='100px'></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body" *ngIf="dataList && dataList.length">
+                    <tr *ngFor="let item of dataList;let i=index">
+                        <td>
+                            <div>
+                                <img [src]="item?.logo || 'assets/icons/restaurant-icon.png'"
+                                    class="img-fluid image-profile">
+                            </div>
+                        </td>
+                        <!-- <td>{{item?.name}}</td> -->
+                        <td>		
+                            <span *ngIf="selectedLang == 'en'">
+                              <span *ngIf="item?.name">{{item?.name | truncate:16| capitalize}}</span>
+                              <span *ngIf="!item?.name">{{item?.nameTranslation?.ar}}</span>
+                            </span>
+                            <span *ngIf="selectedLang == 'ar'">
+                              <span *ngIf="item?.nameTranslation?.ar">{{item?.nameTranslation?.ar}}</span>
+                              <span *ngIf="!item?.nameTranslation?.ar">
+                                              {{item?.name | truncate:16| capitalize}}
+                              </span>
+                            </span> 
+                          </td>
+                        <td>
+                            <div class="d-flex align-items-baseline">
+                                <!-- <div ngbDropdown>
+                                    <button class="btn" id="dropdownConfig" ngbDropdownToggle>
+                                        <img src="assets/icons/action-dot.svg">
+                                    </button>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                                        <button ngbDropdownItem (click)="view(item,true)">
+                                            <label><img style="width: 28px; height: 28px;" src="assets/icons/topup-gray-logo.png"
+                                                    class="mx-2">{{'cardManagement.topup' | translate}}</label>
+                                        </button>
+                                        <button ngbDropdownItem (click)="openConfirmDelete(item)">
+                                            <label><img src="assets/icons/delete-gray.svg"
+                                                    class="mx-2">{{'cardManagement.delete' | translate}}</label>
+                                        </button>
+                                    </div>
+                                </div> -->
+                                <button ngbDropdownItem (click)="view(item,true)">
+                                    <label><img style="width: 28px; height: 28px;" src="assets/icons/topup-gray-logo.png"
+                                            class="mx-2"></label>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+                    <tr>
+                        <td class="text-center" colspan="5">{{ 'noData' | translate}}</td>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="cardManagement == true" class="my-3">
+        <div class="table-responsive page-table text-nowrap ">
+            <table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+                <thead class="table-header no-border">
+                    <tr>
+                        <th class="pl-2" scope="col">{{'cardManagement.logo' | translate}}</th>
+                        <th scope="col">{{'cardManagement.cardNumber' | translate}}</th>
+                        <th scope="col">{{'cardManagement.cardExpiry' | translate}}</th>
+                        <th scope="col">{{'cardManagement.cardAddedAt' | translate}}</th>
+                        <th scope="col">{{'cardManagement.actions' | translate}}</th>
+                        <th scope="col" width='100px'></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body" *ngIf="dataList && dataList.length">
+                    <tr *ngFor="let item of dataList;let i=index">
+                        <td>
+                            <div>
+                                <img [src]="item?.logo || 'assets/icons/visa-card-logo.jpeg'"
+                                    class="img-fluid image-profile">
+                            </div>
+                        </td>
+                        <td>Visa********{{item?.last4}}</td>
+                        <td>{{item?.expiry_month}}/{{item?.expiry_year}}</td>
+                        <td class="font-roboto">{{item?.createdAt | date}}</td>
+                        <td>
+                            <div class="d-flex align-items-baseline">
+                                <button ngbDropdownItem (click)="openConfirmDelete(item)">
+                                    <label><img src="assets/icons/delete-gray.svg"
+                                            class="mx-2"></label>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+                    <tr>
+                        <td class="text-center" colspan="5">{{ 'noData' | translate}}</td>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+    </div>
+</div>

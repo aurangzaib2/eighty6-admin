@@ -1,0 +1,225 @@
+<div class="card profile-card border-0">
+	<img [src]="promotionData?.banner || 'assets/images/banner.png'" *ngIf="type==='view' || type==='reject'"
+		class="card-img-top" alt="banner">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div class="card-body">
+		<div class="d-flex justify-content-center my-1" *ngIf="type==='edit'">
+			<h4 class=" section-head mb-0">{{'marketing.editRequest' | translate}}</h4>
+		</div>
+		<ng-container *ngIf="type==='view' || type==='reject'">
+			<div class="d-flex justify-content-center">
+				<div class="profile-logo">
+					<img [src]="promotionData?.image || 'assets/images/placeholder_logo.png'" class="img-fluid">
+				</div>
+			</div>
+			<div class="text-center mt-5">
+				<div class="clearfix text-capitalize">
+					<h5 class="mb-0 pb-0">{{promotionData?.supplierName}}</h5>
+					<p class="mb-1">{{'marketing.supplier' | translate}}</p>
+				</div>
+			</div>
+			<div class="d-flex justify-content-end" *ngIf="form.id.value != '' && !promotionForm.enabled">
+				<a class="btn-link text-capitalize" role="button" (click)="enableForm()">
+					<img src="assets/icons/edit.svg" class="img-fluid" alt="icon">
+					{{'marketing.edit' | translate}}
+				</a>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="type==='view' || type==='edit'">
+			<form [formGroup]="promotionForm">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group ">
+							<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+								aria-describedby="subject" placeholder="{{ 'enterHere' | translate}}"
+								formControlName="subject">
+							<label for="exampleInput1"> {{'marketing.requestSubject' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.subject">
+								<ng-container
+									*ngIf="form.subject.hasError(error.type) && (form.subject.dirty || form.subject.touched) && submitted">
+									<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group ">
+							<input class="form-control datepicker" placeholder="Select date" name="dp1"
+								[readonly]="true" formControlName="startDate" [minDate]="minDate" ngbDatepicker
+								#d1="ngbDatepicker" outsideDays="visible" (click)="d1.toggle()" type="text" />
+							<label for="exampleInput2">{{'marketing.startDate' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.startDate">
+								<ng-container
+									*ngIf="form.startDate.hasError(error.type) && (form.startDate.dirty || form.startDate.touched) && submitted">
+									<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group ">
+							<input class="form-control datepicker" placeholder="Select date" name="dp2"
+								formControlName="endDate" [minDate]="form.startDate.value" ngbDatepicker
+								#d2="ngbDatepicker" outsideDays="visible" (click)="d2.toggle()" type="text" />
+							<label for="exampleInput3">{{'marketing.endDate' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.endDate">
+								<ng-container
+									*ngIf="form.endDate.hasError(error.type) && (form.endDate.dirty || form.endDate.touched)">
+									<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group ">
+							<textarea type="text" class="form-control" autocomplete="off" rows="4" id="exampleInput4"
+								aria-describedby="note" placeholder="{{ 'enterHere' | translate}}"
+								formControlName="description"></textarea>
+							<label for="exampleInput4">{{'marketing.requestNote' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.description">
+								<ng-container
+									*ngIf="form.description.hasError(error.type) && (form.description.dirty || form.description.touched) && submitted">
+									<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</form>
+			<div class="d-flex justify-content-between align-items-center">
+				<div>
+					<span class="section-head">{{'marketing.uploadBanner' | translate}} Mob App</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-5 my-2" *ngIf="fileUploaded">
+					<div>
+						<div class="image-box rounded border text-center mt-2 position-relative">
+							<img [src]="promotionData?.image" *ngIf="promotionData?.image != null">
+							<button (click)="clearImage()" [hidden]="!promotionForm.enabled"
+								class="btn btn-grey btn-circular btn-photo-close btn-sm btn-sm-close">
+								<i class="fa fa-times fa-lg"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-12" *ngIf="!fileUploaded">
+					<div class="upload-box mt-2" (click)="fileInput1.click()" appDragDrop
+						(fileDropped)="uploadImage($event,'mob')">
+						<input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file"
+							(change)="uploadImage($event.target.files[0],'mob')" required accept="image/png, image/jpeg">
+						<img src="assets/icons/download.svg" class="img-fluid download-img">
+						<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+							translate}}</label>
+						<p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+					</div>
+					<div class="text-left" *ngFor="let error of errorMessages.image">
+						<ng-container
+							*ngIf="form.image.hasError(error.type) && (form.image.dirty || form.image.touched) && submitted">
+							<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-between align-items-center">
+				<div>
+					<span class="section-head">{{'marketing.uploadBanner' | translate}} Web</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-5 my-2" *ngIf="fileUploadedWeb">
+					<div>
+						<div class="image-box rounded border text-center mt-2 position-relative">
+							<img [src]="promotionData?.imageWeb" *ngIf="promotionData?.imageWeb != null">
+							<button (click)="clearImageWeb()" [hidden]="!promotionForm.enabled"
+								class="btn btn-grey btn-circular btn-photo-close btn-sm btn-sm-close">
+								<i class="fa fa-times fa-lg"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-12" *ngIf="!fileUploadedWeb">
+					<div class="upload-box mt-2" (click)="fileInput1.click()" appDragDrop
+						(fileDropped)="uploadImage($event,'web')">
+						<input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file"
+							(change)="uploadImage($event.target.files[0],'web')" required accept="image/png, image/jpeg">
+						<img src="assets/icons/download.svg" class="img-fluid download-img">
+						<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+							translate}}</label>
+						<p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+					</div>
+					<div class="text-left" *ngFor="let error of errorMessages.image">
+						<ng-container
+							*ngIf="form.image.hasError(error.type) && (form.image.dirty || form.image.touched) && submitted">
+							<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="mt-1 text-capitalize">
+				<ng-container *ngIf="displayMessage!=null">
+					<span class="error-message font-14">{{displayMessage}}</span>
+				</ng-container>
+			</div>
+			<div class="d-flex justify-content-between mt-3" *ngIf="promotionForm.enabled && type==='edit'">
+				<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+					cancel
+				</button>
+				<button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+					<span *ngIf="!loading">{{'marketing.saveUpdate' | translate}}</span>
+					<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status"
+						aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="d-flex justify-content-between mt-4" *ngIf="type==='view'">
+				<button (click)="openReject()" class="btn btn-red-badge text-capitalize my-2">
+					<i class="fa fa-times"></i>
+					{{'marketing.reject' | translate}}
+				</button>
+				<button (click)="openConfirmApproved()" class="btn btn-green-badge text-capitalize my-2">
+					<i class="fa fa-check"></i>
+					{{'marketing.approve' | translate}}
+				</button>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="type==='reject'">
+			<form [formGroup]="rejectForm">
+				<div class="row">
+					<div class="col-12">
+						<label class="text-capitalize" for="exampleInput1">reject reason</label>
+						<div class="form-group">
+							<textarea aria-describedby="emailHelp" autocomplete="off" class="form-control"
+								formControlName="reason" id="exampleInput1" placeholder="{{ 'enterHere' | translate}}"
+								rows="4" type="text"></textarea>
+							<label for="exampleInput1">{{'marketing.describe' | translate}}</label>
+							<div class="text-left" *ngFor="let error of errorMessages.reason">
+								<ng-container
+									*ngIf="form2.reason.hasError(error.type) && (form2.reason.dirty || form2.reason.touched) && submitted">
+									<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between mt-3">
+					<button (click)="closeModal()" class="btn btn-theme btn-grey text-capitalize">
+						{{'marketing.cancel' | translate}}
+					</button>
+					<button type="submit" (click)="onSubmitReject()" class="btn btn-theme btn-blue text-capitalize">
+						<span *ngIf="!loading">{{'marketing.submit' | translate}}</span>
+						<span *ngIf="loading" aria-hidden="true" class="spinner-border spinner-border-sm"
+							role="status"></span>
+					</button>
+				</div>
+			</form>
+		</ng-container>
+	</div>
+</div>

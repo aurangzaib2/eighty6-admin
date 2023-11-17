@@ -1,0 +1,50 @@
+.select-and-input input {
+  padding-left: 72px;
+}
+// password
+.form-group-password {
+  > label {
+    background: var(--white);
+  }
+  ::placeholder {
+    font-size: 50px;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-size: 50px;
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    font-size: 50px;
+  }
+}
+.user-profile {
+  width: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+.profile-edit {
+  cursor: pointer;
+  background: var(--black-transparent);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white-2);
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.42px;
+  border-radius: 50%;
+  span {
+    display: block;
+  }
+}

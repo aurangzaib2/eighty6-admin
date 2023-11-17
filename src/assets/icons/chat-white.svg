@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+    <defs>
+        <filter id="bhf8dbj5la">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.043137 0 0 0 0 0.447059 0 0 0 0 0.811765 0 0 0 1.000000 0"/>
+        </filter>
+        <path id="o9787ebo3b" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g transform="translate(-1269.000000, -270.000000) translate(270.000000, 181.000000) translate(0.000000, 0.500000) translate(838.000000, 88.500000) translate(161.000000, 0.000000)">
+                            <rect width="44" height="44" fill="#FFF" fill-opacity=".739" fill-rule="nonzero" rx="22"/>
+                            <g filter="url(#bhf8dbj5la)">
+                                <g transform="translate(11.000000, 12.000000)">
+                                    <mask id="xaevd8zzrc" fill="#fff">
+                                        <use xlink:href="#o9787ebo3b"/>
+                                    </mask>
+                                    <g fill="#000" fill-rule="nonzero" mask="url(#xaevd8zzrc)">
+                                        <path d="M0 0H24V24H0z"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

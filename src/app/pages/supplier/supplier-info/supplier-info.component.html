@@ -1,0 +1,213 @@
+<div class="container-fluid mt-5 border-1" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="clearfix">
+			<h3 class="text-capitalize text-black-200">{{'suppliers.supplierInformation' | translate}}</h3>
+		</div>
+		<div class="clearfix">
+			<a class="btn-link text-capitalize" role="button" (click)="edit()" data-testid="edit-btn">
+				<img src="assets/icons/edit.svg" class="img-fluid" alt="icon">
+				{{'suppliers.editProfile' | translate}}
+			</a>
+		</div>
+	</div>
+	<form [formGroup]="profileForm" autocomplete="off">
+		<!-- general info -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head"> {{'suppliers.generalInformation' | translate}}</span>
+		</div>
+		<div class="row my-3">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group mb-4 mt-4">
+					<input type="text" class="form-control" autocomplete="off" id="firstName" data-testid="firstName"
+						aria-describedby="firstName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="firstName">
+					<label for="firstName">{{'onBoarding.fname' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group mb-4 mt-4">
+					<input type="text" class="form-control" autocomplete="off" id="lastName" aria-describedby="lastName" data-testid="lastName"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+					<label for="lastName">{{'onBoarding.lname' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1" data-testid="supplierName"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="name">
+					<label for="exampleInput1">{{'suppliers.supplierName' | translate}} {{'products.english_text' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1" data-testid="supplierNameArabic"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="Aname">
+					<label for="exampleInput1">{{'suppliers.supplierName' | translate}} {{'products.arabic_text' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'onBoarding.onboarded' | translate}}</label>
+					<select class="custom-select custom-select-lg text-capitalize" formControlName="isOnBoarded" data-testid="isOnBoarded">
+						<option value=true>Yes</option>
+						<option value=false>No</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput2" data-testid="supplierEmail"
+						aria-describedby="email" placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+					<label for="exampleInput2">{{'suppliers.email' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" disabled data-testid="mobileCode">
+							<option aria-readonly="true" selected>{{form.mobileCode.value}}</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" inputNumber
+							onKeyPress="this.defaultValue = this.value" type="number" class="form-control"
+							id="exampleInput3" formControlName="mobileNumber">
+					</div>
+					<label for="exampleInput3">{{'suppliers.mobileNo' | translate}}#</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" disabled data-testid="officePhoneCountryCode">
+							<option aria-readonly="true" selected>{{form.officePhoneCountryCode.value}}</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="number"
+							class="form-control" autocomplete="off" id="exampleInput4"
+							aria-describedby="office mobileNumber" placeholder="{{ 'enterHere' | translate}}"
+							formControlName="officePhoneNumber">
+					</div>
+					<label for="exampleInput5">{{'suppliers.officeNo' | translate}}#</label>
+				</div>
+			</div>
+
+			<!-- TRN Number -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="trnNumber" aria-describedby="trnNumber" data-testid="trnNumber"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="trnNumber">
+					<label for="trnNumber">{{'suppliers.trnName' | translate}}</label>
+				</div>
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12 col-height">
+				<div class="form-group mb-4 mt-4">
+					<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+						autocomplete="off" id="minOrder" aria-describedby="minOrder" data-testid="minimumOrder"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="minOrder">
+					<label for="exampleInput7">{{'onBoarding.minimumOrder' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12 col-height">
+				<div class="form-group mb-4 mt-4">
+					<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+						autocomplete="off" id="exampleInpu7" aria-describedby="emailHelp" data-testid="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="commission">
+					<label for="exampleInput7">{{'suppliers.commission' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group my-4">
+					<ng-select class="form-control" formControlName="deliveryLocation" [addTag]="true" [multiple]="true" data-testid="deliveryLocation"
+						bindLabel="label">
+					</ng-select>
+					<label for="exampleInput6">{{'suppliers.deliverylocation' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-12">
+						<div class="form-group my-4">
+							<input type="time" class="form-control" autocomplete="off" id="workStartTime" data-testid="workStartTime"
+								formControlName="workStartTime" aria-describedby="workStartTime"
+								placeholder="{{ 'enterHere' | translate}}">
+							<label for="workStartTime">{{'suppliers.startTime' | translate}}</label>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12">
+						<div class="form-group my-4">
+							<input type="time" class="form-control" autocomplete="off" id="workEndTime" data-testid="workEndTime"
+								formControlName="workEndTime" aria-describedby="workEndTime"
+								placeholder="{{ 'enterHere' | translate}}">
+							<label for="workEndTime">{{'suppliers.endTime' | translate}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- address -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'suppliers.completeAddress' | translate}}</span>
+		</div>
+		<div class="row mb-2">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'suppliers.country' | translate}}</label>
+					<input type="text" class="form-control" autocomplete="off" id="countryName" data-testid="countryName"
+						aria-describedby="countryName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="countryName">
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'suppliers.city/state' | translate}}</label>
+					<input type="text" class="form-control" autocomplete="off" id="city" aria-describedby="city" data-testid="citySelection"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="city">
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" autocomplete="off" rows="9" id="exampleInput14" data-testid="location"
+						aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="location"></textarea>
+					<label for="exampleInput14">{{'suppliers.address' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group custom-form-group ">
+					<label class="form-group-label mb-0" for="exampleInput15">{{'suppliers.lMap' | translate}}</label>
+					<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="4" [fullscreenControl]='true' data-testid="map-selection">
+						<agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+							[opacity]="marker.alpha" [markerDraggable]="false">
+						</agm-marker>
+					</agm-map>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- documents -->
+	<div class="d-flex justify-content-start mt-4">
+		<span class="section-head">{{'suppliers.documents' | translate}}</span>
+	</div>
+	<div class="row mt-3">
+		<div class="col-lg-3 col-md-5 col-sm-6" *ngFor="let _ of media.controls;index as i" style="cursor: pointer;">
+			<div class="card" [formGroup]="_" [ngClass]="{'card-border': selectDocumentIndex === i}">
+				<div class="card-body px-3 py-2">
+					<label class="document-label text-capitalize">{{_.value.displayName}}</label>
+					<div class="d-flex justify-content-between">
+						<div>
+							<span class="text-gray-100" *ngIf="_.value.name">
+								{{_.value.name | truncate:10}}
+							</span>
+							<span class="text-gray-100" *ngIf="!_.value.name">
+								No file added
+							</span>
+						</div>
+						<div>
+							<a class="btn-link" [hidden]="!_.value.name" (click)="downloadFile(_.value)" data-testid="downloadFile" data-testid="download-file"><img
+									src="assets/icons/filedownload.svg"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

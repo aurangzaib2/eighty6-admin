@@ -1,0 +1,386 @@
+<!-- user form -->
+<ng-container>
+	<div class="card profile-card border-0">
+		<img src="assets/images/banner.png" class="card-img-top" alt="banner">
+		<div class="close-icon" (click)="closeModal()">
+			<img src="assets/icons/white-cross.svg" class="img-fluid">
+		</div>
+		<div class="card-body">
+			<div class="d-flex justify-content-center">
+				<div class="profile-logo" (click)="fileInput2.click()">
+					<input hidden autocapitalize="on" #fileInput2 autocomplete="on" type="file" name="file"
+						(change)="uploadImage($event.target.files[0])" required>
+					<img [src]="userData?.pictureCDN || 'assets/images/placeholder_logo.png'"
+						class="img-fluid user-profile">
+					<div class="profile-edit">
+						<div>
+							<img src="assets/icons/camera.svg">
+							<span>{{'restaurants.uploadPhoto' | translate}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt-4">
+				<form [formGroup]="userForm" autocomplete="off">
+					<h6 class="text-capitalize"> {{'restaurants.generalInformation' | translate}} </h6>
+					<div class="row mt-2">
+						<div class="col-6">
+							<div class="form-group">
+								<select class="custom-select custom-select-lg text-capitalize" formControlName="role"
+									(change)="setValidation()">
+									<!-- <option [value]="type.role" *ngFor="let type of userTypes">
+										{{type.displayRole}}
+									</option>	 -->
+									<option [value]="type.role" *ngFor="let type of roles">
+										{{type.displayRole}}
+									</option>
+								</select>
+								<label for="exampleInput1">{{'restaurants.UserType' | translate}}</label>
+								<div class="text-left" *ngFor="let error of errorMessages.role">
+									<ng-container
+										*ngIf="form.role.hasError(error.type) && (form.role.dirty || form.role.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<input type="text" class="form-control" id="designation"
+									aria-describedby="designation name" placeholder="{{ 'enterHere' | translate}}"
+									formControlName="designation">
+								<label for="designation">{{'restaurants.designation' | translate}}</label>
+								<div class="text-left" *ngFor="let error of errorMessages.designation">
+									<ng-container
+										*ngIf="form.designation.hasError(error.type) && (form.designation.dirty || form.designation.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-6">
+							<div class="form-group">
+								<input type="text" class="form-control" id="exampleInput2" aria-describedby="First name"
+									placeholder="{{ 'enterHere' | translate}}" formControlName="firstName">
+								<label for="firstName">{{'restaurants.fname' | translate}}</label>
+								<div class="text-left" *ngFor="let error of errorMessages.firstName">
+									<ng-container
+										*ngIf="form.firstName.hasError(error.type) && (form.firstName.dirty || form.firstName.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<input type="text" class="form-control" id="lastName" aria-describedby="Last name"
+									placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+								<label for="lastName">{{'restaurants.lname' | translate}}</label>
+								<div class="text-left" *ngFor="let error of errorMessages.lastName">
+									<ng-container
+										*ngIf="form.lastName.hasError(error.type) && (form.lastName.dirty || form.lastName.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<input type="email" class="form-control" id="exampleInput4" aria-describedby="Email"
+									placeholder="demo@eightysix.com" formControlName="email">
+								<label for="email">{{'restaurants.email' | translate}}</label>
+								<div class="text-left" *ngFor="let error of errorMessages.email">
+									<ng-container
+										*ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+						<div class="col-6" *ngIf="form.role.value != userTypes[2].role">
+							<div class="form-group">
+								<div class="select-and-input">
+									<select class="bg-transparent" formControlName="mobileCode">
+										<option [value]="item?.dail_code" *ngFor="let item of phoneCodeList">
+											{{item?.dail_code}}
+										</option>
+									</select>
+									<input inputNumber onKeyPress="this.defaultValue = this.value" type="text"
+										class="form-control" id="mobileCode" placeholder="{{'enterHere' | translate}}"
+										formControlName="mobileNumber">
+								</div>
+								<label for="mobileCode">{{'restaurants.mobileNo' | translate}}#</label>
+								<div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+									<ng-container
+										*ngIf="form.mobileNumber.hasError(error.type) && (form.mobileNumber.dirty || form.mobileNumber.touched)">
+										<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+								<div class="text-left" *ngFor="let error of errorMessages.mobileCode">
+									<ng-container
+										*ngIf="form.mobileCode.hasError(error.type) && (form.mobileCode.dirty || form.mobileCode.touched)">
+										<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+						<div class="col-6" *ngIf="form.role.value === userTypes[2].role">
+							<div class="form-group form-group-password">
+								<label for="passowrd">Pin</label>
+								<div class="input-group input-group-alternative">
+									<input [type]="passwordType" class="form-control" autocomplete="new-password"
+										placeholder="&#183;&#183;&#183;&#183;&#183;&#183;" formControlName="staffPin"
+										(change)="clearDisplayMessage()">
+									<div class="input-group-append" (click)="onClickEye()">
+										<span class="showPassword">
+											<img *ngIf="!showEye" src="assets/icons/eye-fill.svg">
+											<img *ngIf="showEye" src="assets/icons/eye-slash-fill.svg">
+										</span>
+									</div>
+								</div>
+								<div class="text-left" *ngFor="let error of errorMessages.staffPin">
+									<ng-container
+										*ngIf="form.staffPin.hasError(error.type) && (form.staffPin.dirty || form.staffPin.touched)">
+										<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div *ngIf="form.role.value != userTypes[2].role">
+						<h6 class="text-capitalize"> {{'restaurants.completeAddress' | translate}} </h6>
+						<div class="row mt-2">
+							<div class="col-6">
+								<div class="form-group">
+									<input type="text" class="form-control" readonly autocomplete="off" id="countryName"
+										aria-describedby="countryName" placeholder="{{ 'enterHere' | translate}}"
+										formControlName="countryName">
+									<label for="exampleInput6">{{'restaurants.country' | translate}}</label>
+									<div class="text-left" *ngFor="let error of errorMessages.countryName">
+										<ng-container
+											*ngIf="form.countryName.hasError(error.type) && (form.countryName.dirty || form.countryName.touched)">
+											<span class="error-message font-14">{{error.message}}</span>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="form-group">
+									<label>{{'restaurants.city/state' | translate}}</label>
+									<select class="custom-select custom-select-lg text-capitalize"
+										formControlName="city">
+										<option [value]="item.name" *ngFor="let item of cityList">{{item?.name}}
+										</option>
+									</select>
+									<div class="text-left" *ngFor="let error of errorMessages.city">
+										<ng-container
+											*ngIf="form.city.hasError(error.type) && (form.city.dirty || form.city.touched)">
+											<span class="error-message font-13">{{error.message}}</span>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<textarea type="text" class="form-control" autocomplete="off" rows="3"
+										id="exampleInput14" aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+										formControlName="location"></textarea>
+									<label for="exampleInput14">{{'restaurants.completeAddress' | translate}}</label>
+									<div class="text-left" *ngFor="let error of errorMessages.location">
+										<ng-container
+											*ngIf="form.location.hasError(error.type) && (form.location.dirty || form.location.touched)">
+											<span class="error-message font-13">{{error.message}}</span>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
+					<div *ngIf="form.role.value != userTypes[2].role">
+						<h6 class="text-capitalize"> {{'userManagement.createPassword' | translate}} </h6>
+						<div class="row mt-2">
+							<div class="col-6">
+								<div class="form-group form-group-password">
+									<label for="passowrd">{{'userManagement.password' |
+										translate}}</label>
+									<div class="input-group input-group-alternative">
+										<input [type]="passwordType" class="form-control" autocomplete="new-password"
+											placeholder="&#183;&#183;&#183;&#183;&#183;&#183;"
+											formControlName="password" (change)="clearDisplayMessage()">
+										<div class="input-group-append" (click)="onClickEye()">
+											<span class="showPassword">
+												<img *ngIf="!showEye" src="assets/icons/eye-fill.svg">
+												<img *ngIf="showEye" src="assets/icons/eye-slash-fill.svg">
+											</span>
+										</div>
+									</div>
+									<!-- <div class="text-left" *ngFor="let error of errorMessages.password">
+										<ng-container
+											*ngIf="form.password.hasError(error.type) && (form.password.dirty || form.password.touched)">
+											<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+										</ng-container>
+									</div> -->
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="form-group form-group-password">
+									<label for="confirmPassword">{{'userManagement.confirmPassword' |
+										translate}}</label>
+									<div class="input-group input-group-alternative">
+										<input [type]="passwordType2" class="form-control" autocomplete="new-password"
+											placeholder="&#183;&#183;&#183;&#183;&#183;&#183;"
+											formControlName="confirmPassword" (change)="clearDisplayMessage()">
+										<div class="input-group-append" (click)="onClickEye2()">
+											<span class="showPassword">
+												<img *ngIf="!showEye2" src="assets/icons/eye-fill.svg">
+												<img *ngIf="showEye2" src="assets/icons/eye-slash-fill.svg">
+											</span>
+										</div>
+									</div>
+									<div class="text-left" *ngFor="let error of errorMessages.confirmPassword">
+										<ng-container
+											*ngIf="form.confirmPassword.hasError(error.type) && (form.confirmPassword.dirty || form.confirmPassword.touched)">
+											<span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-start" *ngIf="form.role.value === userTypes[0].role">
+						<div class="col-auto" *ngFor="let item of permissionList;index as i">
+							<div class="custom-control custom-switch">
+								<input type="checkbox" class="custom-control-input" [id]="i"
+									[checked]="permissionArray.value.includes(item.value)"
+									(change)="setPermission($event,item.value)">
+								<label class="custom-control-label text-capitalize" [for]="i">{{item.title}}</label>
+							</div>
+						</div>
+					</div>
+
+				</form>
+				<div class="text-capitalize">
+					<ng-container *ngIf="displayMessage!=null">
+						<span class="error-message font-14">{{displayMessage}}</span>
+					</ng-container>
+				</div>
+				<div class="d-flex justify-content-between mt-2">
+					<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+						{{'userManagement.cancel' | translate}}
+					</button>
+					<button type="submit" class="btn btn-theme btn-blue text-capitalize" (click)="onSubmit()">
+						<span class="text-capitalize" *ngIf="!loading && !form.id.value">{{'userManagement.createUser' |
+							translate}}</span>
+						<span class="text-capitalize" *ngIf="!loading && form.id.value">{{'userManagement.saveUpdate' |
+							translate}}</span>
+						<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status"
+							aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+
+<!-- user view -->
+<!-- <ng-container *ngIf="!isEditable">
+	<div class="card profile-card border-0">
+		<img src="assets/images/banner.png" class="card-img-top" alt="banner">
+		<div class="close-icon" (click)="closeModal()">
+			<img src="assets/icons/white-cross.svg" class="img-fluid">
+		</div>
+		<div class="card-body">
+			<div class="d-flex justify-content-center">
+				<div class="profile-logo">
+					<img src="assets/images/upload-image.svg" class="img-fluid" *ngIf="form?.picture.value === null">
+					<img [src]="userData?.picture" class="img-fluid user-profile" *ngIf="form?.picture.value != null">
+				</div>
+			</div>
+			<div ngbDropdown class="text-right">
+				<button class="btn btn-menu" id="dropdownConfig" ngbDropdownToggle>
+					<i class="fa fa-ellipsis-h"></i>
+				</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+					<button ngbDropdownItem (click)="toggleEdit()">
+						<div class="d-flex align-items-center">
+							<div>
+								<img src="assets/icons/edit-gray.svg" class="img-fluid text-blue-100">
+							</div>
+							<div class="pl-2 text-capitalize">
+								<a class="mb-0 text-gray-100">edit</a>
+							</div>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="d-flex align-items-center">
+							<div>
+								<img src="assets/icons/block-gray.svg" class="img-fluid">
+							</div>
+							<div class="pl-2 text-capitalize" (click)="openConfirmStatusChange()">
+								<a class="mb-0 text-gray-100">
+									<span *ngIf="userData?.status === 'active'">Block</span>
+									<span *ngIf="userData?.status === 'inactive'">Un-block</span>
+								</a>
+							</div>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="d-flex align-items-center">
+							<div>
+								<img src="assets/icons/delete-gray.svg" class="img-fluid">
+							</div>
+							<div class="pl-2 text-capitalize" (click)="openConfirmDelete()">
+								<a class="mb-0 text-gray-100">delete</a>
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
+			<div class="text-center mt-3">
+				<div class="clearfix text-capitalize">
+					<h5 class="mb-0 pb-0">{{userData?.firstName}} {{userData?.lastName}}</h5>
+				</div>
+			</div>
+			<div class="mt-4">
+				<div class="d-flex justify-content-between receipt-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">user type</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">{{customizeRoleText(userData?.role)}}</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between receipt-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">phone</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">
+							( {{userData?.mobileCode}} )
+							{{userData?.mobileNumber}}</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between receipt-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">email</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">{{userData?.email}}</span>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between receipt-items">
+					<div class="clearfix">
+						<span class="text-label text-capitalize">location</span>
+					</div>
+					<div class="clearfix">
+						<span class="text-value text-capitalize">{{userData?.city}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container> -->

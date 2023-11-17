@@ -1,0 +1,124 @@
+<div class="row align-items-center">
+    <div class="col-lg-12 col-md-6 col-12 my-1">
+        <div class="sales-box yellow-100-bg card p-3 text-left border-0">
+            <p class="text-black-300">{{'dashboard.salesPerformance' | translate}}</p>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-column">
+                    <div class="dir-ltr">
+                        <!-- <h3>{{currency}} {{statsData?.totalAmount}}</h3> -->
+                        <h3 class="price font-roboto">{{currency}}</h3>
+                        <h3 class="price">{{statsData?.totalAmount}}</h3>
+                    </div>
+                    <!-- <select class="trans-button" [(ngModel)]="selectMonth" (ngModelChange)="getData()">
+                        <option [value]="item" *ngFor="let item of months">{{item}}</option>
+                    </select> -->
+                    <div class="order-stats-date font-roboto">
+                        <dp-date-picker theme="dp-material" [(ngModel)]="selectMonth" (onSelect)="getData()"
+                            [config]="datePickerConfig" #dpDatePicker>
+                        </dp-date-picker>
+                        <img src="assets/icons/arrow-down-black.svg" (click)="dpDatePicker.api.open()" class="img-fluid"
+                            width="14px">
+                    </div>
+
+                </div>
+                <div class="tip-transaction">
+                    <ng-template #tipContent>{{statsData?.transactions}}</ng-template>
+                    <button class="btn" tooltipClass="tip-custom" placement="top" triggers="click" id="openTootip"
+                        [autoClose]="'inside'" #transaction="ngbTooltip" [ngbTooltip]="tipContent">
+                    </button>
+                    <!-- <div style="display: block;">
+                        <canvas baseChart width="250" height="120" [datasets]="lineChartData" [labels]="lineChartLabels"
+                            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                            [chartType]="lineChartType"></canvas>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-6 col-12 my-1">
+        <div class="card monthly-transaction-card">
+            <div class="card-header border-0 bg-transparent d-flex">
+                <span class="text-capitalize">{{'dashboard.monthlyTransactions' | translate}}</span>
+                <a class="btn-link ml-auto" [routerLink]="['/transactions']" routerLinkActive="router-link-active">
+                    {{'dashboard.viewMore' | translate}}
+                </a>
+            </div>
+            <div class="card-body py-0">
+                <div class="table-responsive fixed-height">
+                    <table class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataList" style="cursor: default;">
+                                <td>
+                                    <div class="d-flex image-and-text align-items-center">
+                                        <img [src]="item?.logo || 'assets/images/placeholder_product.svg'">
+                                        <div class="text-div">
+                                            <!-- <h4 class="text-black-100 text-capitalize">{{item?.restaurantName}}</h4> -->
+                                            <span *ngIf="selectedLang == 'en'">
+                                                <h4 *ngIf="item?.restaurantName">{{item?.restaurantName | truncate:16| capitalize}}</h4>
+                                                <h4 *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                              </span>
+                                              <span *ngIf="selectedLang == 'ar'">
+                                                <h4 *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</h4>
+                                                <h4 *ngIf="!item?.restaurantNameTranslation?.ar">
+                                                                {{item?.restaurantName | truncate:16| capitalize}}
+                                                </h4>
+                                              </span>
+                                            <p class="text-gray-100 font-roboto">{{item?.creditDate | date:'mediumDate'}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-div dis-flex">
+                                        <!-- <p class="text-black-100">{{currency}} {{item?.amount.toFixed(2)}}</p> -->
+                                        <p class="text-black-100 price font-roboto">{{currency}}</p>
+                                        <p class="text-black-100 price">{{item?.amount.toFixed(2)}}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataList.length === 0">
+                                <td>{{'noData' | translate}}</td>
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    <div class="d-flex image-and-text align-items-center">
+                                        <img src="assets/images/resto2.png" class="">
+                                        <div class="text-div">
+                                            <h4 class="text-black-100">Olive Garden</h4>
+                                            <p class="text-gray-100">07/May/2021</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="text-div">
+                                        <h4 class="text-black-100">AED 240</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex image-and-text align-items-center">
+                                        <img src="assets/images/resto3.png" class="">
+                                        <div class="text-div">
+                                            <h4 class="text-black-100">Red Chilli</h4>
+                                            <p class="text-gray-100">07/June/2021</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="text-div">
+                                        <h4 class="text-black-100">AED 240</h4>
+                                    </div>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

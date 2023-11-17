@@ -1,0 +1,144 @@
+<div class="card profile-card border-0">
+	<div class="close-icon" (click)="closeModal()" *ngIf="form.id.value !=null">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div class="card-body">
+		<div class="d-flex justify-content-center my-1" *ngIf="form.id.value !=null">
+			<h4 class=" section-head mb-0">{{'marketing.editVoucher' | translate}}</h4>
+		</div>
+		<div class="d-flex justify-content-end" *ngIf="form.id.value != '' && !voucherForm.enabled">
+			<a class="btn-link text-capitalize" role="button" (click)="enableForm()">
+				<img src="assets/icons/edit.svg" class="img-fluid" alt="icon">
+				{{'marketing.edit' | translate}}
+			</a>
+		</div>
+		<form [formGroup]="voucherForm">
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group ">
+						<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+							aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="name">
+						<label for="exampleInput1"> {{'marketing.voucherName' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.name">
+							<ng-container
+								*ngIf="form.name.hasError(error.type) && (form.name.dirty || form.name.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group ">
+						<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+							aria-describedby="code" placeholder="{{ 'enterHere' | translate}}" formControlName="code">
+						<label for="exampleInput1"> {{'marketing.promoCode' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.code">
+							<ng-container
+								*ngIf="form.code.hasError(error.type) && (form.code.dirty || form.code.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group ">
+						<input class="form-control datepicker" placeholder="{{'selectDate' | translate}}" name="dp1" [readonly]="true"
+							formControlName="startDate" [minDate]="minDate" ngbDatepicker #d1="ngbDatepicker"
+							outsideDays="visible" (click)="d1.toggle()" type="text" />
+						<label for="exampleInput2">{{'marketing.startDate' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.startDate">
+							<ng-container
+								*ngIf="form.startDate.hasError(error.type) && (form.startDate.dirty || form.startDate.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group ">
+						<input class="form-control datepicker" placeholder="{{'selectDate' | translate}}" name="dp2"
+							formControlName="endDate" [minDate]="form.startDate.value" ngbDatepicker #d2="ngbDatepicker"
+							outsideDays="visible" (click)="d2.toggle()" type="text" />
+						<label for="exampleInput3">{{'marketing.endDate' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.endDate">
+							<ng-container
+								*ngIf="form.endDate.hasError(error.type) && (form.endDate.dirty || form.endDate.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group ">
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+							autocomplete="off" id="discountInPercentage" aria-describedby="discountInPercentage"
+							placeholder="{{ 'enterHere' | translate}}" formControlName="discountInPercentage">
+						<label for="exampleInput1">{{'marketing.discount' | translate}} %</label>
+						<div class="text-left" *ngFor="let error of errorMessages.discountInPercentage">
+							<ng-container
+								*ngIf="form.discountInPercentage.hasError(error.type) && (form.discountInPercentage.dirty || form.discountInPercentage.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group ">
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+							autocomplete="off" id="exampleInput1" aria-describedby="maximumDiscount"
+							placeholder="{{ 'enterHere' | translate}}" formControlName="maximumDiscount">
+						<label for="exampleInput1">{{'marketing.maximum_discount' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.maximumDiscount">
+							<ng-container
+								*ngIf="form.maximumDiscount.hasError(error.type) && (form.maximumDiscount.dirty || form.maximumDiscount.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="form-group ">
+						<angular2-multiselect class="form-control" style="height:auto !important"
+							placeholder="'Select restaurant'" [settings]="dropdownSettings" [data]="restaurantList"
+							formControlName="restaurants">
+						</angular2-multiselect>
+						<label for="exampleInput6">{{'marketing.selectResturant' | translate}}</label>
+						<div class="text-left" *ngFor="let error of errorMessages.restaurants">
+							<ng-container
+								*ngIf="form.restaurants.hasError(error.type) && (form.restaurants.dirty || form.restaurants.touched) && submitted">
+								<span class="error-message font-13">{{'marketingErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="mt-1 text-capitalize">
+			<ng-container *ngIf="displayMessage!=null">
+				<span class="error-message font-14">{{displayMessage}}</span>
+			</ng-container>
+		</div>
+		<div class="d-flex justify-content-between mt-3">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+				{{'marketing.cancel' | translate}}
+			</button>
+			<button type="submit" *ngIf="form.id.value === null" (click)="onSubmit()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<span *ngIf="!loading">{{'marketing.create' | translate}}</span>
+				<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+			</button>
+			<button type="submit" *ngIf="form.id.value != null" (click)="update()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<span *ngIf="!loading">{{'marketing.saveUpdate' | translate}}</span>
+				<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+</div>

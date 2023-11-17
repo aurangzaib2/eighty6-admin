@@ -1,0 +1,36 @@
+<div class="form-group max-300">
+    <div class="input-group mb-0 search-box">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">
+                <img src="assets/icons/search.svg">
+            </span>
+        </div>
+        <input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+            aria-describedby="basic-addon1">
+    </div>
+</div>
+<div class="tab-inner-div mt-4">
+    <div class="row">
+        <div class="col-sm-2" *ngFor="let item of dataList">
+            <div class="discount-box">
+                <div class="image-box rounded border mb-3">
+                    <div class="text-div">
+                        <div class="promo blue-bg ml-auto m-1">{{item?.discountedPrice / item?.price *100}}%
+                            {{'products.off' | translate}}</div>
+                    </div>
+                    <img src="assets/images/promo1.png">
+                </div>
+                <div class="text-div">
+                    <p class="text-gray-100 mb-2">{{item?.sku}}</p>
+                    <h4 class="text-black-100 font-20 mb-2">{{item?.name}}</h4>
+                    <p class="text-blue-100 font-15 mb-2">{{currency}} {{item?.price - item?.discountedPrice}} /
+                        {{item?.units}}{{item?.unitType}}</p>
+                    <p class="text-gray-600 font-14 font-normal text-decoration-line-through">{{currency}}
+                        {{item?.price}} /
+                        {{item?.units}}{{item?.unitType}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

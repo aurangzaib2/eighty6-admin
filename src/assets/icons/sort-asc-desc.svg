@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="23px" viewBox="0 0 14 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2E2731BE-182F-4207-9A13-F6A6D90F97A5</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.383589 0 0 0 0 0.383589 0 0 0 0 0.383589 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <polygon id="path-2" points="9.6775 5.01083333 7 7.6825 4.3225 5.01083333 3.5 5.83333333 7 9.33333333 10.5 5.83333333"></polygon>
+        <polygon id="path-4" points="9.6775 4.66666667 7 7.33833333 4.3225 4.66666667 3.5 5.48916667 7 8.98916667 10.5 5.48916667"></polygon>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="E01" transform="translate(-483.000000, -292.000000)">
+            <g id="Group-3-Copy-2" transform="translate(300.000000, 275.000000)" filter="url(#filter-1)">
+                <g transform="translate(183.000000, 18.000000)">
+                    <g id="icons/filled/navigation/expand_more_24px" transform="translate(0.000000, 8.000000)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="icon/navigation/expand_more_24px" fill-rule="nonzero"></g>
+                        <g id="_ignore/Color-Symbol/Tintable-(black)" mask="url(#mask-3)" fill="#424242" fill-rule="nonzero">
+                            <rect id="↳-👉Icon-Style" x="0" y="0" width="14" height="14"></rect>
+                        </g>
+                    </g>
+                    <g id="icons/filled/navigation/expand_more_24px" transform="translate(7.000000, 6.655833) scale(1, -1) translate(-7.000000, -6.655833) translate(0.000000, -0.344167)">
+                        <mask id="mask-5" fill="white">
+                            <use xlink:href="#path-4"></use>
+                        </mask>
+                        <g id="icon/navigation/expand_more_24px" fill-rule="nonzero"></g>
+                        <g id="_ignore/Color-Symbol/Tintable-(black)" mask="url(#mask-5)" fill="#424242" fill-rule="nonzero">
+                            <g transform="translate(0.000000, -0.344167)" id="↳-👉Icon-Style">
+                                <rect x="0" y="0" width="14" height="14"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

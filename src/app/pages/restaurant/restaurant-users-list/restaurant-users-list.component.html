@@ -1,0 +1,153 @@
+<div class="container-fluid" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="form-group">
+			<div class="input-group mb-0 search-box">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">
+						<img src="assets/icons/search.svg">
+					</span>
+				</div>
+				<input type="text" class="form-control" #search placeholder="{{ 'search' | translate}}"
+					aria-label="Search" aria-describedby="basic-addon1"
+					(keyup)="tableSetFilter('search', $event.currentTarget.value)">
+			</div>
+		</div>
+		<div>
+			<div class="clearfix">
+				<button class="btn btn-theme btn-blue text-capitalize px-4" (click)="add()">
+					<img src="assets/icons/plus-white.svg">{{'userManagement.addNewUser' | translate}}
+				</button>
+			</div>
+			<!-- <div ngbDropdown>
+				<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+					<img src="../../../../assets/icons/filter.svg">
+				</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+					<h6 class="pl-4 text-black-100">User Types</h6>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck1" #systemAdmin
+								(change)="tableSetFilter('roles', 'SYSTEM_ADMIN', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck1">System Admin</label>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck2" #systemManager
+								(change)="tableSetFilter('roles', 'SYSTEM_MANAGER', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck2">System
+								Manager</label>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck3" #systemUser
+								(change)="tableSetFilter('roles', 'SYSTEM_USER', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck3">System User</label>
+						</div>
+					</button>
+					<h6 class="pl-4 text-black-100 text-capitalize">Locations</h6>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck4" #dubai
+								(change)="tableSetFilter('locations', 'Dubai', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck4">Dubai</label>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck5" #abuDhabi
+								(change)="tableSetFilter('locations', 'Abu Dhabi', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck5">Abu Dhabi</label>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck6" #ajman
+								(change)="tableSetFilter('locations', 'Ajman', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck6">Ajman</label>
+						</div>
+					</button>
+					<button ngbDropdownItem>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customCheck6" #sharjah
+								(change)="tableSetFilter('locations', 'Sharjah', $event)">
+							<label class="custom-control-label text-capitalize" for="customCheck6">Sharjah</label>
+						</div>
+					</button>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div class="clearfix">
+		<div class="table-responsive page-table text-nowrap">
+			<table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+				<thead class="table-header no-border">
+					<tr>
+						<th class="pl-2" scope="col">{{'userManagement.userName' | translate}}</th>
+						<th scope="col">{{'userManagement.UserType' | translate}}</th>
+						<!-- <th scope="col">{{'userManagement.location' | translate}}</th> -->
+						<th scope="col">{{'userManagement.createdOn' | translate}}</th>
+						<th class="pr-1" scope="col">{{'restaurants.action' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<ng-container *ngIf="dataList && dataList.length">
+						<tr *ngFor="let item of dataList;let i=index">
+							<td class="pl-2" (click)="view(item,false)">
+								<div>
+									<!-- <img [src]="item?.picture || 'assets/icons/user-management.png'"
+										class="img-fluid image-profile"> -->
+									<span class="px-2">{{item?.firstName}}</span>
+								</div>
+							</td>
+							<!-- <td (click)="view(item,false)">{{customizeRoleText(item?.role)}}</td> -->
+							<td (click)="view(item,false)">
+								<span *ngIf="item?.role == 'RESTAURANT_USER'">{{'restaurants.RESTAURANT_USER' | translate}}</span>
+								<span *ngIf="item?.role == 'RESTAURANT_KITCHEN_USER'">{{'restaurants.RESTAURANT_KITCHEN_USER' | translate}}</span>
+								<span *ngIf="item?.role == 'RESTAURANT_SUB_KITCHEN_USER'">{{'restaurants.RESTAURANT_SUB_KITCHEN_USER' | translate}}</span>
+							</td>
+							<!-- <td (click)="view(item,false)">{{item?.city | truncate:18}}</td> -->
+							<td class="font-roboto" (click)="view(item,false)">{{item?.createdAt | date:'mediumDate'}}</td>
+							<td>
+								<div class="d-flex align-items-baseline">
+									<div ngbDropdown container="body">
+										<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+											<img src="assets/icons/action-dot.svg">
+										</button>
+										<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+											<button ngbDropdownItem (click)="view(item,true)">
+												<label><img src="assets/icons/edit-gray.svg"
+														class="mx-2">{{'userManagement.edit' | translate}}</label>
+											</button>
+											<button ngbDropdownItem (click)="openConfirmStatusChange(item)">
+												<label>
+													<img src="assets/icons/block-gray.svg" class="mx-2">
+													<span *ngIf="item.status === 'active'">
+														{{'userManagement.block' |translate}}</span>
+													<span *ngIf="item.status === 'inactive'">{{'userManagement.unBlock'
+														|translate}}</span>
+												</label>
+											</button>
+											<button ngbDropdownItem (click)="openConfirmDelete(item)">
+												<label>
+													<img src="assets/icons/delete-gray.svg"
+														class="mx-2">{{'userManagement.delete' | translate}}
+												</label>
+											</button>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</ng-container>
+				</tbody>
+				<ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+					<tr>
+						<td class="text-center" colspan="5">{{ 'noData' | translate}}</td>
+					</tr>
+				</ng-container>
+			</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="73px" height="46px" viewBox="0 0 73 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>4292301E-1C11-4EC8-AA09-C920EB5C6473</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.798003 0 0 0 0 0.798003 0 0 0 0 0.798003 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="F02" transform="translate(-1080.000000, -338.000000)">
+            <g id="Group-5" transform="translate(299.532993, 285.016553)">
+                <g id="Group-4" transform="translate(735.000000, 0.000000)" filter="url(#filter-1)">
+                    <g transform="translate(45.467007, 52.983447)">
+                        <polygon id="Path-3" fill="#D8D8D8" points="0 46 73 46 47.5348837 0 32.255814 28.962963 21.2209302 14.4814815"></polygon>
+                        <circle id="Oval" fill="#D8D8D8" cx="25.5" cy="4.5" r="4.5"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

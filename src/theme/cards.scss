@@ -1,0 +1,198 @@
+.banner-image {
+  height: 90px;
+}
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px dashed var(--grey-400);
+  text-align: center;
+  padding: 20px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent !important;
+  .download-img {
+    height: 1.8em;
+  }
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+.upload-box-small {
+  display: flex;
+  flex-direction: column;
+  border: 1px dashed var(--grey-400);
+  text-align: center;
+  padding: 20px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent !important;
+  .download-img {
+    height: 1.2em;
+  }
+  .section-head,
+  .dragDropText {
+    font-size: 12px;
+  }
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+// view order page card
+.card-order {
+  width: 460px;
+  .list-items {
+    border-bottom: 1px solid var(--grey-400);
+    padding: 1em 0em;
+    .text-label {
+      font-family: var(--font-roboto);
+      font-size: 1em;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.43;
+      letter-spacing: 0.15px;
+      color: var(--grey-100);
+    }
+    .text-value {
+      font-family: var(--font-roboto);
+      font-size: 1em;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.43;
+      letter-spacing: 0.15px;
+      text-align: right;
+      color: var(--black-100);
+    }
+    .text-final-value {
+      font-family: var(--font-roboto);
+      font-size: 1.2em;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.43;
+      letter-spacing: 0.15px;
+      text-align: right;
+      color: var(--blue-100);
+    }
+  }
+}
+
+// removing field label background in modal and changes in modal
+.profile-card {
+  .form-group > label {
+    background: var(--white);
+    color: var(--black-300);
+    font-size: 12px;
+    top: -8px;
+  }
+}
+
+// info card header
+.profile-head-card {
+  .card-top-image {
+    height: 160px;
+  }
+  // display profile image and info
+  .profile {
+    position: absolute;
+    bottom: 30px;
+    left: 40px;
+    place-items: center;
+    z-index: 3;
+    width: 96%;
+    .name {
+      font-family: var(--font-roboto);
+      font-size: 20px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: 0.15px;
+      color: var(--white-2);
+      text-transform: capitalize;
+    }
+    .email {
+      font-family: var(--font-roboto);
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.57;
+      letter-spacing: 0.1px;
+      color: var(--white-2);
+    }
+    .user-profile {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .profile-edit {
+      border-radius: 100%;
+    }
+  }
+  .ov-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  // tabs inside card related css
+  .nav-tabs {
+    .nav-link {
+      margin-bottom: -0.28rem !important;
+      padding: 10px 10px 9px;
+    }
+  }
+}
+
+// text editor
+.faq-card {
+  border: 1px var(--grey-200) solid;
+  margin: 18px 0px;
+  .form-custom {
+    margin: 2px 14px;
+    .form-control {
+      border: none;
+      border-radius: 0px;
+      border-bottom: 1px var(--grey-200) solid;
+      font-size: 20px !important;
+      font-weight: bold;
+    }
+    :focus {
+      box-shadow: none;
+      border-color: none;
+    }
+  }
+}
+.faq-edit-card {
+  border: none;
+  margin: 0px;
+  .form-custom {
+    margin: 2px 14px;
+    .form-control {
+      border: none !important;
+      border-radius: 0px;
+      border-bottom: 1px var(--grey-200) solid !important;
+      font-size: 20px !important;
+      font-weight: bold;
+    }
+    :focus {
+      box-shadow: none;
+      border-color: none;
+    }
+  }
+}

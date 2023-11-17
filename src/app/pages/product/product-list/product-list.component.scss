@@ -1,0 +1,55 @@
+#page-container {
+  min-height: 74vh;
+}
+.tab-inner-div {
+  max-height: 68vh;
+  overflow-y: scroll;
+  padding-right: 4px;
+  overflow-x: hidden;
+  .inner-div {
+    padding-bottom: 100px;
+    overflow-y: scroll;
+  }
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px var(--grey-300);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--grey-200);
+  border-radius: 10px;
+}
+
+.discount-box {
+  cursor: pointer;
+  position: relative;
+  .discount-click {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+  }
+  .z-index-fix {
+    z-index: 9;
+  }
+}
+.product-type {
+  position: absolute;
+  top: 0;
+}
+/** drop down*/
+.dropdown-menu.show {
+  button {
+    font-size: 0.8em;
+  }
+}

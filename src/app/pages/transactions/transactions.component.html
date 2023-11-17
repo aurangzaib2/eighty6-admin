@@ -1,0 +1,96 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'transactions.transactions' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" aria-current="page">{{'transactions.transactions' | translate}}</li>
+		</ol>
+	</div>
+</div>
+<div class="container-fluid" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="form-group">
+			<div class="input-group mb-0 search-box">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">
+						<img src="assets/icons/search.svg">
+					</span>
+				</div>
+				<input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+					aria-describedby="basic-addon1" (keyup)="tableSetFilter('search', $event.currentTarget.value)">
+			</div>
+		</div>
+		<!-- <div>
+			<div ngbDropdown>
+				<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+					<img src="../../../../assets/icons/filter.svg">
+				</button>
+			</div>
+		</div> -->
+	</div>
+	<div>
+		<div class="table-responsive page-table text-nowrap">
+			<table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+				<thead class="table-header no-border">
+					<tr>
+						<th class="pl-2" scope="col">{{'transactions.invoiceNo' | translate}}#</th>
+						<th scope="col">{{'transactions.orderID' | translate}}</th>
+						<th scope="col">{{'transactions.restaurants' | translate}}</th>
+						<th scope="col">{{'transactions.suppliers' | translate}}</th>
+						<th scope="col">{{'transactions.amount' | translate}}</th>
+						<th scope="col">{{'transactions.date' | translate}}</th>
+						<th scope="col">{{'transactions.time' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<ng-container *ngIf="dataList && dataList.length">
+						<tr *ngFor="let item of dataList;let i=index" (click)="openReceipt(item)">
+							<td class="pl-2 font-roboto">{{item?.invoiceId }}</td>
+							<td class="font-roboto">{{item?.orderId}}</td>
+							<!-- <td>{{item?.restaurantName |truncate:18}}</td>
+							<td>{{item?.supplierName |truncate:18}}</td> -->
+							<td>
+								<span *ngIf="selectedLang == 'en'">
+								  <span *ngIf="item?.restaurantName">{{item?.restaurantName | truncate:16| capitalize}}</span>
+								  <span *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</span>
+								</span>
+								<span *ngIf="selectedLang == 'ar'">
+								  <span *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</span>
+								  <span *ngIf="!item?.restaurantNameTranslation?.ar">
+												  {{item?.restaurantName | truncate:16| capitalize}}
+								  </span>
+								</span>
+							  </td>
+							<td>
+								<span *ngIf="selectedLang == 'en'">
+								  <span *ngIf="item?.supplierName">{{item?.supplierName | truncate:16| capitalize}}</span>
+								  <span *ngIf="!item?.supplierName">{{item?.supplierNameTranslation?.ar}}</span>
+								</span>
+								<span *ngIf="selectedLang == 'ar'">
+								  <span *ngIf="item?.supplierNameTranslation?.ar">{{item?.supplierNameTranslation?.ar}}</span>
+								  <span *ngIf="!item?.supplierNameTranslation?.ar">
+												  {{item?.supplierName | truncate:16| capitalize}}
+								  </span>
+								</span>
+							  </td>
+							
+							<!-- <td>{{currency}} {{(item?.amount).toFixed(2)}}</td> -->
+							<td>
+								<span class="font-roboto m-1">{{currency}}</span>
+								<span>{{(item?.amount).toFixed(2)}}</span>
+							</td>
+							<td class="font-roboto">{{item?.creditDate | date : 'mediumDate'}}</td>
+							<td class="font-roboto dir-ltr">{{item?.creditDate | date:'shortTime'}}</td>
+						</tr>
+					</ng-container>
+				</tbody>
+				<ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+					<tr>
+						<td class="text-center" colspan="7">{{ 'noData' | translate}}</td>
+					</tr>
+				</ng-container>
+			</table>
+		</div>
+	</div>
+</div>
+<ngx-spinner [fullScreen]="false" type="timer" size="default" bdColor="rgba(255,255,255,0)" color="var(--blue-100)">
+</ngx-spinner>

@@ -1,0 +1,53 @@
+<div class="clearfix">
+  <div class="form-group max-300">
+    <div class="input-group mb-0 search-box">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <img src="assets/icons/search.svg">
+        </span>
+      </div>
+      <input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+        aria-describedby="basic-addon1" [(ngModel)]="search" (keyup)="searchData()">
+    </div>
+  </div>
+  <div class="tab-inner-div mt-4" (scroll)="onScroll($event)">
+    <div class="d-flex inner-div flex-wrap justify-content-lg-start justify-content-start">
+      <div class="product-box p-3 mb-3" *ngFor="let item of dataList">
+        <div class="product-click" (click)="navigateToSubCategory(item)"></div>
+        <div class="text-div">
+          <h4 class="text-black-100 text-capitalize" *ngIf="selectedLang == 'en'">{{item?.name | capitalize}}</h4>
+          <h4 class="text-black-100 text-capitalize" *ngIf="selectedLang == 'ar'">{{item?.nameTranslation.ar | capitalize}}</h4>
+          <p class="text-gray-100">{{item?.itemCount}} {{'products.items' | translate}}</p>
+          <div class="d-flex align-items-baseline">
+            <div ngbDropdown class="drop-small">
+              <button class="btn" id="dropdownConfig" ngbDropdownToggle>
+                <img src="assets/icons/action-dot.svg">
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                <button ngbDropdownItem (click)="editCategory(item)">
+                  <label><img src="assets/icons/edit-gray.svg" class="mx-2">{{'products.edit' | translate}}</label>
+                </button>
+                <button ngbDropdownItem (click)="openConfirmHide(item)">
+                  <label>
+                    <img src="assets/icons/block-gray.svg" class="mx-2">
+                    <span *ngIf="item?.status === 'active'">{{'products.hide' | translate}}</span>
+                    <span *ngIf="item?.status === 'inactive'">{{'products.unHide' | translate}}</span>
+                  </label>
+                </button>
+                <button ngbDropdownItem (click)="openConfirmDelete(item)">
+                  <label><img src="assets/icons/delete-gray.svg" class="mx-2">{{'products.delete' | translate}}</label>
+                </button>
+              </div>
+            </div>
+            <img src="assets/images/placeholder_category.svg" class="ml-auto"
+              *ngIf="item?.image === null || !item?.image">
+            <img [src]="item?.image" class="ml-auto" *ngIf="item?.image != null && item?.image">
+          </div>
+        </div>
+      </div>
+      <div class="align-self-center h-100" *ngIf="dataList.length === 0">
+        <p>{{ 'noData' | translate}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'faqs.frequentAskedQuestion' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" aria-current="page">{{'sidebar.faq' | translate}}</li>
+		</ol>
+	</div>
+	<div class="clearfix">
+		<button class="btn btn-theme btn-blue text-capitalize px-4" (click)="toggleEdit()" *ngIf="!isEditable">
+			<img src="assets/icons/edit-white.svg"> {{'faqs.editFaq' | translate}}
+		</button>
+		<button class="btn btn-theme btn-blue text-capitalize px-4" (click)="onSubmit()" *ngIf="isEditable">
+			<img src="assets/icons/checked-white.svg"> {{'faqs.saveUpdate' | translate}}
+		</button>
+	</div>
+</div>
+<div class="container-fluid" id="page-container">
+	<div class="d-flex my-3" *ngIf="!canAddNew && isEditable">
+		<button class="btn btn-blue-badge text-capitalize btn-block" (click)="toggleNew()">
+			<img class="img-fluid" src="assets/icons/plus.svg">
+			{{'faqs.addFaq' | translate}}
+		</button>
+	</div>
+
+
+	<div class="faq-card" *ngIf="canAddNew" [ngClass]="setDirection == true ? 'directions-rtl' : 'directions-ltl'">
+		<ul ngbNav #nav="ngbNav" class="nav nav-tabs w-100 flex-nowrap ov-scroll" [(activeId)]="active">
+			<li class="nav-link text-nowrap" [ngbNavItem]="1">
+				<a ngbNavLink routerLinkActive="router-link-active" class="text-capitalize" (click)="selectTab1()">
+					{{tab_name_1}}
+				</a>
+				<ng-template ngbNavContent>
+					<form [formGroup]="faqForm">
+						<div class="input-group input-group-custom px-3">
+							<input type="text" class="form-control" formControlName="question" placeholder="{{'faqs.titleHere' | translate}}"
+								aria-label="answer">
+							<div class="input-group-append">
+								<button class="btn btn-custom" (click)="toggleNew()">
+									<img src="assets/icons/close-grey.svg">
+								</button>
+							</div>
+						</div>
+						<div class="text-left px-4" *ngFor="let error of errorMessages.question">
+							<ng-container
+								*ngIf="form.question.hasError(error.type) && (form.question.dirty || form.question.touched) && submitted">
+								<span class="error-message font-14">{{error.message}}</span>
+							</ng-container>
+						</div>
+						<quill-editor formControlName="answer" [modules]="modules"
+							[styles]="{'min-height': '200px','padding':'1.5rem!important'}"
+							[placeholder]="'Type something...'">
+						</quill-editor>
+
+						<div class="text-left px-4 mb-4" *ngFor="let error of errorMessages.answer">
+							<ng-container
+								*ngIf="form.answer.hasError(error.type) && (form.answer.dirty || form.answer.touched) && submitted">
+								<span class="error-message font-14">{{error.message}}</span>
+							</ng-container>
+						</div>
+					</form>
+				</ng-template>
+			</li>
+			<li class="nav-link text-nowrap" [ngbNavItem]="2">
+				<a ngbNavLink routerLinkActive="router-link-active" class="text-capitalize" (click)="selectTab2()">
+					{{tab_name_2}}
+				</a>
+				<ng-template ngbNavContent>
+					<form [formGroup]="faqForm2">
+						<div class="input-group input-group-custom px-3">
+							<input type="text" class="form-control" formControlName="question" placeholder="{{'faqs.titleHere' | translate}}"
+								aria-label="answer">
+							<div class="input-group-append">
+								<button class="btn btn-custom" (click)="toggleNew()">
+									<img src="assets/icons/close-grey.svg">
+								</button>
+							</div>
+						</div>
+						<div class="text-left px-4" *ngFor="let error of errorMessages.question">
+							<ng-container
+								*ngIf="form2.question.hasError(error.type) && (form2.question.dirty || form2.question.touched) && submitted">
+								<span class="error-message font-14">{{error.message}}</span>
+							</ng-container>
+						</div>
+						<quill-editor formControlName="answer" [modules]="modules"
+							[styles]="{'min-height': '200px','padding':'1.5rem!important'}"
+							[placeholder]="'Type something...'">
+						</quill-editor>
+
+						<div class="text-left px-4 mb-4" *ngFor="let error of errorMessages.answer">
+							<ng-container
+								*ngIf="form.answer.hasError(error.type) && (form.answer.dirty || form.answer.touched) && submitted">
+								<span class="error-message font-14">{{error.message}}</span>
+							</ng-container>
+						</div>
+					</form>
+				</ng-template>
+			</li>
+		</ul>
+		<div [ngbNavOutlet]="nav" class="mt-2"></div>
+	</div>
+
+	<ngb-accordion #acc="ngbAccordion">
+		<ngb-panel [id]="'active'+i" *ngFor="let _ of faqFormArray.controls;let i = index" [formGroup]="_">
+			<ng-template ngbPanelHeader let-opened="opened">
+				<div class="d-flex align-items-center justify-content-between active-header">
+					<h5 class="mx-1 text-grey-100">{{_.value.question}}</h5>
+					<div>
+						<button class="btn btn-link p-0 mx-5" *ngIf="isEditable" (click)="openConfirmDelete(_.value)">
+							<img src="assets/icons/delete-gray.svg">
+						</button>
+						<button class="btn btn-link p-0" (click)="acc.toggle('active'+i);expandOne(i)">
+							<img src="assets/icons/plus-grey.svg" *ngIf="!opened">
+							<img src="assets/icons/close-grey.svg" *ngIf="opened">
+						</button>
+					</div>
+				</div>
+			</ng-template>
+			<ng-template ngbPanelContent>
+				<div class="faq-edit-card" *ngIf="isEditable">
+					<div class="input-group input-group-custom">
+						<input type="text" class="form-control" placeholder="Tittle here" aria-label="answer"
+							formControlName="question">
+						<div class="text-left" *ngFor="let error of errorMessages.question">
+							<ng-container
+								*ngIf="form.question.hasError(error.type) && (form.question.dirty || form.question.touched) && submitted">
+								<span class="error-message font-14">{{error.message}}</span>
+							</ng-container>
+						</div>
+						<div class="input-group-append">
+							<button class="btn btn-custom" (click)="openConfirmDelete(_.value)">
+								<img src="assets/icons/delete-gray.svg">
+							</button>
+							<button class="btn btn-custom" (click)="acc.toggle('active'+i);expandOne(i)">
+								<img src="assets/icons/close-grey.svg">
+							</button>
+						</div>
+					</div>
+					<quill-editor [modules]="modules" [styles]="{'min-height': '200px'}" formControlName="answer"
+						[placeholder]="'Type something...'">
+					</quill-editor>
+
+					<div class="text-left" *ngFor="let error of errorMessages.answer">
+						<ng-container
+							*ngIf="form.answer.hasError(error.type) && (form.answer.dirty || form.answer.touched) && submitted">
+							<span class="error-message font-14">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+				<p *ngIf="!isEditable">{{ removeHTML(_.value.answer)}}</p>
+			</ng-template>
+		</ngb-panel>
+	</ngb-accordion>
+
+	<div class="align-self-center h-100" *ngIf="dataList.length === 0">
+		<p>{{ 'noData' | translate}}</p>
+	</div>
+</div>

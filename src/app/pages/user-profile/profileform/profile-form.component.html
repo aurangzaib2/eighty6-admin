@@ -1,0 +1,293 @@
+<div class="inner-header d-flex justify-content-between">
+  <div class="clearfix">
+    <h2 class="text-capitalize">{{'accountSettings.accountSettings' | translate}}</h2>
+    <ol class="breadcrumb inner-header-breadrumb">
+      <li class="breadcrumb-item" aria-current="page">{{'accountSettings.accountSettings' | translate}}</li>
+    </ol>
+  </div>
+</div>
+<div class="container-fluid banner-image position-relative" [style.background-image]="getUrl()">
+  <div class="d-flex align-items-center profile">
+    <div>
+      <div class="clearfix position-relative" (click)="fileInput2.click()">
+        <input hidden autocapitalize="on" #fileInput2 autocomplete="on" type="file" name="file" [disabled]="!isEditable"
+          (change)="uploadImage($event.target.files[0])" required accept="image/png, image/jpeg">
+        <img src="assets/images/placeholder_logo.png" class="img-fluid user-profile"
+          *ngIf="user?.profilePicture === null && form?.profilePictureCDN.value == null">
+        <img [src]="form?.profilePictureCDN.value" class="img-fluid user-profile"
+          *ngIf="form?.profilePictureCDN.value != null">
+        <div class="profile-edit" [hidden]="!isEditable">
+          <div>
+            <img src="assets/icons/camera.svg">
+            <span>{{'accountSettings.uploadPhoto' | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix pl-2">
+      <label class="mb-0 name">{{user?.firstName}} {{user?.lastName}}</label>
+      <!-- <p class="email text-capitalize">{{customizeRoleText(user?.role)}}</p> -->
+    </div>
+  </div>
+</div>
+<div class="card border-0">
+  <div class="card-body d-flex justify-content-end" *ngIf="!isEditable">
+    <a class="btn-link text-capitalize" role="button" (click)="enableFrom()">
+      <img src="assets/icons/edit.svg" class="img-fluid" alt="icon">
+      {{'accountSettings.editProfile' | translate}}
+    </a>
+  </div>
+</div>
+<div class="container-fluid mt-5 border-1" id="page-container">
+
+  <form [formGroup]="profileForm" autocomplete="off">
+    <!-- general info -->
+    <div class="d-flex justify-content-start">
+      <span class="section-head"> {{'accountSettings.generalInformation' | translate}}</span>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <input type="text" class="form-control" autocomplete="off" id="firstName" aria-describedby="firstName"
+            placeholder="{{ 'enterHere' | translate}}" formControlName="firstName" onkeydown="return /[a-z]/i.test(event.key)" minlength="3" maxlength="20">
+          <label for="exampleInput1"> {{'accountSettings.fname' | translate}}</label>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <input type="text" class="form-control" autocomplete="off" id="lastName" aria-describedby="lastName"
+            placeholder="{{ 'enterHere' | translate}}" formControlName="lastName" onkeydown="return /[a-z]/i.test(event.key)" minlength="3" maxlength="20">
+          <label for="exampleInput1"> {{'accountSettings.lname' | translate}}</label>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <input type="text" class="form-control" autocomplete="off" id="exampleInput2" aria-describedby="email"
+            placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+          <label for="exampleInput2">{{'accountSettings.email' | translate}}</label>
+          <div class="text-left" *ngFor="let error of errorMessages.email">
+            <ng-container *ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <div class="select-and-input">
+            <select class="bg-transparent" formControlName="mobileCode">
+              <option [value]="item?.dail_code" *ngFor="let item of countryList">{{item?.dail_code}}</option>
+            </select>
+            <input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+              id="exampleInput3" formControlName="mobileNumber" maxlength="10">
+          </div>
+          <label for="exampleInput3">{{'accountSettings.mobileNo' | translate}}#</label>
+          <div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+            <ng-container
+              *ngIf="form.mobileNumber.hasError(error.type) && (form.mobileNumber.dirty || form.mobileNumber.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+          <div class="text-left" *ngFor="let error of errorMessages.mobileCode">
+            <ng-container
+              *ngIf="form.mobileCode.hasError(error.type) && (form.mobileCode.dirty || form.mobileCode.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    		<!-- contact person -->
+        <div class="card card-contact-person grey-200-bg mb-4" >
+          <div class="card-body" >
+            <div class="d-flex justify-content-start">
+              <span class="section-head">{{'onBoarding.contactPerson' | translate}}</span>
+            </div>
+            <div *ngFor="let _ of adminSecondaryContact.controls;index as i">
+              <div class="row" [formGroup]="_">
+                <div class="col-lg-6 col-md-6 col-sm-12" >
+                  <div class="form-group ">
+                    <input type="text" class="form-control" autocomplete="off"
+                      id="exampleInput8" aria-describedby="emailHelp"
+                      placeholder="{{ 'enterHere' | translate}}"
+                      formControlName="fullName" minlength="3" maxlength="20">
+                    <label for="exampleInput8">{{'onBoarding.name' | translate}}</label>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="form-group ">
+                    <div class="select-and-input">
+                      <select class="bg-transparent" formControlName="mobileCode">
+                        <option [value]="item?.dail_code"
+                          *ngFor="let item of countryList">
+                          {{item?.dail_code}}</option>
+                      </select>
+                      <input type="text" class="form-control" autocomplete="off" inputNumber maxlength="15"                        id="exampleInput9" aria-describedby="office mobileNumber"
+                        placeholder="{{ 'enterHere' | translate}}"
+                        formControlName="mobileNumber">
+                    </div>
+                    <label for="exampleInput9">{{'onBoarding.mobileNo' |
+                      translate}}#</label>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="form-group ">
+                    <input type="text" class="form-control" autocomplete="off"
+                      id="exampleInput10" aria-describedby="emailHelp"
+                      placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+                    <label for="exampleInput20">{{'onBoarding.email' | translate}}</label>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="form-group ">
+                    <input type="text" class="form-control" autocomplete="off"
+                      id="exampleInput11" aria-describedby="emailHelp"
+                      placeholder="{{ 'enterHere' | translate}}" formControlName="title">
+                    <label for="exampleInput11">{{'onBoarding.title' | translate}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-2" *ngIf="isEditable">
+                <a class="text-capitalize btn-link btn-remove-red"
+                  (click)="removeContactPerson(i)">{{'onBoarding.remove' | translate}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start mt-2" *ngIf="isEditable">
+              <a class="text-capitalize text-black-100 btn-add-black"
+                (click)="addContactPerson()">
+                + {{'onBoarding.addContactPerson' | translate}}
+              </a>
+            </div>
+          </div>
+        </div>
+    <!-- address -->
+    <div class="d-flex justify-content-start">
+      <span class="section-head">{{'accountSettings.completeAddress' | translate}}</span>
+    </div>
+    <div class="row mb-2">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <label>{{'accountSettings.country' | translate}}</label>
+          <select class="custom-select custom-select-lg mb-3 text-capitalize" formControlName="countryName"
+            (change)="setCountry($event.target.value)">
+            <option [value]="item.name" *ngFor="let item of countryList">{{item?.name}}</option>
+          </select>
+          <div class="text-left" *ngFor="let error of errorMessages.countryName">
+            <ng-container
+              *ngIf="form.countryName.hasError(error.type) && (form.countryName.dirty || form.countryName.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-height">
+        <div class="form-group mb-4 mt-4">
+          <label>{{'accountSettings.city/state' | translate}}</label>
+          <select class="custom-select custom-select-lg mb-3 text-capitalize" formControlName="city">
+            <option [value]="item.name" *ngFor="let item of cityList">{{item?.name}}</option>
+          </select>
+          <div class="text-left" *ngFor="let error of errorMessages.city">
+            <ng-container *ngIf="form.city.hasError(error.type) && (form.city.dirty || form.city.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mb-4 mt-4">
+          <textarea type="text" class="form-control" autocomplete="off" rows="6" id="exampleInput14"
+            aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+            formControlName="location"></textarea>
+          <label for="exampleInput14">{{'accountSettings.address' | translate}}</label>
+          <div class="text-left" *ngFor="let error of errorMessages.location">
+            <ng-container *ngIf="form.location.hasError(error.type) && (form.location.dirty || form.location.touched)">
+              <span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!-- password -->
+    <div class="d-flex justify-content-start" *ngIf="isEditable">
+      <span class="section-head">{{'accountSettings.changePassword' | translate}}</span>
+    </div>
+    <div class="row mt-1" *ngIf="isEditable">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="form-group form-group-password ">
+          <label for="passowrd">{{'accountSettings.currentPassword' | translate}}</label>
+          <div class="input-group input-group-alternative">
+            <input [type]="passwordType" class="form-control" autocomplete="off"
+              placeholder="&#183;&#183;&#183;&#183;&#183;&#183;" formControlName="currentPassword">
+          </div>
+          <div class="text-left" *ngFor="let error of errorMessages.currentPassword">
+            <ng-container
+              *ngIf="form.currentPassword.hasError(error.type) && (form.currentPassword.dirty || form.currentPassword.touched)">
+              <span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="form-group form-group-password ">
+          <label for="passowrd">{{'accountSettings.newPassword' | translate}}</label>
+          <div class="input-group input-group-alternative">
+            <input [type]="passwordType" class="form-control" autocomplete="off"
+              placeholder="&#183;&#183;&#183;&#183;&#183;&#183;" formControlName="password">
+            <!-- <div class="input-group-append" (click)="onClickEye()">
+              <span class="showPassword">
+                <img *ngIf="!showEye" src="assets/icons/eye-fill.svg">
+                <img *ngIf="showEye" src="assets/icons/eye-slash-fill.svg">
+              </span>
+            </div> -->
+          </div>
+          <!-- <div class="text-left" *ngFor="let error of errorMessages.password">
+            <ng-container *ngIf="form.password.hasError(error.type) && (form.password.dirty || form.password.touched)">
+              <span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="form-group form-group-password ">
+          <label for="confirmPassword">{{'accountSettings.confirmPassword' | translate}}</label>
+          <div class="input-group input-group-alternative">
+            <input [type]="passwordType" class="form-control" autocomplete="off"
+              placeholder="&#183;&#183;&#183;&#183;&#183;&#183;" formControlName="confirmPassword">
+            <!-- <div class="input-group-append" (click)="onClickEye2()">
+              <span class="showPassword">
+                <img *ngIf="!showEye2" src="assets/icons/eye-fill.svg">
+                <img *ngIf="showEye2" src="assets/icons/eye-slash-fill.svg">
+              </span>
+            </div> -->
+          </div>
+          <div class="text-left" *ngFor="let error of errorMessages.confirmPassword">
+            <ng-container
+              *ngIf="form.confirmPassword.hasError(error.type) && (form.confirmPassword.dirty || form.confirmPassword.touched)">
+              <span class="error-message font-14">{{'profileFromErrors.'+error.message | translate}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="text-capitalize">
+    <ng-container *ngIf="displayMessage!=null">
+      <span class="error-message font-14">{{displayMessage}}</span>
+    </ng-container>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4" *ngIf="isEditable">
+    <button class="btn btn-theme btn-grey text-capitalize" (click)="enableFrom()">
+      {{'accountSettings.cancel' | translate}}
+    </button>
+    <button *ngIf="loading" class="btn btn-theme btn-blue text-capitalize">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+    <button type="submit" *ngIf="!loading" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+      <span>{{'accountSettings.saveUpdate' | translate}}</span>
+    </button>
+  </div>
+</div>

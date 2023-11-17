@@ -1,0 +1,87 @@
+<div class="card profile-card border-0">
+	<div class="close-icon" (click)="closeModal()">
+		<img src="assets/icons/black-cross.svg" class="img-fluid">
+	</div>
+	<div class="d-flex justify-content-center my-4">
+		<h5 class="text-black-100 mb-0 text-capitalize" *ngIf="!data?.id">{{'products.createNewSubCategory' |translate}}
+		</h5>
+		<h5 class="text-black-100 mb-0 text-capitalize" *ngIf="data?.id">{{'products.editCategory' |translate}}</h5>
+	</div>
+	<div class="mx-4 mb-4">
+		<form [formGroup]="categoryForm">
+			<div class="row">
+				<div class="col-12 col-height">
+					<div class="form-group mb-4 mt-4">
+						<!-- <select class="form-control" formControlName="parentId">
+							<option [value]="item?.id" *ngFor="let item of categoryList">
+								{{item?.name}}
+							</option>
+						</select> -->
+						<ng-select [multiple]="false" class="form-control" formControlName="parentId">
+							<ng-option *ngFor="let item of categoryList" [value]="item.id">
+								{{item.name}}
+							</ng-option>
+						</ng-select>
+						<label for="exampleInput3">{{'suppliers.category' | translate}}*</label>
+						<div class="text-left" *ngFor="let error of errorMessages.parentId">
+							<ng-container
+								*ngIf="form.parentId.hasError(error.type) && (form.parentId.dirty || form.parentId.touched)">
+								<span class="error-message font-13">{{'subCategoryFormErrors.'+error.message | translate}}</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-height">
+					<div class="form-group mb-4 mt-4">
+						<input type="text" class="form-control" autocomplete="off" id="categoryName"
+							aria-describedby="category name" placeholder="{{ 'enterHere' | translate}}"
+							formControlName="name">
+						<label for="exampleInput1">{{'suppliers.subCategory' | translate}} {{'products.english_text' | translate}}*</label>
+						<div class="text-left" *ngFor="let error of errorMessages.name">
+							<ng-container
+								*ngIf="form.name.hasError(error.type) && (form.name.dirty || form.name.touched)">
+								<span class="error-message font-13">{{'subCategoryFormErrors.'+error.message | translate}}*</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-height">
+					<div class="form-group mb-4 mt-4">
+						<input type="text" class="form-control" autocomplete="off" id="categoryName" dir="rtl"
+							aria-describedby="category name" placeholder="أدخل هنا"
+							formControlName="Aname">
+						<label for="exampleInput1">{{'suppliers.subCategory' | translate}} {{'products.arabic_text' | translate}}*</label>
+						<div class="text-left" *ngFor="let error of errorMessages.name">
+							<ng-container
+								*ngIf="form.Aname.hasError(error.type) && (form.Aname.dirty || form.Aname.touched)">
+								<span class="error-message font-13" style="float: right;">أدخل اسم الفئة الفرعية</span>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="mt-1 text-capitalize">
+			<ng-container *ngIf="displayMessage!=null">
+				<span class="error-message font-14">{{displayMessage}}</span>
+			</ng-container>
+		</div>
+		<div class="d-flex justify-content-between mt-3">
+			<button class="btn btn-theme btn-grey text-capitalize" (click)="closeModal()">
+				{{'products.cancel' | translate}}
+			</button>
+
+			<button type="submit" *ngIf="!loading && !data?.id" (click)="onSubmit()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<img src="assets/icons/plus-white.svg">{{'products.create' | translate}}
+			</button>
+			<button *ngIf="loading" class="btn btn-theme btn-blue text-capitalize">
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			</button>
+			<button type="submit" *ngIf="!loading && data?.id" (click)="update()"
+				class="btn btn-theme btn-blue text-capitalize">
+				<span>{{'products.saveUpdate' | translate}}</span>
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ADADE2EA-74E5-45FA-BB21-7D732F09AFAB</title>
+    <defs>
+        <polygon id="path-1" points="8.9175 2.0975 8.0275 1.2125 3.0825 6.1625 8.0325 11.1125 8.9175 10.2275 4.8525 6.1625"></polygon>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="D07" transform="translate(-1178.000000, -32.000000)">
+            <g id="Top-bar" transform="translate(-0.000000, 0.000000)">
+                <g id="Group-3-Copy" transform="translate(1144.000000, 13.000000)">
+                    <g id="Group-4" transform="translate(-0.000000, 0.000000)">
+                        <g id="icons/filled/navigation/arrow_back_ios_24px" transform="translate(40.837500, 25.162500) rotate(-90.000000) translate(-40.837500, -25.162500) translate(34.837500, 19.162500)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <g id="icon/navigation/arrow_back_ios_24px" fill-rule="nonzero"></g>
+                            <g id="_ignore/Color-Symbol/Tintable-(black)" mask="url(#mask-2)" fill="#FFFFFF">
+                                <g transform="translate(0.162500, 0.162500)" id="↳-👉Icon-Style">
+                                    <rect x="0" y="0" width="12" height="12"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

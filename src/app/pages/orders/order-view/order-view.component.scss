@@ -1,0 +1,150 @@
+#page-container {
+  min-height: 74vh;
+  overflow-y: scroll;
+  max-height: 74vh;
+}
+.profile {
+  place-items: center;
+  .user-profile {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+  }
+}
+.form-group > label {
+  position: relative;
+  left: 0px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black-100);
+  padding: 0 5px;
+}
+
+.btn-dropdown {
+  text-align: left;
+  padding-top: 12px;
+}
+.dropdown-toggle::after {
+  display: inline-block;
+  float: right;
+  padding-top: 12px;
+  position: absolute;
+  right: 12px;
+  top: 22px;
+}
+.dropdown-menu.show {
+  width: 100%;
+}
+.table-header{
+	background-color: #F2F2F2;
+	height: 60px;
+   }
+
+   table td{
+	 background-color: #ffff;
+	 border-top: 0;
+   }
+   table thead th{
+	 border-bottom: 0;
+	 border-top: 0;
+   }
+ 
+ table{
+	 margin-top: 25px;
+ }
+ .table{
+	width: 100%;
+}
+// .card-body{
+// 	margin-top: -70px;
+// }
+/* rows */
+div.dropdown-multicol{
+	width: 30em;
+  }
+  div.dropdown-row>a.dropdown-item{
+	display:inline-block;
+	width: 32%;
+  }
+  
+  /* Columns */
+  div.dropdown-multicol2{
+	width: 30em;
+  }
+  div.dropdown-multicol2>div.dropdown-col{
+	display:inline-block;
+	width: 32%;
+  }
+  
+  .dropdown-menu {
+    max-height: 280px;
+    overflow-y: auto;
+}
+.drpdwn-col-left{
+//	 margin-top: -12px;
+	color: black;
+	font-weight: 800;
+	// background-color: #dee2e6;
+	
+
+}
+.drpdwn-col{
+	min-width: 125px;
+}
+.table td{
+	// padding: 0.4rem;
+}
+.dropdown-toggle{
+	//: hidden;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ffff
+}
+.new-table{
+	transform: none !important;
+}
+.dropdown-menu .dropdown-toggle:after{
+  border-top: .3em solid transparent;
+    border-right: 0;
+    border-bottom: .3em solid transparent;
+    border-left: .3em solid;
+}
+.dropdown-menu .dropdown-menu{
+  margin-left:0; margin-right: 0;
+}
+.dropdown-menu li{
+  position: relative;
+}
+.nav-item .submenu{ 
+  display: none;
+  position: absolute;
+  left:100%; top:-7px;
+}
+.nav-item .submenu-left{ 
+  right:100%; left:auto;
+}
+.dropdown-menu > li:hover{ background-color: #f1f1f1 }
+.dropdown-menu > li:hover > .submenu{
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  position: absolute; 
+}

@@ -1,0 +1,373 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'onBoarding.company' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" (click)="goBack()">{{'restaurants.companyListing' | translate}}</li>
+			<li class="breadcrumb-item" aria-current="page">{{form.name.value}}</li>
+		</ol>
+	</div>
+</div>
+<!-- <div class="container-fluid banner-image position-relative" [style.background-image]="getUrl()">
+	<input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file" [disabled]="!isEditable"
+		(change)="uploadImage($event.target.files[0],'banner')" required accept="image/png, image/jpeg">
+
+	<div class="d-flex align-items-center profile">
+		<div>
+			<div class="clearfix position-relative" (click)="fileInput2.click()">
+				<input hidden autocapitalize="on" #fileInput2 autocomplete="on" type="file" name="file"
+					[disabled]="!isEditable" (change)="uploadImage($event.target.files[0],'logo')" required
+					accept="image/png, image/jpeg">
+				<img [src]="user?.logo  || 'assets/images/placeholder_logo.png'" class="img-fluid user-profile">
+				<div class="profile-edit" [hidden]="!isEditable">
+					<div>
+						<img src="assets/icons/camera.svg">
+						<span> {{'onBoarding.uploadPhoto' | translate}} </span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="clearfix pl-2">
+			<label class="mb-0 name">{{user?.name || 'Full name'}}</label>
+			<p class="email">{{user?.email || 'Email'}}</p>
+		</div>
+	</div>
+
+</div> -->
+<div class="card profile-head-card">
+	<img [src]="getUrl()" class="card-top-image">
+	<div class="profile">
+		<div class="row justify-content-between align-items-center ">
+			<div class="col-8 d-flex align-items-center">
+				<div>
+					<div class="clearfix position-relative" (click)="fileInput2.click()">
+						<input hidden autocapitalize="on" #fileInput2 autocomplete="on" type="file" name="file"
+							[disabled]="!isEditable" (change)="uploadImage($event.target.files[0],'logo')" required
+							accept="image/png, image/jpeg">
+						<img [src]="user?.logo  || 'assets/images/placeholder_logo.png'" class="img-fluid user-profile">
+						<div class="profile-edit" [hidden]="!isEditable">
+							<div>
+								<img src="assets/icons/camera.svg">
+								<span> {{'onBoarding.uploadPhoto' | translate}} </span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix pl-2">
+					<label class="mb-0 name">
+						{{user?.name}}
+					</label>
+					<p class="email">
+						{{user?.city}}, {{user?.countryName}}
+					</p>
+				</div>
+			</div>
+			<div class="col-4 d-flex align-items-center">
+				<div class="media">
+					<img src="assets/icons/phone-white.svg" class="mr-3" alt="...">
+					<div class="media-body">
+						<label class="mb-0 pb-0 text-white-100">{{'restaurants.phone' | translate}}</label>
+						<p class="text-white-100">{{user?.mobileNumber}}</p>
+					</div>
+				</div>
+				<div class="media pl-3" style="cursor: pointer;" (click)="startChat()">
+					<img src="assets/icons/chat-white.svg" class="mr-3" alt="...">
+					<div class="media-body">
+						<label class="mb-0 pb-0 text-white-100">{{'restaurants.chat' | translate}}</label>
+						<p class="text-white-100">{{'restaurants.withCompany' | translate}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card-body py-0">
+		<div class="d-flex justify-content-end" style="padding-left:120px;">
+			<div class="clearfix">
+				<div ngbDropdown class="drop-small">
+					<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+						<img src="assets/icons/action-dot.svg" class="rotate90">
+					</button>
+					<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+						<button ngbDropdownItem (click)="openConfirmStatus()">
+							<label>
+								<img src="assets/icons/block-gray.svg" class="mx-2">
+								<span *ngIf="user?.status === 'active'">
+									{{'userManagement.block' | translate}}</span>
+								<span *ngIf="user?.status === 'inactive'">Un-block</span>
+							</label>
+						</button>
+						<button ngbDropdownItem (click)="enableFrom()">
+							<label><img src="assets/icons/edit-gray.svg" class="mx-2">
+								{{'userManagement.edit' | translate}}
+							</label>
+						</button>
+						<button ngbDropdownItem (click)="openConfirmDelete()">
+							<label>
+								<img src="assets/icons/delete-gray.svg" class="mx-2">
+								{{'userManagement.delete' | translate}}
+							</label>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid mt-5 border-1" id="page-container">
+	<form [formGroup]="profileForm" autocomplete="off">
+		<!-- general info -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head"> {{'onBoarding.generalInformation' | translate}}</span>
+		</div>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'onBoarding.standAloneCompany' | translate}}</label>
+					<select class="custom-select custom-select-lg text-capitalize" formControlName="isStandalone">
+						<option [disabled]="form.id.value != null" value=true>{{'yes' | translate}}</option>
+						<option [disabled]="form.id.value != null" value=false>{{'no' | translate}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="name">
+					<label for="exampleInput1"> {{'onBoarding.companyName' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.name">
+						<ng-container *ngIf="form.name.hasError(error.type) && (form.name.dirty || form.name.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput2"
+						aria-describedby="email" placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+					<label for="exampleInput2">{{'onBoarding.email' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.email">
+						<ng-container
+							*ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="firstName"
+						aria-describedby="firstName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="firstName">
+					<label for="firstName">{{'onBoarding.fname' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.firstName">
+						<ng-container
+							*ngIf="form.firstName.hasError(error.type) && (form.firstName.dirty || form.firstName.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="lastName" aria-describedby="lastName"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+					<label for="lastName">{{'onBoarding.lname' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.lastName">
+						<ng-container
+							*ngIf="form.lastName.hasError(error.type) && (form.lastName.dirty || form.lastName.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" formControlName="mobileCode">
+							<option [value]="item?.dail_code" *ngFor="let item of phoneCodeList">{{item?.dail_code}}
+							</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+							id="exampleInput3" formControlName="mobileNumber">
+					</div>
+					<label for="exampleInput3">{{'onBoarding.mobileNo' | translate}}#</label>
+					<div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+						<ng-container
+							*ngIf="form.mobileNumber.hasError(error.type) && (form.mobileNumber.dirty || form.mobileNumber.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+					<div class="text-left" *ngFor="let error of errorMessages.mobileCode">
+						<ng-container
+							*ngIf="form.mobileCode.hasError(error.type) && (form.mobileCode.dirty || form.mobileCode.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group ">
+							<div class="select-and-input">
+								<select class="bg-transparent" formControlName="officePhoneCountryCode"
+									(change)="setOfficeValidator()">
+									<option [value]="item?.dail_code" *ngFor="let item of phoneCodeList">
+										{{item?.dail_code}}
+									</option>
+								</select>
+								<input inputNumber onKeyPress="this.defaultValue = this.value" type="text"
+									class="form-control" autocomplete="off" id="exampleInput4"
+									aria-describedby="office mobileNumber" placeholder="{{ 'enterHere' | translate}}"
+									formControlName="officePhoneNumber">
+							</div>
+							<label for="exampleInput5">{{'onBoarding.officeNo' | translate}}#</label>
+							<div class="text-left" *ngFor="let error of errorMessages.officePhoneNumber">
+								<ng-container
+									*ngIf="form.officePhoneNumber.hasError(error.type) && (form.officePhoneNumber.dirty || form.officePhoneNumber.touched)">
+									<span class="error-message font-13">{{error.message}}</span>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- TRN Number -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="trnNumber" aria-describedby="trnNumber"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="trnNumber">
+					<label for="trnNumber">{{'restaurants.trnName' | translate}}</label>
+				</div>
+			</div>
+		</div>
+
+		<!-- address -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'onBoarding.completeAddress' | translate}} </span>
+		</div>
+		<div class="row mb-2">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'onBoarding.country' | translate}}</label>
+					<input type="text" class="form-control" readonly autocomplete="off" id="countryName"
+						aria-describedby="countryName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="countryName">
+					<div class="text-left" *ngFor="let error of errorMessages.countryName">
+						<ng-container
+							*ngIf="form.countryName.hasError(error.type) && (form.countryName.dirty || form.countryName.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'onBoarding.city/state' | translate}}</label>
+					<select class="custom-select custom-select-lg text-capitalize" formControlName="city">
+						<option [value]="item.name" *ngFor="let item of cityList">{{item?.name}}</option>
+					</select>
+					<div class="text-left" *ngFor="let error of errorMessages.city">
+						<ng-container *ngIf="form.city.hasError(error.type) && (form.city.dirty || form.city.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" autocomplete="off" rows="14" id="exampleInput14"
+						aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="location"></textarea>
+					<label for="exampleInput14">{{'onBoarding.address' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.location">
+						<ng-container
+							*ngIf="form.location.hasError(error.type) && (form.location.dirty || form.location.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group custom-form-group ">
+					<label class="form-group-label mb-0" for="exampleInput15">{{'onBoarding.lMap' | translate}}</label>
+					<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fullscreenControl]='true'
+						[mapTypeControl]='false' (mapClick)="mapClicked($event)">
+						<agm-marker [latitude]="markers.lat" [longitude]="markers.lng" [opacity]="markers?.alpha"
+							[markerDraggable]="false">
+						</agm-marker>
+					</agm-map>
+					<input type="text" class="form-control" 
+						(keydown.enter)="$event.preventDefault()" 
+						placeholder="Search Nearest Location" 
+						autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search
+					>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<!-- documents -->
+	<div class="d-flex justify-content-start mt-4">
+		<span class="section-head">{{'onBoarding.documents' | translate}}</span>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-lg-3 col-md-5 col-sm-6" *ngFor="let _ of media.controls;index as i" style="cursor: pointer;">
+			<div class="card" [formGroup]="_" (click)="addDocument(i)"
+				[ngClass]="{'card-border': selectDocumentIndex === i}">
+				<div class="card-body px-3 py-2">
+					<label class="document-label text-capitalize">{{_.value.displayName}}</label>
+					<div class="d-flex justify-content-between">
+						<div>
+							<span class="text-gray-100" *ngIf="_.value.name">
+								{{_.value.name | truncate:10}}
+							</span>
+							<span class="text-gray-100" *ngIf="!_.value.name">
+								No file added
+							</span>
+						</div>
+						<div>
+							<a class="btn-link" [hidden]="!_.value.name" (click)="downloadFile(_.value)"><img
+									src="assets/icons/filedownload.svg"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ng-container *ngIf="showUpload">
+		<div (fileDropped)="onFileDropped($event)" appDragDrop>
+			<div class="upload-box mt-2" (click)="fileDropRef.click()">
+				<input #fileDropRef autocomplete="on" type="file" name="file"
+					(change)="fileBrowseHandler($event.target.files)" required
+					accept="application/pdf,image/png, image/jpeg,image/jpg">
+				<img src="assets/icons/download.svg" class="img-fluid download-img">
+				<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' |
+					translate}}</label>
+				<p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+			</div>
+		</div>
+	</ng-container>
+	<div class="mt-1 text-capitalize">
+		<ng-container *ngIf="displayMessage!=null">
+			<span class="error-message font-14">{{displayMessage}}</span>
+		</ng-container>
+	</div>
+
+	<div class="d-flex justify-content-end mt-4" *ngIf="isEditable">
+		<button *ngIf="loading" class="btn btn-theme btn-blue text-capitalize">
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+		</button>
+		<button type="submit" *ngIf="!loading" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+			<span>{{'onBoarding.saveUpdate' | translate}}</span>
+		</button>
+	</div>
+</div>

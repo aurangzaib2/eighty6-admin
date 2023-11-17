@@ -1,0 +1,456 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{'sidebar.restaurants' | translate}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<!-- <li class="breadcrumb-item text-black-400" [routerLink]="['/']" routerLinkActive="router-link-active">
+				{{'sidebar.dashboard' | translate}}
+			</li> -->
+			<li class="breadcrumb-item" [routerLink]="['/company/list']" routerLinkActive="router-link-active">
+				{{'restaurants.companyListing' | translate}}</li>
+			<li class="breadcrumb-item" (click)="goBackTwice()">{{companyData?.name}}</li>
+			<li class="breadcrumb-item" aria-current="page">{{restaurantData?.name}} </li>
+		</ol>
+	</div>
+</div>
+<div class="container-fluid banner-image position-relative" [style.background-image]="getUrl()">
+	<input hidden autocapitalize="on" #fileInput1 autocomplete="on" type="file" name="file" [disabled]="!isEditable"
+		(change)="uploadImage($event.target.files[0],'banner')" required accept="image/png, image/jpeg"
+		class="img-fluid">
+	<div class="profile-edit" [hidden]="!isEditable" (click)="fileInput1.click()">
+		<img src="assets/icons/camera.svg">
+	</div>
+	<div class="d-flex align-items-center profile">
+		<div>
+			<div class="clearfix position-relative" (click)="fileInput2.click()">
+				<input hidden autocapitalize="on" #fileInput2 autocomplete="on" type="file" name="file"
+					[disabled]="!isEditable" (change)="uploadImage($event.target.files[0],'logo')" required
+					accept="image/png, image/jpeg">
+				<img [src]="restaurantData?.logo  || 'assets/images/placeholder_logo.png'"
+					class="img-fluid user-profile">
+				<div class="profile-edit" [hidden]="!isEditable">
+					<div>
+						<img src="assets/icons/camera.svg">
+						<span>{{'restaurants.uploadPhoto' | translate}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix pl-2">
+			<label class="mb-0 name">{{restaurantData?.name || 'Full name'}}</label>
+			<p class="email">{{restaurantData?.email || 'Email'}}</p>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid mt-5 border-1" id="page-container">
+	<form [formGroup]="profileForm" autocomplete="off">
+		<!-- general info -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'restaurants.generalInformation' | translate}}</span>
+		</div>
+		
+		<div class="row my-3">
+			<!-- First name -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="firstName"
+						aria-describedby="firstName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="firstName">
+					<label for="firstName">{{'restaurants.fname' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.firstName">
+						<ng-container
+							*ngIf="form.firstName.hasError(error.type) && (form.firstName.dirty || form.firstName.touched)">
+							<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- Last name -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="lastName" aria-describedby="lastName"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="lastName">
+					<label for="lastName">{{'restaurants.lname' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.lastName">
+						<ng-container
+							*ngIf="form.lastName.hasError(error.type) && (form.lastName.dirty || form.lastName.touched)">
+							<span class="error-message font-13">{{'profileFromErrors.'+error.message | translate}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- Restaurant Name -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="name">
+					<label for="exampleInput1">{{'restaurants.restaurantName' | translate}} {{'products.english_text' | translate}}</label>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput1"
+						aria-describedby="name" placeholder="{{ 'enterHere' | translate}}" formControlName="Aname">
+					<label for="exampleInput1">{{'restaurants.restaurantName' | translate}} {{'products.arabic_text' | translate}}</label>
+				</div>
+			</div>
+
+			<!-- Email -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="exampleInput2"
+						aria-describedby="email" placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+					<label for="exampleInput2">{{'restaurants.email' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.email">
+						<ng-container
+							*ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- Mobile No -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" formControlName="mobileCode">
+							<option [value]="item?.dail_code" *ngFor="let item of countryList">{{item?.dail_code}}
+							</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+							id="exampleInput3" formControlName="mobileNumber">
+					</div>
+					<label for="exampleInput3">{{'restaurants.mobileNo' | translate}}#</label>
+					<div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+						<ng-container
+							*ngIf="form.mobileNumber.hasError(error.type) && (form.mobileNumber.dirty || form.mobileNumber.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+					<div class="text-left" *ngFor="let error of errorMessages.mobileCode">
+						<ng-container
+							*ngIf="form.mobileCode.hasError(error.type) && (form.mobileCode.dirty || form.mobileCode.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- Office No -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<div class="select-and-input">
+						<select class="bg-transparent" formControlName="officePhoneCountryCode"
+							(change)="setOfficeValidator()">
+							<option [value]="item?.dail_code" *ngFor="let item of countryList">{{item?.dail_code}}
+							</option>
+						</select>
+						<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+							autocomplete="off" id="exampleInput4" aria-describedby="office mobileNumber"
+							placeholder="{{ 'enterHere' | translate}}" formControlName="officePhoneNumber">
+					</div>
+					<label for="exampleInput5">{{'restaurants.officeNo' | translate}}#</label>
+					<div class="text-left" *ngFor="let error of errorMessages.officePhoneNumber">
+						<ng-container
+							*ngIf="form.officePhoneNumber.hasError(error.type) && (form.officePhoneNumber.dirty || form.officePhoneNumber.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- TRN Number -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="trnNumber" aria-describedby="trnNumber"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="trnNumber">
+					<label for="trnNumber">{{'restaurants.trnName' | translate}}</label>
+				</div>
+			</div>
+			
+			<!-- Bill To Email -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="billToEmail" aria-describedby="billToEmail"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="billToEmail">
+					<label for="billToEmail">{{'restaurants.billToEmail' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.email">
+						<ng-container
+							*ngIf="form.billToEmail.hasError(error.type) && (form.billToEmail.dirty || form.billToEmail.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<!-- Delivery Instructions -->
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" rows="3" autocomplete="off" id="deliveryInstruction"
+						aria-describedby="deliveryInstruction" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="deliveryInstruction">
+						</textarea>
+					<label for="deliveryInstruction">{{'restaurants.deliveryInstruction' | translate}}</label>
+					<!-- <div class="text-left" *ngFor="let error of errorMessages.deliveryInstruction">
+						<ng-container
+							*ngIf="form.deliveryInstruction.hasError(error.type) && (form.deliveryInstruction.dirty || form.deliveryInstruction.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div> -->
+				</div>
+			</div>
+		</div>
+
+		<!-- contact person -->
+		<!-- <div class="card card-contact-person grey-200-bg mb-4" *ngIf="form.role.value === 'SUPPLIER'">
+			<div class="card-body">
+				<div class="d-flex justify-content-start">
+					<span class="section-head">Contact person</span>
+				</div>
+				<div *ngFor="let _ of contactPerson.controls;index as i">
+					<div class="row" [formGroup]="_">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<div class="form-group ">
+								<input type="text" class="form-control" autocomplete="off" id="exampleInput8"
+									aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}" formControlName="fullName">
+								<label for="exampleInput8">name</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<div class="form-group ">
+								<div class="select-and-input">
+									<select class="bg-transparent" formControlName="mobileCode">
+										<option [value]="item?.dail_code" *ngFor="let item of countryList">
+											{{item?.dail_code}}</option>
+									</select>
+									<input type="text" class="form-control" autocomplete="off" id="exampleInput9"
+										aria-describedby="office mobileNumber" placeholder="{{ 'enterHere' | translate}}"
+										formControlName="mobileNumber">
+								</div>
+								<label for="exampleInput9">mobile no#</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<div class="form-group ">
+								<input type="text" class="form-control" autocomplete="off" id="exampleInput10"
+									aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}" formControlName="email">
+								<label for="exampleInput20">email address</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<div class="form-group ">
+								<input type="text" class="form-control" autocomplete="off" id="exampleInput11"
+									aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}" formControlName="title">
+								<label for="exampleInput11">title</label>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-end mt-2" *ngIf="isEditable">
+						<a class="text-capitalize btn-link btn-remove-red" (click)="removeContactPerson(i)">remove</a>
+					</div>
+				</div>
+				<div class="d-flex justify-content-start mt-2">
+					<a class="text-capitalize text-black-100 btn-add-black" (click)="addContactPerson()">
+						+ Add contact person
+					</a>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- address -->
+		<div class="d-flex justify-content-start">
+			<span class="section-head">{{'restaurants.completeAddress' | translate}}</span>
+		</div>
+
+		<!-- Unit No, Fllor No, Street, Area -->
+		<div class="row rows-cols-2 rows-cols-lg-4">
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input inputNumber onKeyPress="this.defaultValue = this.value" type="text" class="form-control"
+						autocomplete="off" id="unitNo" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="unitNo">
+					<label for="unitNo">{{'restaurants.unit' | translate}} #</label>
+					<div class="text-left" *ngFor="let error of errorMessages.unitNo">
+						<ng-container
+							*ngIf="form.unitNo.hasError(error.type) && (form.commission.dirty || form.unitNo.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="floorNo"
+						aria-describedby="commission" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="floorNo">
+					<label for="floorNo">{{'restaurants.floor' | translate}} #</label>
+					<div class="text-left" *ngFor="let error of errorMessages.floorNo">
+						<ng-container
+							*ngIf="form.floorNo.hasError(error.type) && (form.commission.dirty || form.floorNo.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="street" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="street">
+					<label for="street">{{'restaurants.street' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.street">
+						<ng-container
+							*ngIf="form.street.hasError(error.type) && (form.commission.dirty || form.street.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="form-group ">
+					<input type="text" class="form-control" autocomplete="off" id="area" aria-describedby="commission"
+						placeholder="{{ 'enterHere' | translate}}" formControlName="area">
+					<label for="area">{{'restaurants.area' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.area">
+						<ng-container
+							*ngIf="form.area.hasError(error.type) && (form.commission.dirty || form.area.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Country, City -->
+		<div class="row mb-2">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'restaurants.country' | translate}}</label>
+					<!-- <select class="custom-select custom-select-lg text-capitalize" formControlName="countryName"
+						(change)="setCountry($event.target.value)">
+						<option [value]="item.name" *ngFor="let item of countryList">{{item?.name}}</option>
+					</select> -->
+					<input type="text" class="form-control" readonly autocomplete="off" id="countryName"
+						aria-describedby="countryName" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="countryName">
+					<div class="text-left" *ngFor="let error of errorMessages.countryName">
+						<ng-container
+							*ngIf="form.countryName.hasError(error.type) && (form.countryName.dirty || form.countryName.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<label>{{'restaurants.city/state' | translate}}</label>
+					<select class="custom-select custom-select-lg text-capitalize" formControlName="city">
+						<option [value]="item.name" *ngFor="let item of cityList">{{item?.name}}</option>
+					</select>
+					<div class="text-left" *ngFor="let error of errorMessages.city">
+						<ng-container *ngIf="form.city.hasError(error.type) && (form.city.dirty || form.city.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-2">
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group ">
+					<textarea type="text" class="form-control" autocomplete="off" rows="14" id="exampleInput14"
+						aria-describedby="emailHelp" placeholder="{{ 'enterHere' | translate}}"
+						formControlName="location"></textarea>
+					<label for="exampleInput14">{{'restaurants.completeAddress' | translate}}</label>
+					<div class="text-left" *ngFor="let error of errorMessages.location">
+						<ng-container
+							*ngIf="form.location.hasError(error.type) && (form.location.dirty || form.location.touched)">
+							<span class="error-message font-13">{{error.message}}</span>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="form-group custom-form-group ">
+					<label class="form-group-label mb-0" for="exampleInput15">{{'restaurants.lMap' | translate}}</label>
+					<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fullscreenControl]='true'
+						[mapTypeControl]='false' (mapClick)="mapClicked($event)">
+						<agm-marker [latitude]="markers.lat" [longitude]="markers.lng" [opacity]="markers?.alpha"
+							[markerDraggable]="false">
+						</agm-marker>
+					</agm-map>
+					<input type="text" class="form-control" 
+						(keydown.enter)="$event.preventDefault()" 
+						placeholder="Search Nearest Location" 
+						autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search
+					>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<!-- documents -->
+	<div class="d-flex justify-content-start mt-4">
+		<span class="section-head">{{'restaurants.documents' | translate}}</span>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-lg-3 col-md-5 col-sm-6" *ngFor="let _ of media.controls;index as i" style="cursor: pointer;">
+			<div class="card" [formGroup]="_" (click)="addDocument(i)"
+				[ngClass]="{'card-border': selectDocumentIndex === i}">
+				<div class="card-body px-3 py-2">
+					<label class="document-label text-capitalize">{{_.value.displayName}}</label>
+					<div class="d-flex justify-content-between">
+						<div>
+							<span class="text-gray-100" *ngIf="_.value.name">
+								{{_.value.name | truncate:10}}
+							</span>
+							<span class="text-gray-100" *ngIf="!_.value.name">
+								No file added
+							</span>
+						</div>
+						<div>
+							<a class="btn-link" [hidden]="!_.value.name" (click)="downloadFile(_.value)"><img
+									src="assets/icons/filedownload.svg"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ng-container *ngIf="showUpload">
+		<div (fileDropped)="onFileDropped($event)" appDragDrop>
+			<div class="upload-box mt-2" (click)="fileDropRef.click()">
+				<input #fileDropRef autocomplete="on" type="file" name="file"
+					(change)="fileBrowseHandler($event.target.files)" required
+					accept="application/pdf,image/png, image/jpeg,image/jpg">
+				<img src="assets/icons/download.svg" class="img-fluid download-img">
+				<label class="dragDropText section-head text-black-100"> {{'shared.dragDropText' | translate}}</label>
+				<p class="dragDropText text-gray-100">{{'shared.imageTypeAllowed' | translate}}</p>
+			</div>
+		</div>
+	</ng-container>
+	<div class="mt-1 text-capitalize">
+		<ng-container *ngIf="displayMessage!=null">
+			<span class="error-message font-14">{{displayMessage}}</span>
+		</ng-container>
+	</div>
+
+	<div class="d-flex justify-content-between mt-4">
+		<button class="btn btn-theme btn-grey text-capitalize" (click)="goBack()">
+			{{'restaurants.cancel' | translate}}
+		</button>
+		<button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+			<span *ngIf="!loading">{{'restaurants.saveUpdate' | translate}}</span>
+			<span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
+		</button>
+	</div>
+</div>

@@ -1,0 +1,181 @@
+/*  section heading */
+.section-head {
+  font-family: var(--font-roboto);
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+  color: var(--black-100);
+  text-transform: capitalize;
+}
+
+.document-label {
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: 0.15px;
+  color: var(--black-200);
+}
+
+.text-blue-100 {
+  color: var(--blue-100);
+}
+.text-blue-200 {
+  color: var(--blue-200);
+}
+.text-blue-300 {
+  color: var(--blue-300);
+}
+
+.text-red-100 {
+  color: var(--red-100);
+}
+.text-red-200 {
+  color: var(--red-200);
+}
+
+.text-orange-100 {
+  color: var(--orange-100);
+}
+.text-orange-200 {
+  color: var(--orange-200);
+}
+
+.text-yellow-100 {
+  color: var(--yellow-100);
+}
+
+.text-green-100 {
+  color: var(--green-100);
+}
+.text-green-200 {
+  color: var(--green-200);
+}
+
+.text-white-100 {
+  color: var(--white);
+}
+
+.text-black-100 {
+  color: var(--black-100) !important;
+}
+.text-black-200 {
+  color: var(--black-200);
+}
+.text-black-300 {
+  color: var(--black-300);
+}
+.text-black-400 {
+  color: var(--black-400);
+}
+
+.text-gray-100 {
+  color: var(--grey-100);
+}
+.text-gray-200 {
+  color: var(--grey-200);
+}
+.text-gray-300 {
+  color: var(--grey-300);
+}
+.text-gray-400 {
+  color: var(--grey-400);
+}
+.text-gray-600 {
+  color: var(--gray-600);
+}
+// fontsize
+.font-13 {
+  font-size: 13px !important;
+}
+.font-17 {
+  font-size: 17px !important;
+}
+.font-20 {
+  font-size: 20px !important;
+}
+.font-15 {
+  font-size: 15px !important;
+}
+.font-14 {
+  font-size: 14px !important;
+}
+.font-12 {
+  font-size: 12px !important;
+}
+.font-20 {
+  font-size: 20px !important;
+}
+.font-normal {
+  font-weight: normal;
+}
+.medium {
+  font-weight: 500 !important;
+}
+.text-decoration-line-through {
+  text-decoration: line-through;
+}
+
+// opacity
+.op-7 {
+  opacity: 0.7;
+}
+
+// error message
+.error-message {
+  color: var(--red-100);
+  text-transform: none;
+}
+
+/* badges */
+.green-badge {
+  color: var(--green-100);
+  background: var(--green-200);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+.red-badge {
+  color: var(--red-100);
+  background: var(--red-200);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+.badge-red {
+  color: var(--red-100);
+  background-color: var(--red-200);
+  border-radius: 0.4em;
+  padding: 0.7em 0em;
+}
+.orange-badge {
+  color: var(--orange-100);
+  background: var(--orange-300);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+.blue-badge {
+  color: var(--blue-100);
+  background: var(--blue-300);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.grey-white-badge {
+  color: var(--white-100);
+  background: var(--grey-100);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 12px;
+}

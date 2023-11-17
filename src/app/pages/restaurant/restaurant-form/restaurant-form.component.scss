@@ -1,0 +1,97 @@
+.banner-image {
+  // background-image: url("assets/images/banner2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+// display profile image and info
+.profile {
+  position: relative;
+  top: 70px;
+  left: 20px;
+  place-items: center;
+  z-index: 3;
+  .name {
+    font-family: var(--font-roboto);
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: 0.15px;
+    color: var(--white-2);
+    text-transform: capitalize;
+  }
+  .email {
+    font-family: var(--font-roboto);
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: 0.1px;
+    color: var(--white-2);
+  }
+  .user-profile {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+  }
+
+  .profile-edit {
+    border-radius: 100%;
+  }
+}
+
+.profile-edit {
+  cursor: pointer;
+  background: var(--black-transparent);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white-2);
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.42px;
+
+  span {
+    display: block;
+  }
+}
+.select-and-input input {
+  padding-left: 72px;
+}
+/* tag inputs */
+tag-input {
+  height: 200px;
+  .ng2-tag-input .ng2-tag-input--focused {
+    box-shadow: none;
+    border-bottom: none !important;
+  }
+}
+
+/* map */
+agm-map {
+  height: 30vh;
+}
+
+.custom-form-group > label {
+  position: relative;
+  left: 0px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black-100);
+  padding: 0 5px;
+}
+
+.card-border {
+  border: 1px solid var(--blue-100);
+}

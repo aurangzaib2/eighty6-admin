@@ -1,0 +1,69 @@
+<div class="inner-header d-flex justify-content-between">
+	<div class="clearfix">
+		<h2 class="text-capitalize">{{categoryData?.name}}</h2>
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" aria-current="page" (click)="goBack()">{{'products.products' | translate}}</li>
+			<li class="breadcrumb-item" aria-current="page">{{categoryData?.name}}</li>
+		</ol>
+	</div>
+	<div class="clearfix">
+		<button class="btn btn-theme btn-blue text-capitalize px-4" (click)='open()'>
+			<img src="assets/icons/plus-white.svg"> {{'products.createNewSubCategory' |translate}}
+		</button>
+	</div>
+</div>	
+<div class="container-fluid" id="page-container">
+	<div class="form-group max-300">
+		<div class="input-group mb-0 search-box">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="basic-addon1">
+					<img src="assets/icons/search.svg">
+				</span>
+			</div>
+			<input type="text" class="form-control" placeholder="{{ 'search' | translate}}" aria-label="Search"
+				aria-describedby="basic-addon1" (keyup)="setFilter('search', $event.currentTarget.value)">
+		</div>
+	</div>
+	<div class="tab-inner-div">
+		<div class="table-responsive page-table text-nowrap">
+			<table class="table table-borderless" datatable [dtOptions]="dtOptions" style="width:100%">
+				<thead class="table-header no-border">
+					<tr>
+						<th class="pl-2" scope="col" style="width:50%">{{'suppliers.subCategory' | translate}}</th>
+						<th class="pr-2" scope="col" style="text-align: right;">{{'products.totalItems' |translate}}
+						</th>
+					</tr>
+				</thead>
+				<tbody class="table-body" *ngIf="dataList || dataList.length">
+					<tr *ngFor="let item of dataList;let i=index" (click)="navigateToProduct(item)">
+						<td class="text-capitalize pl-2" *ngIf="selectedLang == 'en'">
+							<span *ngIf="item?.name">
+								{{item?.name | capitalize}}
+							</span>
+							<span *ngIf="!item?.name">
+								{{item?.nameTranslation?.ar | capitalize}}
+							</span>
+							
+						</td>
+						<td class="text-capitalize pl-2" *ngIf="selectedLang == 'ar'">
+							<span *ngIf="item?.nameTranslation?.ar">
+								{{item?.nameTranslation?.ar | capitalize}}
+							</span>
+							<span *ngIf="!item?.nameTranslation?.ar">
+								{{item?.name | capitalize}}
+							</span>
+						</td>
+						<td class="pr-2" style="text-align: right;">
+							<span class="px-2">{{item?.itemCount}}</span>
+						</td>
+					</tr>
+				</tbody>
+				<ng-container *ngIf="(!dataList || dataList.length === 0) && !processing" class="table-body">
+					<tr>
+						<td class="text-center" colspan="3">{{ 'noData' | translate}}</td>
+					</tr>
+				</ng-container>
+			</table>
+		</div>
+	</div>
+</div>

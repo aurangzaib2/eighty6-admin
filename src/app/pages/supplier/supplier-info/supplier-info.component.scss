@@ -1,0 +1,23 @@
+/* map */
+agm-map {
+  height: 30vh;
+}
+.custom-form-group > label {
+  position: relative;
+  left: 0px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black-100);
+  padding: 0 5px;
+}
+.ng-select.ng-select-multiple ::ng-deep .ng-select-container {
+	border: none !important;
+	color: var(--grey-100) !important;
+}
+
+.ng-select.ng-select-multiple ::ng-deep .ng-select-container:hover {
+	box-shadow: none !important;
+}
+.ng-select.ng-select-focused:not(.ng-select-opened) > ::ng-deep.ng-select-container {
+	box-shadow: none !important;
+}

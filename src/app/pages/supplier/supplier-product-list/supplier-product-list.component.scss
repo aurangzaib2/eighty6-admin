@@ -1,0 +1,79 @@
+#page-container {
+  min-height: 74vh;
+}
+.tab-inner-div {
+  max-height: 69vh;
+  overflow-y: auto;
+  padding-right: 4px;
+  overflow-x: hidden;
+  .inner-div {
+    padding-bottom: 100px;
+    overflow-y: auto;
+  }
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px var(--grey-300);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--grey-200);
+  border-radius: 10px;
+}
+
+.discount-box {
+  cursor: pointer;
+  position: relative;
+  .discount-click {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+  }
+  .z-index-fix {
+    z-index: 9;
+  }
+}
+.product-type {
+  position: absolute;
+  top: 0;
+}
+/** drop down*/
+.dropdown-menu.show {
+  button {
+    font-size: 0.8em;
+  }
+}
+
+.outOfStock {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.7;
+  background: var(--black-200);
+  color: var(--white);
+  z-index: 1;
+  display: flex;
+  width: fit-content;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: 0.9em;
+  font-family: var(--font-roboto);
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+}

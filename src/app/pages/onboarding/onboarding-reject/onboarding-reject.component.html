@@ -1,0 +1,47 @@
+<div class="card profile-card border-0">
+	<img [src]="userData?.banner ||'assets/images/placeholder_banner.jpg'" alt="banner" class="card-img-top">
+	<div (click)="closeModal()" class="close-icon">
+		<img class="img-fluid" src="assets/icons/white-cross.svg">
+	</div>
+	<div class="card-body mx-4">
+		<div class="d-flex justify-content-center">
+			<div class="profile-logo">
+				<img [src]="userData?.logo || 'assets/images/placeholder_logo.png'" class="img-fluid">
+			</div>
+		</div>
+		<div class="text-center mt-5">
+			<div class="clearfix text-capitalize">
+				<h5 class="mb-0 pb-0">{{userData?.company?.name || userData?.restaurant?.name || userData?.name}}</h5>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-12">
+				<form [formGroup]="rejectForm">
+					<label class="text-capitalize" for="exampleInput1">{{'onBoarding.rejectReason' | translate}}</label>
+					<div class="form-group mb-4 mt-4">
+						<textarea aria-describedby="emailHelp" autocomplete="off" class="form-control"
+							formControlName="reason" id="exampleInput1" placeholder="{{ 'enterHere' | translate}}"
+							rows="4" type="text"></textarea>
+						<label for="exampleInput1">{{'onBoarding.describe' | translate}}</label>
+						<div *ngIf="form.reason?.errors">
+							<span *ngIf="form.reason?.errors.required" class="error-message font-13">Reason is
+								required.</span>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+		<div class="d-flex justify-content-between mt-3">
+			<button (click)="closeModal()" class="btn btn-theme btn-grey text-capitalize">
+				{{'onBoarding.cancel' | translate}}
+			</button>
+			<button type="submit" (click)="onSubmit()" class="btn btn-theme btn-blue text-capitalize">
+				<span *ngIf="!loading">{{'onBoarding.submit' | translate}}</span>
+				<span *ngIf="loading" aria-hidden="true" class="spinner-border spinner-border-sm" role="status"></span>
+			</button>
+		</div>
+	</div>
+</div>

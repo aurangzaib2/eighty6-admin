@@ -1,0 +1,18 @@
+.nav-tabs .nav-link {
+  border: none;
+  margin-bottom: 0px !important;
+  padding: 10px 10px 10px;
+  font-size: 14px;
+  color: var(--black-300);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.active {
+  border: none;
+  border-bottom: 3px solid var(--blue-100) !important;
+  color: var(--blue-100) !important;
+}
+.price{
+  display: inline-block;
+  margin:2px;
+}

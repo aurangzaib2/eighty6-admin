@@ -1,0 +1,17 @@
+.notification-image {
+  height: 50px;
+}
+#page-container {
+	min-height: 74vh;
+}
+table.dataTable thead{
+	display: none !important;
+}
+.page-table .table-body td{
+	padding: 8px 10px !important;
+}
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+	border-bottom: none !important;
+	height: 100%;
+	min-height: 58vh !important;
+}

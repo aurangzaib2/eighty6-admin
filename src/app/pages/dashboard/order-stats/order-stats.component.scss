@@ -1,0 +1,66 @@
+.rejected-box {
+  p {
+    font-weight: normal;
+  }
+}
+.sales-box {
+  background-image: url(../../../../assets/images/graph-bg2.png);
+  background-size: 230px;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  p {
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+  h3 {
+    font-size: 24px;
+    font-weight: normal;
+  }
+  select {
+    font-size: 12px;
+  }
+}
+.tip-transaction {
+  position: relative;
+  left: 0px;
+  top: 4px;
+  .btn {
+    width: 120px;
+  }
+}
+ngb-tooltip-window {
+  .tooltip-inner {
+    max-width: 220px;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+    text-align: center;
+    background-color: #000;
+    border-radius: 0.25rem;
+    font-size: small;
+  }
+}
+.monthly-transaction-card {
+  min-height: 200px;
+  .card-body {
+    padding-bottom: 0;
+  }
+}
+.fixed-height {
+  max-height: 200px;
+}
+table {
+  td {
+    &:last-child .text-div {
+      text-align: right;
+    }
+    &:first-child,
+    &:last-child {
+      padding: 0.75rem 0px;
+    }
+  }
+}
+.price{
+  display: inline-block;
+  margin: 2px;
+}

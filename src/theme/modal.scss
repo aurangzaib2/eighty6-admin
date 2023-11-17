@@ -1,0 +1,65 @@
+.modal-content {
+  border: none;
+}
+.badge-success {
+  background-color: var(--green-200);
+  border-radius: 0.4em;
+  padding: 0.7em 0em;
+}
+
+.profile-card {
+  .card-img-top {
+    height: 120px;
+  }
+  .profile-logo {
+    position: absolute;
+    top: 70px;
+    display: flex;
+    border-radius: 50%;
+    background-color: var(--grey-200);
+    padding: 14px;
+    width: 100px;
+    height: 100px;
+    img {
+      border-radius: 50%;
+    }
+  }
+  .close-icon {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    cursor: pointer;
+  }
+}
+.receipt-items {
+  border-bottom: 1px solid var(--grey-400);
+  padding: 1em 0em;
+  .text-label {
+    font-family: var(--font-roboto);
+    font-size: 1em;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: 0.15px;
+    color: var(--black-100);
+  }
+  .text-value {
+    font-family: var(--font-roboto);
+    font-size: 1em;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: 0.15px;
+    text-align: right;
+    color: var(--grey-100);
+  }
+}
+
+.close-icon {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  cursor: pointer;
+}

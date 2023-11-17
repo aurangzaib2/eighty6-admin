@@ -1,0 +1,14 @@
+table.dataTable thead .sorting {
+  background-image: url("../../../../assets/icons/sort-asc-desc.svg") !important;
+}
+table.dataTable thead .sorting_asc {
+  background-image: url("../../../../assets/icons/sort-asc.svg") !important;
+}
+table.dataTable thead .sorting_desc {
+  background-image: url("../../../../assets/icons/sort-desc.svg") !important;
+}
+table.dataTable thead .sorting:after {
+  opacity: 0 !important;
+  content: none !important;
+}
+

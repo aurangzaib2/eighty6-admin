@@ -1,0 +1,28 @@
+.top-cards {
+  min-height: 340px;
+  .card-body {
+    padding-bottom: 0;
+  }
+}
+.price{
+  display: inline-block;
+  margin:2px;
+}
+.fixed-height {
+  max-height: 340px;
+  .time {
+    font-size: 11px;
+    display: block;
+    padding: 2px 7px;
+    border-radius: 30px;
+  }
+  td {
+    .image-and-text {
+      min-width: max-content;
+    }
+    &:last-child {
+      padding-right: 1.5rem;
+      text-align: center;
+    }
+  }
+}

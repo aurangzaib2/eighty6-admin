@@ -1,0 +1,114 @@
+<div class="card reataurant-card border-0">
+    <div class="close-icon" (click)="dismissModal()">
+        <img src="assets/icons/black-cross.svg" class="img-fluid">
+    </div>
+    <div class="card-body mx-4">
+        <div class="d-flex justify-content-center my-1">
+            <h4 class="section-head mb-0 font-weight-bold">
+                {{'reports.generateReports' | translate}}
+            </h4>
+        </div>
+        <form>
+            <div class="d-flex justify-content-between receipt-items">
+                <div class="clearfix">
+                    <span class="text-label text-capitalize">{{'reports.reports' | translate}}</span>
+                </div>
+                <div class="clearfix" class="w-75 text-right">
+                    <p class="text-black-300 mb-0 text-capitalize"  *ngIf="selectedLang == 'en'">{{report?.name}}
+                        <i class="fa fa-info-circle" style="color:#9e9e9e;cursor: pointer;"
+                            [ngbTooltip]="report?.description" tooltipClass="quantity-tooltip"></i>
+                    </p>
+                    <p class="text-black-300 mb-0 text-capitalize" *ngIf="selectedLang == 'ar'">{{report?.arabicName}}
+                        <i class="fa fa-info-circle" style="color:#9e9e9e;cursor: pointer;"
+                            [ngbTooltip]="report?.description" tooltipClass="quantity-tooltip"></i>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between receipt-items align-items-center">
+                <div class="clearfix">
+                    <span class="text-label text-capitalize">{{'reports.selectDateRange' | translate}}</span>
+                </div>
+                <div class="clearfix">
+                    <div ngbDropdown #myDrop="ngbDropdown">
+                        <button class="btn text-capitalize" id="dropdownConfig" ngbDropdownToggle>
+                            <img alt="phone" class="mr-1 pb-1" src="assets/icons/calender.svg">
+                            {{selectedOption}}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('today')">
+                                {{'reports.today' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('yesterday')">
+                                {{'reports.yesterday' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('this month')">
+                                {{'reports.thisMonth' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('last month')">
+                                {{'reports.lastMonth' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('year to date')">
+                                {{'reports.yearTodate' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="selectOption('last year')">
+                                {{'reports.lastYear' | translate}}
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a ngbDropdownItem class="text-capitalize" (click)="d2.toggle()">
+                                {{'reports.customDate' | translate}}
+                            </a>
+                            <a ngbDropdownItem class="text-capitalize" (click)="d1.toggle()">
+                                {{'reports.customDateRange' | translate}}
+                            </a>
+                        </div>
+                        <input #myDateInput hidden class="form-control" placeholder="mm/dd/yyyy" name="dp"
+                            #d2="ngbDatepicker" ngbDatepicker [dayTemplate]="t1" [readonly]="true" [autoClose]="true"
+                            [displayMonths]="1" outsideDays="hidden">
+                        <ng-template #t1 let-date="date" let-focused="focused">
+                            <span class="custom-day" (click)="onSingleDateSelection(date)">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                        <input #myRangeInput hidden class="form-control" placeholder="mm/dd/yyyy" name="dp"
+                            #d1="ngbDatepicker" ngbDatepicker [dayTemplate]="t" [readonly]="true" [autoClose]="false"
+                            [displayMonths]="1" outsideDays="hidden">
+                        <ng-template #t let-date="date" let-focused="focused">
+                            <span class="custom-day"
+                                [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (click)="onDateSelection(date)"
+                                (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between receipt-items">
+                <div class="clearfix">
+                    <span class="text-label text-capitalize">{{'reports.selectFormat' | translate}} </span>
+                </div>
+                <div class="clearfix">
+                    <!-- <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="formatType" type="radio" name="inlineRadioOptions"
+                            id="inlineRadio1" value="pdf" [checked]="formatType === 'pdf'">
+                        <label class="form-check-label text-uppercase" for="inlineRadio1">pdf</label>
+                    </div> -->
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="formatType" type="radio" name="inlineRadioOptions"
+                            id="inlineRadio2" value="excel" [checked]="formatType === 'excel'">
+                        <label class="form-check-label text-uppercase" for="inlineRadio2">xls</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-theme btn-grey text-capitalize" (click)="dismissModal()">
+                {{'reports.cancel' | translate}}
+            </button>
+            <button class="btn btn-theme btn-blue text-capitalize" (click)="downloadExcel()">
+                {{'reports.downloadReport' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

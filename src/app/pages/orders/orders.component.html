@@ -1,0 +1,290 @@
+<div class="inner-header d-flex justify-content-between">
+    <div class="clearfix">
+        <h2 class="text-capitalize">{{'sidebar.orders' | translate}}</h2>
+        <ol class="breadcrumb inner-header-breadrumb">
+            <li aria-current="page" class="breadcrumb-item">{{'sidebar.orders' | translate}}</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid" id="page-container">
+    <ul (navChange)="onNavChange($event)" [(activeId)]="activeTab" class="nav nav-tabs w-100 flex-nowrap ov-scroll"
+        ngbNav>
+        <li *ngFor="let link of links" [ngbNavItem]="link.status" class="nav-link text-nowrap">
+            <a class="text-capitalize" ngbNavLink>
+                <img [src]="link.image" class="mr-2">
+                {{ link.title }}
+            </a>
+        </li>
+    </ul>
+    <div class="d-flex justify-content-between align-items-center pt-4">
+        <div class="form-group">
+            <div class="input-group mb-0 search-box">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                        <img src="assets/icons/search.svg">
+                    </span>
+                </div>
+                <input (keyup)="tableSetFilter('search', $event.currentTarget.value)" aria-describedby="basic-addon1"
+                    aria-label="Search" class="form-control" placeholder="{{ 'search' | translate}}" type="text">
+            </div>
+        </div>
+        <div>
+            <div ngbDropdown>
+                <button class="btn" id="dropdownConfig" ngbDropdownToggle>
+                    <img src="../../../../assets/icons/filter.svg">
+                </button>
+                <div aria-labelledby="dropdownConfig" ngbDropdownMenu>
+                    <h6 class="pl-4 text-black-100" *ngIf="activeTab != 'pending'">{{'onBoarding.status' | translate}}
+                    </h6>
+                    <button ngbDropdownItem *ngIf="activeTab === 'active'">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(deliveryStatus.CONFIRMED,$event.target.checked, 'status')"
+                                [checked]="activeFilters.deliveryStatus.includes('confirmed')"
+                                class="custom-control-input" id="customCheck1" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck1">{{'orders.accepted' |
+                                translate}}</label>
+                        </div>
+                    </button>
+                    <button ngbDropdownItem *ngIf="activeTab === 'active'">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(deliveryStatus.DISPATCHED,$event.target.checked, 'status')"
+                                [checked]="activeFilters.deliveryStatus.includes('dispatched')"
+                                class="custom-control-input" id="customCheck2" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck2">{{'orders.dispatched'
+                                | translate}}</label>
+                        </div>
+                    </button>
+
+                    <button ngbDropdownItem *ngIf="activeTab === 'completed'">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(deliveryStatus.DELIVERED,$event.target.checked, 'status')"
+                                [checked]="activeFilters.deliveryStatus.includes('delivered')"
+                                class="custom-control-input" id="customCheckdelivered" type="checkbox">
+                            <label class="custom-control-label text-capitalize"
+                                for="customCheckdelivered">{{'orders.delivered'
+                                | translate}}</label>
+                        </div>
+                    </button>
+                    <button ngbDropdownItem *ngIf="activeTab === 'completed'">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(deliveryStatus.ACKNOWLEDGED,$event.target.checked, 'status')"
+                                [checked]="activeFilters.deliveryStatus.includes('acknowledged')"
+                                class="custom-control-input" id="customCheck4" type="checkbox">
+                            <label class="custom-control-label text-capitalize"
+                                for="customCheck4">{{'orders.acknowledged'
+                                | translate}}</label>
+
+                            </div>
+                    </button>
+                    <button ngbDropdownItem *ngIf="activeTab === 'completed'">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(deliveryStatus.REJECTED,$event.target.checked, 'status')"
+                                [checked]="activeFilters.deliveryStatus.includes('rejected')"
+                                class="custom-control-input" id="customCheck5" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck5">{{'orders.rejected'
+                                | translate}}</label>
+                        </div>
+                    </button>
+
+                    <button ngbDropdownItem *ngIf="activeTab === 'acknowledged'">
+                        <div class="custom-control custom-checkbox">
+                            <input
+                                (change)="setFilter(deliveryStatus.PENDING,$event.target.checked, 'amendOrderStatus')"
+                                [checked]="activeFilters.amendOrderStatus.includes('pending')"
+                                class="custom-control-input" id="customCheck6" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck6">{{'orders.pending'
+                                | translate}}</label>
+                        </div>
+                    </button>
+                    <button ngbDropdownItem *ngIf="activeTab === 'acknowledged'">
+                        <div class="custom-control custom-checkbox">
+                            <input
+                                (change)="setFilter(deliveryStatus.RETURNED,$event.target.checked, 'amendOrderStatus')"
+                                [checked]="activeFilters.amendOrderStatus.includes('returned')"
+                                class="custom-control-input" id="customCheck7" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck7">{{'orders.returned'
+                                | translate}}</label>
+                        </div>
+                    </button>
+                    <button ngbDropdownItem *ngIf="activeTab === 'acknowledged'">
+                        <div class="custom-control custom-checkbox">
+                            <input
+                                (change)="setFilter(deliveryStatus.PARTIALLY,$event.target.checked, 'amendOrderStatus')"
+                                [checked]="activeFilters.amendOrderStatus.includes('partially')"
+                                class="custom-control-input" id="customCheck8" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck8">{{'orders.partially'
+                                | translate}}</label>
+                        </div>
+                    </button>
+
+                    <h6 class="pl-4 text-black-100 text-capitalize">{{'orders.paymentMethod' | translate}}</h6>
+                    <button ngbDropdownItem>
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter('all',$event.target.checked,'payment')"
+                                [checked]="activeFilters.paymentMethod.length === paymentMethodFilterTypes.length"
+                                class="custom-control-input" id="customCheck3" type="checkbox">
+                            <label class="custom-control-label text-capitalize" for="customCheck3">{{'orders.all' |
+                                translate}}</label>
+                        </div>
+                    </button>
+                    <button *ngFor="let p of paymentMethodFilterTypes" ngbDropdownItem>
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="setFilter(p.value,$event.target.checked,'payment')"
+                                [checked]="activeFilters.paymentMethod.includes(p?.value)" [id]="p.value"
+                                class="custom-control-input" type="checkbox">
+                            <label [for]="p.value" class="custom-control-label text-capitalize">{{p?.title}}</label>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade active show" id="All">
+            <div>
+                <div class="table-responsive page-table text-nowrap">
+                    <table [dtOptions]="dtOptions" class="table table-borderless" datatable style="width:100%">
+                        <thead *ngIf="showTable" class="table-header no-border">
+                            <tr>
+                                <th class="pl-2" scope="col">{{'orders.orderID'| translate}}</th>
+                                <th scope="col">{{'orders.supplier'| translate}}</th>
+                                <th scope="col">{{'orders.restaurant'| translate}}</th>
+                                <th scope="col">{{'orders.date'| translate}}</th>
+                                <th scope="col">{{'orders.paymentMethod'| translate}}</th>
+                                <th scope="col">{{'orders.orderStatus'| translate}}</th>
+                                <th scope="col">{{'orders.totalAmount'| translate}}</th>
+                                <th scope="col">{{'orders.timer'| translate}}</th>
+                                <th scope="col">{{'onBoarding.status' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="orders && orders.length && showTable" class="table-body">
+                            <tr (click)='navigateTo(item)' *ngFor="let item of orders;let i=index"
+                                [ngClass]="{'yellow-200-bg': item?.isAmended && item.amendOrderStatus !='confirmed','bg-green' : item?.isAmended && item.amendOrderStatus==='confirmed'}">
+                                <td class="pl-2">
+                                    <span class="text-black-100 font-roboto">{{item?.orderId}}</span>
+                                </td>
+                                <!-- <td>{{item?.supplierName | truncate:15| capitalize}}</td> -->
+                                <!-- <td>{{item?.restaurantName | truncate:16| capitalize}}</td> -->
+                                <td>
+                                    <span *ngIf="selectedLang == 'en'">
+                                      <span *ngIf="item?.supplierName">{{item?.supplierName | truncate:16| capitalize}}</span>
+                                      <span *ngIf="!item?.supplierName">{{item?.supplierNameTranslation?.ar}}</span>
+                                    </span>
+                                    <span *ngIf="selectedLang == 'ar'">
+                                      <span *ngIf="item?.supplierNameTranslation?.ar">{{item?.supplierNameTranslation?.ar}}</span>
+                                      <span *ngIf="!item?.supplierNameTranslation?.ar">
+                                                      {{item?.supplierName | truncate:16| capitalize}}
+                                      </span>
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <span *ngIf="selectedLang == 'en'">
+                                      <span *ngIf="item?.restaurantName">{{item?.restaurantName | truncate:16| capitalize}}</span>
+                                      <span *ngIf="!item?.restaurantName">{{item?.restaurantNameTranslation?.ar}}</span>
+                                    </span>
+                                    <span *ngIf="selectedLang == 'ar'">
+                                      <span *ngIf="item?.restaurantNameTranslation?.ar">{{item?.restaurantNameTranslation?.ar}}</span>
+                                      <span *ngIf="!item?.restaurantNameTranslation?.ar">
+                                                      {{item?.restaurantName | truncate:16| capitalize}}
+                                      </span>
+                                    </span>
+                                  </td>
+                                <td class="font-roboto">
+                                    <span *ngIf="item?.deliveryStatus ==='pending'">
+                                        {{item?.createdAt| date:'mediumDate'}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='rejected'">
+                                        {{item?.rejectedAt | date:'mediumDate'}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='confirmed'">
+                                        {{item?.confirmedAt | date:'mediumDate'}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='delivered'">
+                                        {{item?.deliveredAt | date:'mediumDate'}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='completed'">
+                                        {{item?.completedAt | date:'mediumDate'}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='dispatched'">
+                                        {{item?.dispatchedAt | date:'mediumDate'}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span *ngIf="item?.paymentMethod === 'card'">{{'card'|translate}}</span>
+                                    <span *ngIf="item?.paymentMethod === 'cash'">{{'cash'|translate}}</span>
+                                    <span *ngIf="item?.paymentMethod === 'credit'">{{'credit'|translate}}</span>
+                                    <span *ngIf="item?.paymentMethod === 'wallet'">{{'wallet'|translate}}</span>
+                                    <span *ngIf="item?.paymentMethod === 'bank'">{{'Cheque'|translate}}</span>
+                                </td>
+                                <!-- <td *ngIf="activeTab != 'pending'"> -->
+                              <!-- <td>{{item?.paymentMethod}}</td> -->
+                                <td *ngIf="activeTab != 'pending'  && activeTab != 'acknowledged'">
+                                    <span *ngIf="item?.deliveryStatus ==='confirmed'" class="green-badge">
+                                        {{'suppliers.confirmed' | translate}}
+                                    </span>
+
+                                    <span *ngIf="item?.deliveryStatus ==='delivered'"
+                                        [ngClass]="item?.amendOrderStatus ==='acknowledged' ? 'green-badge' : 'blue-badge'">
+                                        <span *ngIf="item?.amendOrderStatus ==='acknowledged';else delivered">
+                                            {{item?.amendOrderStatus}}
+                                        </span>
+                                        <ng-template #delivered>
+                                            {{item?.deliveryStatus}}
+                                        </ng-template>
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='completed'" class="green-badge">
+                                        {{'suppliers.completed' | translate}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='dispatched'" class="blue-badge">
+                                        {{'suppliers.dispatched' | translate}}
+                                    </span>
+                                    <span *ngIf="item?.deliveryStatus ==='rejected'" class="red-badge">
+                                        {{'suppliers.rejected' | translate}}
+                                    </span>
+                                </td>
+                                <!-- <td>{{currency}} {{(item?.totalPrice+item?.tax).toFixed(2)}}</td> -->
+                                <td>
+                                    <span class="font-roboto m-1">{{currency}}</span>
+                                    <span>{{item?.totalPrice+item?.tax | number : '1.2-2'}}</span>
+                                </td>
+                                <td *ngIf="activeTab != 'acknowledged'">
+                                    <span
+                                        [class]="(item?.placedDate | timer: {'time':newTime, 'confirmedAt': item?.confirmedAtDateTime}).class">
+                                        {{(item?.placedDate | timer: {
+                                        'time': newTime,
+                                        'confirmedAt': item?.confirmedAtDateTime
+                                        }).time}}
+                                        <i class="fa fa-clock-o"></i> </span>
+                                </td>
+                                <td *ngIf="activeTab === 'acknowledged'">
+                                    <!-- <span *ngIf="item?.amendOrderStatus ==='pending'" class="orange-badge">
+                                        {{'orders.pending' | translate}}
+                                    </span>
+                                    <span *ngIf="item?.amendOrderStatus ==='returned'" class="red-badge">
+                                        {{'orders.return' | translate}}
+                                    </span>
+                                    <span *ngIf="item?.amendOrderStatus ==='partially'" class="green-badge">
+                                        {{'orders.partially' | translate}}
+                                    </span> -->
+                                    <span class="text-gray-100" *ngIf="item?.acknowledgeStatus === 'Acknowledged with amendment'">{{'orders.ackWithAmendment' |
+                                        translate}}</span>
+                                    <span class="text-gray-100" *ngIf="item?.acknowledgeStatus === 'Fully Acknowledged'">{{'orders.fullyAck' |
+                                        translate}}</span>
+                                    <span class="text-gray-100" *ngIf="item?.acknowledgeStatus === 'Amended'">{{'orders.amended' |
+                                        translate}}</span>
+                                    <span class="text-gray-100" *ngIf="item?.acknowledgeStatus === 'rejected'">{{'orders.rejected' |
+                                        translate}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <ng-container *ngIf="(!orders || orders.length === 0) && !processing" class="table-body">
+                            <tr>
+                                <td class="text-center" colspan="6">{{ 'noData' | translate}}</td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

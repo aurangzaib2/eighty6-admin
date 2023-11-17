@@ -1,0 +1,42 @@
+.loginContainer {
+    background:var(--white-2);
+    .w-50{
+        >img{
+            height: 100vh;
+            object-fit: cover;
+        }
+    }
+    .loginForm {
+        padding: 0 7vw;
+        .logo{
+            max-width: 187px;
+        }
+        h2{
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .text-block{
+            max-width: 450px;
+        }
+        form{
+            max-width: 390px;
+            a {
+                color: var(--blue-100);
+            }
+            .form-check-label {
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: normal;
+                line-height: 1.43;
+                letter-spacing: 0.15px;
+                color: var(--black-100);
+            }
+        }
+        @media screen and (max-height: 720px) {
+            transform: scale(0.8);
+            transform-origin: left;
+            -ms-transform-origin-x: left;
+          }
+    }
+}

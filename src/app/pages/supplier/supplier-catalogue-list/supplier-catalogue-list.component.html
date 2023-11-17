@@ -1,0 +1,65 @@
+<div class="conatiner-fluid" id="page-container">
+	<div class="d-flex justify-content-between align-items-center">
+		<div class="clearfix">
+			<h3 class="text-capitalize text-black-200">{{'suppliers.myCatalogue' | translate}}</h3>
+		</div>
+		<div>
+			<div class="clearfix">
+				<button class="btn btn-theme btn-blue text-capitalize px-4" (click)="open()" data-testid="add-product">
+					<img src="assets/icons/plus-white.svg"> {{'suppliers.addProducts' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="tab-inner-div mt-4">
+		<div class="d-flex inner-div flex-wrap justify-content-lg-start justify-content-start">
+			<div class="product-box p-3 mb-3" *ngFor="let item of dataList">
+				<div class="product-click" (click)="navigateToProduct(item)" data-testid="navigateToProduct"></div>
+				<div class="text-div">
+					<h4 class="text-black-100 text-capitalize" *ngIf="selectedLang == 'en'">
+						<span *ngIf="item?.name">{{item?.name | capitalize}}</span>
+						<span *ngIf="!item?.name">{{item?.nameTranslation.ar | capitalize}}</span>
+					</h4>
+					<h4 class="text-black-100 text-capitalize" *ngIf="selectedLang == 'ar'">
+						<span *ngIf="item?.nameTranslation.ar ">
+							{{item?.nameTranslation.ar | capitalize}}
+						</span>
+						<span *ngIf="!item?.nameTranslation.ar ">
+							{{item?.name| capitalize}}
+						</span>
+					</h4>
+					<p class="text-gray-100">{{item?.itemCount}} items</p>
+					<div class="d-flex align-items-baseline">
+						<!-- <div ngbDropdown class="drop-small">
+							<button class="btn" id="dropdownConfig" ngbDropdownToggle>
+								<img src="assets/icons/action-dot.svg">
+							</button>
+							<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+								<button ngbDropdownItem (click)="openConfirmHide(item)">
+									<label>
+										<img src="assets/icons/block-gray.svg" class="mx-2">
+										<span *ngIf="item?.status === 'active'">
+											Hide
+										</span>
+										<span *ngIf="item?.status === 'inactive'">
+											Unhide
+										</span>
+									</label>
+								</button>
+								<button ngbDropdownItem (click)="openConfirmDelete(item)">
+									<label><img src="assets/icons/delete-gray.svg" class="mx-2">Delete</label>
+								</button>
+							</div>
+						</div> -->
+						<img src="assets/images/placeholder_category.svg" class="ml-auto"
+							*ngIf="item?.image === null || !item?.image">
+						<img [src]="item?.image" class="ml-auto" *ngIf="item?.image != null && item?.image">
+					</div>
+				</div>
+			</div>
+			<div class="align-self-center h-100" *ngIf="dataList.length === 0">
+				<p>{{ 'noData' | translate}}</p>
+			</div>
+		</div>
+	</div>
+</div>
